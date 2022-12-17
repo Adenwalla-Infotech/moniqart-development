@@ -303,6 +303,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_userpassword` varchar(255) NULL,
                 `_userotp` int(100) NULL,
                 `_userverify` varchar(50) NULL,
+                `_usercurrency` varchar(50) NULL ,
                 `Creation_at_Date` date NOT NULL DEFAULT current_timestamp(),
                 `CreationDate` datetime NOT NULL DEFAULT current_timestamp(),
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
@@ -571,6 +572,8 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_lessonname` text NOT NULL,
                 `_lessontype` varchar(55) NOT NULL,
                 `_lessonurl` varchar(55) NOT NULL,
+                `_lessondate` varchar(55) NOT NULL,
+                `_lessontime` varchar(55) NOT NULL,
                 `_recordedfilename` varchar(55) NOT NULL,
                 `_lessondescription` text NOT NULL,
                 `_status` varchar(55) NOT NULL,
@@ -616,7 +619,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 }
             }
             if ($creation_done) {
-                $admin_data = "INSERT INTO `tblusers` (`_username`, `_useremail`,  `_userphone`, `_usertype`, `_userstatus`, `_userpassword`,`_userverify`) VALUES ('$username', '$useremail', '', 2, 'true', '$enc_password','true');";
+                $admin_data = "INSERT INTO `tblusers` (`_username`, `_useremail`,  `_userphone`, `_usertype`, `_userstatus`, `_userpassword`,`_userverify`,`_usercurrency`) VALUES ('$username', '$useremail', '', 2, 'true', '$enc_password','true','INR');";
 
                 $sms_data = "INSERT INTO `tblsmsconfig`(`_suppliername`, `_apikey`, `_baseurl`, `_supplierstatus`) VALUES ('Fast2SMS','maeS4bc5gM17qo0FwszOEAx62JND3IiHdfQBtl8XWLZ9rCjVTYOJlgtFLzNqZ7uYj830XWm6sQbM2KIR', 'https://www.fast2sms.com/dev/bulkV2', 'true')";
 
@@ -684,7 +687,7 @@ function _createuser($username, $useremail, $usertype, $userphone, $isactive, $i
                 $alert = new PHPAlert();
                 $alert->warn("User Already Exists");
             } else {
-                $sql = "INSERT INTO `tblusers`(`_username`, `_useremail`, `_userphone`, `_usertype`, `_userstatus`, `_userotp`, `_userverify`) VALUES ('$username','$useremail', '$userphone', '$usertype', '$isactive', '$userotp', '$isverified')";
+                $sql = "INSERT INTO `tblusers`(`_username`, `_useremail`, `_userphone`, `_usertype`, `_userstatus`, `_userotp`, `_userverify`, `_usercurrency`) VALUES ('$username','$useremail', '$userphone', '$usertype', '$isactive', '$userotp', '$isverified', 'INR')";
 
                 $query = mysqli_query($conn, $sql);
                 if ($query) {
@@ -1083,7 +1086,7 @@ function _updateuser($username, $useremail, $usertype, $userphone, $isactive, $i
     }
 }
 
-function _updateProfile($username, $useremail, $userpassword, $userphone, $userage, $userbio, $location, $userpin, $country)
+function _updateProfile($username, $useremail, $userpassword, $userphone, $userage, $userbio, $location, $userpin, $country, $usercurrency)
 {
     require('_config.php');
     require('_alert.php');
@@ -1116,10 +1119,10 @@ function _updateProfile($username, $useremail, $userpassword, $userphone, $usera
                 $password = $_SESSION['userPassword'];
                 if ($userpassword == $password) {
                     $encpassword = $userpassword;
-                    $sql = "UPDATE `tblusers` SET `_username`='$username',`_useremail`='$useremail',`_userphone`='$userphone',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin' WHERE `_id` = $id";
+                    $sql = "UPDATE `tblusers` SET `_username`='$username',`_useremail`='$useremail',`_userphone`='$userphone',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin',`_usercurrency`='$usercurrency' WHERE `_id` = $id";
                 } else {
                     $encpassword = md5($userpassword);
-                    $sql = "UPDATE `tblusers` SET `_username`='$username',`_useremail`='$useremail',`_userphone`='$userphone',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin',`_userpassword`='$encpassword' WHERE `_id` = $id";
+                    $sql = "UPDATE `tblusers` SET `_username`='$username',`_useremail`='$useremail',`_userphone`='$userphone',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin',`_userpassword`='$encpassword',`_usercurrency`='$usercurrency' WHERE `_id` = $id";
                 }
 
                 $query = mysqli_query($conn, $sql);
@@ -1139,10 +1142,10 @@ function _updateProfile($username, $useremail, $userpassword, $userphone, $usera
         $password = $_SESSION['userPassword'];
         if ($userpassword == $password) {
             $encpassword = $userpassword;
-            $sql = "UPDATE `tblusers` SET `_username`='$username',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin' WHERE `_id` = $id";
+            $sql = "UPDATE `tblusers` SET `_username`='$username',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin',`_usercurrency`='$usercurrency' WHERE `_id` = $id";
         } else {
             $encpassword = md5($userpassword);
-            $sql = "UPDATE `tblusers` SET `_username`='$username',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin',`_userpassword`='$encpassword' WHERE `_id` = $id";
+            $sql = "UPDATE `tblusers` SET `_username`='$username',`_userbio`='$userbio',`_userage`='$userage',`_userlocation`='$location',`_userstate`='$country',`_userpin`='$userpin',`_userpassword`='$encpassword',`_usercurrency`='$usercurrency' WHERE `_id` = $id";
         }
 
         $query = mysqli_query($conn, $sql);
@@ -3438,13 +3441,13 @@ function _deleteCourse($id)
 
 
 // Lessons //
-function _createLesson($_courseid, $_lessonname, $_lessontype, $_lessonurl, $_recordedfilename, $_lessondescription, $_status, $_availablity)
+function _createLesson($_courseid, $_lessonname, $_lessontype, $_lessonurl, $lessondate, $lessontime, $_recordedfilename, $_lessondescription, $_status, $_availablity)
 {
 
 
     require('_config.php');
 
-    $sql = "INSERT INTO `tbllessons`(`_courseid`,`_lessonname`,`_lessontype`,`_lessonurl`,`_recordedfilename`,`_lessondescription`,`_status`,`_availablity`) VALUES ('$_courseid','$_lessonname','$_lessontype','$_lessonurl','$_recordedfilename','$_lessondescription','$_status','$_availablity')";
+    $sql = "INSERT INTO `tbllessons`(`_courseid`,`_lessonname`,`_lessontype`,`_lessonurl`,`_lessondate`,`_lessontime`,`_recordedfilename`,`_lessondescription`,`_status`,`_availablity`) VALUES ('$_courseid','$_lessonname','$_lessontype','$_lessonurl','$lessondate','$lessontime','$_recordedfilename','$_lessondescription','$_status','$_availablity')";
 
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -3540,13 +3543,13 @@ function _getLessons($coursename = '', $lessonname = '', $createdAt = '', $start
     }
 }
 
-function _updateLesson($_id, $_courseid, $_lessonname, $_lessontype, $_lessonurl, $_recordedfilename, $_lessondescription, $_status, $_availablity)
+function _updateLesson($_id, $_courseid, $_lessonname, $_lessontype, $_lessonurl, $_lessondate, $_lessontime, $_recordedfilename, $_lessondescription, $_status, $_availablity)
 {
 
     require('_config.php');
 
 
-    $sql = "UPDATE `tbllessons` SET `_courseid`='$_courseid' ,`_lessonname`='$_lessonname' ,`_lessondescription`='$_lessondescription' , `_status`='$_status',`_availablity`='$_availablity',`_lessontype`='$_lessontype',`_lessonurl`='$_lessonurl',`_recordedfilename`='$_recordedfilename'  WHERE `_id` = '$_id' ";
+    $sql = "UPDATE `tbllessons` SET `_courseid`='$_courseid' ,`_lessonname`='$_lessonname' ,`_lessondescription`='$_lessondescription' , `_status`='$_status',`_availablity`='$_availablity',`_lessontype`='$_lessontype',`_lessonurl`='$_lessonurl',`_lessondate`='$_lessondate',`_lessontime`='$_lessontime',`_recordedfilename`='$_recordedfilename'  WHERE `_id` = '$_id' ";
 
 
     $query = mysqli_query($conn, $sql);

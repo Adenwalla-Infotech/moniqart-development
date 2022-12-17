@@ -195,7 +195,9 @@ if (isset($_POST['editSlide'])) {
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea'
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
         });
     </script>
     <!-- End plugin css for this page -->

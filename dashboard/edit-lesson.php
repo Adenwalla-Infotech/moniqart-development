@@ -66,15 +66,19 @@ if (isset($_POST['submit'])) {
             echo "<script>alert('Invalid format. Only mp4 / mkv/ webm /avi format allowed');</script>";
         } else {
             $lessonurl = '';
+            $lessondate = '';
+            $lessontime = '';
             $recorderfile = md5($lessonfile) . $extension;
             move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
         }
     } else {
         $recorderfile = '';
         $lessonurl = $_POST['lessonurl'];
+        $lessondate = $_POST['lessondate'];
+        $lessontime = $_POST['lessontime'];
     }
 
-    _updateLesson($id, $_courseid, $_lessonname, $lessontype, $lessonurl, $recorderfile, $_lessondescription, $isactive, $_availablity);
+    _updateLesson($id, $_courseid, $_lessonname, $lessontype, $lessonurl, $lessondate, $lessontime, $recorderfile, $_lessondescription, $isactive, $_availablity);
 
 }
 
@@ -138,7 +142,9 @@ if (isset($_POST['editAttachment'])) {
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea'
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
         });
     </script>
     <!-- End plugin css for this page -->
@@ -366,6 +372,25 @@ if (isset($_POST['editAttachment'])) {
                                     </div>
 
 
+                                    <div class="row g-3" style="margin-top: 20px;">
+
+                                        <div class="col-lg-6" style="display: none;" id="lessondate">
+                                            <label for="lessondate" class="form-label">Date</label>
+                                            <input type="date" class="form-control" name="lessondate">
+                                            <div class="invalid-feedback">Please select correct date</div>
+                                        </div>
+
+                                        <div class="col-lg-6" style="display: none;" id="lessontime">
+                                            <label for="lessontime" class="form-label">Time</label>
+                                            <input type="time" class="form-control" name="lessontime">
+                                            <div class="invalid-feedback">Please select correct time</div>
+                                        </div>
+
+                                    </div>
+
+
+
+
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label for="lessonDescription" class="form-label">Lesson Description</label>
@@ -540,14 +565,26 @@ if (isset($_POST['editAttachment'])) {
             }
 
             let lessontype = document.getElementById('lessontype');
+
             let lessonurl = document.getElementById('lessonurl');
+            let lessondate = document.getElementById('lessondate');
+            let lessontime = document.getElementById('lessontime');
+
             let lessonfile = document.getElementById('lessonfile');
+
 
             let value = lessontype.options[lessontype.selectedIndex].value;
 
             if (value == 'Live') {
                 lessonurl.style.display = 'block'
                 lessonurl.children[1].setAttribute('required', true);
+
+                lessondate.style.display = 'block'
+                lessondate.children[1].setAttribute('required', true);
+
+                lessontime.style.display = 'block'
+                lessontime.children[1].setAttribute('required', true);
+
 
                 lessonfile.style.display = 'none'
                 lessonfile.children[1].removeAttribute('required');
@@ -557,6 +594,12 @@ if (isset($_POST['editAttachment'])) {
 
                 lessonurl.style.display = 'none'
                 lessonurl.children[1].removeAttribute('required', true);
+
+                lessondate.style.display = 'none'
+                lessondate.children[1].removeAttribute('required', true);
+
+                lessontime.style.display = 'none'
+                lessontime.children[1].removeAttribute('required', true);
             }
 
             const setInputForLessonType = (value) => {
@@ -567,14 +610,27 @@ if (isset($_POST['editAttachment'])) {
                     lessonurl.style.display = 'block'
                     lessonurl.children[1].setAttribute('required', true);
 
+                    lessondate.style.display = 'block'
+                    lessondate.children[1].setAttribute('required', true);
+
+                    lessontime.style.display = 'block'
+                    lessontime.children[1].setAttribute('required', true);
+
                     lessonfile.style.display = 'none'
                     lessonfile.children[1].removeAttribute('required');
-                } else if (input == 'Recorded') {
+                }
+                else if (input == 'Recorded') {
                     lessonfile.style.display = 'block'
                     lessonfile.children[1].setAttribute('required', true);
 
                     lessonurl.style.display = 'none'
                     lessonurl.children[1].removeAttribute('required', true);
+
+                    lessondate.style.display = 'none'
+                    lessondate.children[1].removeAttribute('required', true);
+
+                    lessontime.style.display = 'none'
+                    lessontime.children[1].removeAttribute('required', true);
                 }
 
             }

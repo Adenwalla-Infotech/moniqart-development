@@ -49,18 +49,21 @@ if (isset($_POST['submit'])) {
             echo "<script>alert('Invalid format. Only mp4 / mkv/ webm /avi format allowed');</script>";
         } else {
             $lessonurl = '';
+            $lessondate = '';
+            $lessontime = '';
             $recorderfile = md5($lessonfile) . $extension;
             move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
         }
-    }
-    else{
+    } else {
         $recorderfile = '';
         $lessonurl = $_POST['lessonurl'];
+        $lessondate = $_POST['lessondate'];
+        $lessontime = $_POST['lessontime'];
     }
 
 
 
-    _createLesson($_courseid, $_lessonname, $lessontype, $lessonurl, $recorderfile, $_lessondescription, $isactive, $_availablity);
+    _createLesson($_courseid, $_lessonname, $lessontype, $lessonurl, $lessondate, $lessontime, $recorderfile, $_lessondescription, $isactive, $_availablity);
 }
 
 ?>
@@ -84,7 +87,9 @@ if (isset($_POST['submit'])) {
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea'
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
         });
     </script>
     <!-- End plugin css for this page -->
@@ -96,7 +101,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <div class="container-scroller">
-    <?php include('templates/_header.php'); ?>
+        <?php include('templates/_header.php'); ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <?php include('templates/_sidebar.php'); ?>
@@ -156,26 +161,43 @@ if (isset($_POST['submit'])) {
                                         <div class="col-6">
                                             <label for="lessontype" class="form-label">Lesson Type</label>
                                             <select style="height: 46px;" id="lessontype" name="lessontype"
-                                                class="form-control form-control-lg" onchange="setInputForLessonType(this.options[this.selectedIndex])" required>
+                                                class="form-control form-control-lg"
+                                                onchange="setInputForLessonType(this.options[this.selectedIndex])"
+                                                required>
                                                 <option selected disabled value="">Type</option>
                                                 <option value="Live">Live</option>
                                                 <option value="Recorded">Recorded</option>
                                             </select>
                                             <div class="invalid-feedback">Please select correct lessontype</div>
                                         </div>
-                                        
-                                        <div class="col-lg-6" style="display: none;" id="lessonurl" >
+
+                                        <div class="col-lg-6" style="display: none;" id="lessonurl">
                                             <label for="lessonurl" class="form-label">Lesson URl</label>
                                             <input type="text" class="form-control" name="lessonurl"
-                                                 placeholder="Lesson URl">
+                                                placeholder="Lesson URl">
                                             <div class="invalid-feedback">Please type correct url</div>
                                         </div>
-                                        
-                                        <div class="col-lg-6" style="display: none;"  id="lessonfile" >
+
+                                        <div class="col-lg-6" style="display: none;" id="lessonfile">
                                             <label for="lessonfile" class="form-label">Video Lecture</label>
-                                            <input type="file" class="form-control" name="lessonfile"
-                                                >
+                                            <input type="file" class="form-control" name="lessonfile">
                                             <div class="invalid-feedback">Please upload correct file</div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row g-3" style="margin-top: 20px;">
+
+                                        <div class="col-lg-6" style="display: none;" id="lessondate">
+                                            <label for="lessondate" class="form-label">Date</label>
+                                            <input type="date" class="form-control" name="lessondate">
+                                            <div class="invalid-feedback">Please select correct date</div>
+                                        </div>
+
+                                        <div class="col-lg-6" style="display: none;" id="lessontime">
+                                            <label for="lessontime" class="form-label">Time</label>
+                                            <input type="time" class="form-control" name="lessontime">
+                                            <div class="invalid-feedback">Please select correct time</div>
                                         </div>
 
                                     </div>
@@ -200,8 +222,9 @@ if (isset($_POST['submit'])) {
                                             <input type="text" class="form-control" name="lessonname" id="lessonname"
                                                 placeholder="Lesson Name" required>
                                             <div class="invalid-feedback">Please type correct Description</div>
-                                            <div id="wordCountDisplay" style="margin: 10px 5px; display: none;" >
-                                                <p style="color: red;" >Word Count <strong style="color: red;" id="wordCount" ></strong> </p>
+                                            <div id="wordCountDisplay" style="margin: 10px 5px; display: none;">
+                                                <p style="color: red;">Word Count <strong style="color: red;"
+                                                        id="wordCount"></strong> </p>
                                             </div>
                                         </div>
                                     </div>
@@ -241,35 +264,51 @@ if (isset($_POST['submit'])) {
         <script>
 
             let lessontype = document.getElementById('lessontype');
+            
             let lessonurl = document.getElementById('lessonurl');
+            let lessondate = document.getElementById('lessondate');
+            let lessontime = document.getElementById('lessontime');
+            
             let lessonfile = document.getElementById('lessonfile');
 
 
-            const setInputForLessonType = (value)=>{
+            const setInputForLessonType = (value) => {
 
                 let input = value.value;
 
-                if(input=='Live'){
+                if (input == 'Live') {
                     lessonurl.style.display = 'block'
-                    lessonurl.children[1].setAttribute('required',true);
-                    
+                    lessonurl.children[1].setAttribute('required', true);
+                   
+                    lessondate.style.display = 'block'
+                    lessondate.children[1].setAttribute('required', true);
+                   
+                    lessontime.style.display = 'block'
+                    lessontime.children[1].setAttribute('required', true);
+
                     lessonfile.style.display = 'none'
                     lessonfile.children[1].removeAttribute('required');
                 }
-                else if (input=='Recorded'){
+                else if (input == 'Recorded') {
                     lessonfile.style.display = 'block'
-                    lessonfile.children[1].setAttribute('required',true);
-                    
+                    lessonfile.children[1].setAttribute('required', true);
+
                     lessonurl.style.display = 'none'
-                    lessonurl.children[1].removeAttribute('required',true);
+                    lessonurl.children[1].removeAttribute('required', true);
+
+                    lessondate.style.display = 'none'
+                    lessondate.children[1].removeAttribute('required', true);
+
+                    lessontime.style.display = 'none'
+                    lessontime.children[1].removeAttribute('required', true);
                 }
 
             }
 
             let lessonname = document.getElementById('lessonname');
-            lessonname.addEventListener('input',(ele)=>{
+            lessonname.addEventListener('input', (ele) => {
                 let value = ele.target.value;
-                if(value.length > 0){
+                if (value.length > 0) {
 
                     let wordCountDisplay = document.getElementById('wordCountDisplay');
                     let wordCount = document.getElementById('wordCount');

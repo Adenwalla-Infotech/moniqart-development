@@ -28,7 +28,8 @@ if (isset($_POST['submit'])) {
     $location = $_POST['location'];
     $pincode = $_POST['pincode'];
     $country = $_POST['country'];
-    _updateProfile($username, $useremail, $userpassword, $userphone, $userage, $userbio, $location, $pincode, $country);
+    $usercurrency = $_POST['usercurrency'];
+    _updateProfile($username, $useremail, $userpassword, $userphone, $userage, $userbio, $location, $pincode, $country, $usercurrency);
 }
 
 if (isset($_POST['update'])) {
@@ -68,9 +69,11 @@ if (isset($_POST['update'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea'
-        });
+    tinymce.init({
+        selector: '#mytextarea',
+        statusbar: false,
+        branding: false,
+    });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -79,71 +82,71 @@ if (isset($_POST['update'])) {
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
 
     <style>
-        .img-account-profile {
-            height: 10rem;
-            width: 10rem;
-        }
+    .img-account-profile {
+        height: 10rem;
+        width: 10rem;
+    }
 
-        .rounded-circle {
-            border-radius: 50% !important;
-        }
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
 
-        .card {
-            /* box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%); */
-        }
+    .card {
+        /* box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%); */
+    }
 
-        .card .card-header {
-            font-weight: 500;
-        }
+    .card .card-header {
+        font-weight: 500;
+    }
 
-        .card-header:first-child {
-            border-radius: 1.35rem 1.35rem 0 0;
-        }
+    .card-header:first-child {
+        border-radius: 1.35rem 1.35rem 0 0;
+    }
 
-        .card-header {
-            padding: 1rem 1.35rem;
-            margin-bottom: 0;
-            background-color: rgba(33, 40, 50, 0.03);
-            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
-        }
+    .card-header {
+        padding: 1rem 1.35rem;
+        margin-bottom: 0;
+        background-color: rgba(33, 40, 50, 0.03);
+        border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+    }
 
-        .form-control,
-        .dataTable-input {
-            display: block;
-            width: 100%;
-            padding: 0.875rem 1.125rem;
-            font-size: 0.875rem;
-            font-weight: 400;
-            line-height: 1;
-            color: #69707a;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #c5ccd6;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            border-radius: 0.35rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
+    .form-control,
+    .dataTable-input {
+        display: block;
+        width: 100%;
+        padding: 0.875rem 1.125rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1;
+        color: #69707a;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #c5ccd6;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.35rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
 
-        .stretch-card {
-            padding: 0px;
-        }
+    .stretch-card {
+        padding: 0px;
+    }
 
-        .price-label {
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.34;
-            margin-bottom: 0;
-            padding: 6px 15px;
-            display: inline-block;
-            border-radius: 3px;
-        }
+    .price-label {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.34;
+        margin-bottom: 0;
+        padding: 6px 15px;
+        display: inline-block;
+        border-radius: 3px;
+    }
 
-        .price-label.basic {
-            background: #E8EAF6;
-            color: #3F51B5;
-        }
+    .price-label.basic {
+        background: #E8EAF6;
+        color: #3F51B5;
+    }
     </style>
 </head>
 
@@ -571,7 +574,7 @@ if (isset($_POST['update'])) {
                                                         </div>
                                                     </div>
                                                     <div class="row mb-3">
-                                                        <div class="col-lg-12">
+                                                        <div class="col-lg-6">
                                                             <label class="small mb-1" for="inputEmailAddress">Email
                                                                 address</label>
                                                             <input class="form-control" id="inputEmailAddress"
@@ -581,6 +584,158 @@ if (isset($_POST['update'])) {
                                                             <div class="invalid-feedback">Please type correct email
                                                             </div>
                                                         </div>
+
+                                                        <div class="col-lg-6">
+
+                                                            <label for="usercurrency" class="small mb-1">User
+                                                                Currency</label>
+                                                            <select name="usercurrency" style="height: 46px;"
+                                                                class="form-control form-control-lg"
+                                                                id="usercurrency">
+                                                                <option selected
+                                                                    value="<?php echo _getsingleuser($_id, '_usercurrency'); ?>"
+                                                                    required>
+                                                                    <?php echo _getsingleuser($_id, '_usercurrency'); ?>
+                                                                </option>
+                                                                <option value="USD">America (United States) Dollars –
+                                                                    USD</option>
+                                                                <option value="AFN">Afghanistan Afghanis – AFN</option>
+                                                                <option value="ALL">Albania Leke – ALL</option>
+                                                                <option value="DZD">Algeria Dinars – DZD</option>
+                                                                <option value="ARS">Argentina Pesos – ARS</option>
+                                                                <option value="AUD">Australia Dollars – AUD</option>
+                                                                <option value="ATS">Austria Schillings – ATS</OPTION>
+
+                                                                <option value="BSD">Bahamas Dollars – BSD</option>
+                                                                <option value="BHD">Bahrain Dinars – BHD</option>
+                                                                <option value="BDT">Bangladesh Taka – BDT</option>
+                                                                <option value="BBD">Barbados Dollars – BBD</option>
+                                                                <option value="BEF">Belgium Francs – BEF</OPTION>
+                                                                <option value="BMD">Bermuda Dollars – BMD</option>
+
+                                                                <option value="BRL">Brazil Reais – BRL</option>
+                                                                <option value="BGN">Bulgaria Leva – BGN</option>
+                                                                <option value="CAD">Canada Dollars – CAD</option>
+                                                                <option value="XOF">CFA BCEAO Francs – XOF</option>
+                                                                <option value="XAF">CFA BEAC Francs – XAF</option>
+                                                                <option value="CLP">Chile Pesos – CLP</option>
+
+                                                                <option value="CNY">China Yuan Renminbi – CNY</option>
+                                                                <option value="CNY">RMB (China Yuan Renminbi) – CNY
+                                                                </option>
+                                                                <option value="COP">Colombia Pesos – COP</option>
+                                                                <option value="XPF">CFP Francs – XPF</option>
+                                                                <option value="CRC">Costa Rica Colones – CRC</option>
+                                                                <option value="HRK">Croatia Kuna – HRK</option>
+
+                                                                <option value="CYP">Cyprus Pounds – CYP</option>
+                                                                <option value="CZK">Czech Republic Koruny – CZK</option>
+                                                                <option value="DKK">Denmark Kroner – DKK</option>
+                                                                <option value="DEM">Deutsche (Germany) Marks – DEM
+                                                                </OPTION>
+                                                                <option value="DOP">Dominican Republic Pesos – DOP
+                                                                </option>
+                                                                <option value="NLG">Dutch (Netherlands) Guilders – NLG
+                                                                </OPTION>
+
+                                                                <option value="XCD">Eastern Caribbean Dollars – XCD
+                                                                </option>
+                                                                <option value="EGP">Egypt Pounds – EGP</option>
+                                                                <option value="EEK">Estonia Krooni – EEK</option>
+                                                                <option value="EUR">Euro – EUR</option>
+                                                                <option value="FJD">Fiji Dollars – FJD</option>
+                                                                <option value="FIM">Finland Markkaa – FIM</OPTION>
+
+                                                                <option value="FRF*">France Francs – FRF*</OPTION>
+                                                                <option value="DEM">Germany Deutsche Marks – DEM
+                                                                </OPTION>
+                                                                <option value="XAU">Gold Ounces – XAU</option>
+                                                                <option value="GRD">Greece Drachmae – GRD</OPTION>
+                                                                <option value="GTQ">Guatemalan Quetzal – GTQ</OPTION>
+                                                                <option value="NLG">Holland (Netherlands) Guilders – NLG
+                                                                </OPTION>
+                                                                <option value="HKD">Hong Kong Dollars – HKD</option>
+
+                                                                <option value="HUF">Hungary Forint – HUF</option>
+                                                                <option value="ISK">Iceland Kronur – ISK</option>
+                                                                <option value="XDR">IMF Special Drawing Right – XDR
+                                                                </option>
+                                                                <option value="INR">India Rupees – INR</option>
+                                                                <option value="IDR">Indonesia Rupiahs – IDR</option>
+                                                                <option value="IRR">Iran Rials – IRR</option>
+
+                                                                <option value="IQD">Iraq Dinars – IQD</option>
+                                                                <option value="IEP*">Ireland Pounds – IEP*</OPTION>
+                                                                <option value="ILS">Israel New Shekels – ILS</option>
+                                                                <option value="ITL*">Italy Lire – ITL*</OPTION>
+                                                                <option value="JMD">Jamaica Dollars – JMD</option>
+                                                                <option value="JPY">Japan Yen – JPY</option>
+
+                                                                <option value="JOD">Jordan Dinars – JOD</option>
+                                                                <option value="KES">Kenya Shillings – KES</option>
+                                                                <option value="KRW">Korea (South) Won – KRW</option>
+                                                                <option value="KWD">Kuwait Dinars – KWD</option>
+                                                                <option value="LBP">Lebanon Pounds – LBP</option>
+                                                                <option value="LUF">Luxembourg Francs – LUF</OPTION>
+
+                                                                <option value="MYR">Malaysia Ringgits – MYR</option>
+                                                                <option value="MTL">Malta Liri – MTL</option>
+                                                                <option value="MUR">Mauritius Rupees – MUR</option>
+                                                                <option value="MXN">Mexico Pesos – MXN</option>
+                                                                <option value="MAD">Morocco Dirhams – MAD</option>
+                                                                <option value="NLG">Netherlands Guilders – NLG</OPTION>
+
+                                                                <option value="NZD">New Zealand Dollars – NZD</option>
+                                                                <option value="NOK">Norway Kroner – NOK</option>
+                                                                <option value="OMR">Oman Rials – OMR</option>
+                                                                <option value="PKR">Pakistan Rupees – PKR</option>
+                                                                <option value="XPD">Palladium Ounces – XPD</option>
+                                                                <option value="PEN">Peru Nuevos Soles – PEN</option>
+
+                                                                <option value="PHP">Philippines Pesos – PHP</option>
+                                                                <option value="XPT">Platinum Ounces – XPT</option>
+                                                                <option value="PLN">Poland Zlotych – PLN</option>
+                                                                <option value="PTE">Portugal Escudos – PTE</OPTION>
+                                                                <option value="QAR">Qatar Riyals – QAR</option>
+                                                                <option value="RON">Romania New Lei – RON</option>
+
+                                                                <option value="ROL">Romania Lei – ROL</option>
+                                                                <option value="RUB">Russia Rubles – RUB</option>
+                                                                <option value="SAR">Saudi Arabia Riyals – SAR</option>
+                                                                <option value="XAG">Silver Ounces – XAG</option>
+                                                                <option value="SGD">Singapore Dollars – SGD</option>
+                                                                <option value="SKK">Slovakia Koruny – SKK</option>
+
+                                                                <option value="SIT">Slovenia Tolars – SIT</option>
+                                                                <option value="ZAR">South Africa Rand – ZAR</option>
+                                                                <option value="KRW">South Korea Won – KRW</option>
+                                                                <option value="ESP">Spain Pesetas – ESP</OPTION>
+                                                                <option value="XDR">Special Drawing Rights (IMF) – XDR
+                                                                </option>
+                                                                <option value="LKR">Sri Lanka Rupees – LKR</option>
+
+                                                                <option value="SDD">Sudan Dinars – SDD</option>
+                                                                <option value="SEK">Sweden Kronor – SEK</option>
+                                                                <option value="CHF">Switzerland Francs – CHF</option>
+                                                                <option value="TWD">Taiwan New Dollars – TWD</option>
+                                                                <option value="THB">Thailand Baht – THB</option>
+                                                                <option value="TTD">Trinidad and Tobago Dollars – TTD
+                                                                </option>
+
+                                                                <option value="TND">Tunisia Dinars – TND</option>
+                                                                <option value="TRY">Turkey New Lira – TRY</option>
+                                                                <option value="AED">United Arab Emirates Dirhams – AED
+                                                                </option>
+                                                                <option value="GBP">United Kingdom Pounds – GBP</option>
+                                                                <option value="USD">United States Dollars – USD</option>
+                                                                <option value="VEB">Venezuela Bolivares – VEB</option>
+
+                                                                <option value="VND">Vietnam Dong – VND</option>
+                                                                <option value="ZMK">Zambia Kwacha – ZMK</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">select correct currency</div>
+                                                        </div>
+
                                                     </div>
                                                     <div class="row gx-3 mb-3">
                                                         <!-- Form Group (phone number)-->
@@ -658,9 +813,9 @@ if (isset($_POST['update'])) {
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <script>
-    function selectDP() {
-        document.getElementById('userdp').click();
-    }
+function selectDP() {
+    document.getElementById('userdp').click();
+}
 </script>
 
 </html>

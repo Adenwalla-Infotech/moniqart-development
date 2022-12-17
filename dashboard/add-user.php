@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
                                             <div class="invalid-feedback">Please type correct username</div>
                                         </div>
                                         <div class="col">
-                                            <label for="useremail" class="form-label">UserEmail</label>
+                                            <label for="useremail" class="form-label">User Email</label>
                                             <input type="email" class="form-control" placeholder="Email ID" aria-label="Email Id" id="useremail" name="useremail" required>
                                             <div class="invalid-feedback">Please type correct email</div>
 

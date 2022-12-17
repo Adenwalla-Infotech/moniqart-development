@@ -65,6 +65,8 @@ if (isset($_POST['submit'])) {
     <script>
         tinymce.init({
             selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
             plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
             setup: function (editor) {
                 var max = 500;

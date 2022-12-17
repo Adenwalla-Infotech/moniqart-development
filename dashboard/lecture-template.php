@@ -54,7 +54,9 @@ if (isset($_POST['submit'])) {
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea'
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
         });
     </script>
     <!-- End plugin css for this page -->
@@ -107,7 +109,7 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3">
                                         <div class="col">
-                                            <textarea name="lecturecode" id="mytextarea"><?php echo _getSingleEmailTemplate('_lecturetemplate');  ?></textarea>
+                                            <textarea name="lecturecode" rows="20" class="form-control" ><?php echo _getSingleEmailTemplate('_lecturetemplate');  ?></textarea>
                                             <div class="invalid-feedback">Please enter code</div>
                                         </div>
                                     </div>

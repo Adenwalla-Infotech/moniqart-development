@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
         $isactive = false;
     }
 
-    _updateMembership($_id,$membershipname, $membershipdesc, $duration, $discount, $discounttype, $price, $isactive);
+    _updateMembership($_id, $membershipname, $membershipdesc, $duration, $discount, $discounttype, $price, $isactive);
 }
 
 ?>
@@ -52,7 +52,9 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Edit Membership | <?php echo _getSingleMembership($_id, '_membershipname'); ?></title>
+    <title>Edit Membership |
+        <?php echo _getSingleMembership($_id, '_membershipname'); ?>
+    </title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
@@ -63,22 +65,24 @@ if (isset($_POST['submit'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-      tinymce.init({
-        selector: '#mytextarea',
-        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
-        setup: function(editor) {
-	  	var max = 500;
-	    editor.on('submit', function(event) {
-		  var numChars = tinymce.activeEditor.plugins.wordcount.body.getCharacterCountWithoutSpaces();
-		  if (numChars > max) {
-			alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
-			event.preventDefault();
-			return false;
-		  }
-		});
-        
-        }
-      });
+        tinymce.init({
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
+            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
+            setup: function (editor) {
+                var max = 500;
+                editor.on('submit', function (event) {
+                    var numChars = tinymce.activeEditor.plugins.wordcount.body.getCharacterCountWithoutSpaces();
+                    if (numChars > max) {
+                        alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+
+            }
+        });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -96,60 +100,70 @@ if (isset($_POST['submit'])) {
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                <?php 
-                    
-                    if ($_SESSION['membership_success']) {
+                    <?php
+
+                if ($_SESSION['membership_success']) {
+                ?>
+                    <div id="liveAlertPlaceholder">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Membership Created!</strong> New Membership created successfully.
+                        </div>
+                    </div>
+                    <?php
+                }
+
+                if ($_SESSION['membership_error']) {
                         ?>
-                            <div id="liveAlertPlaceholder">
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Membership Created!</strong> New Membership created successfully.
-                                </div>
-                            </div>
-                        <?php 
-                    } 
-                    
-                    if ($_SESSION['membership_error']) {
+                    <div id="liveAlertPlaceholder">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Membership Creation Failed!</strong> Error while creating membership.
+                        </div>
+                    </div>
+                    <?php
+                }
+
+
                         ?>
-                            <div id="liveAlertPlaceholder">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Membership Creation Failed!</strong> Error while creating membership.
-                                </div>
-                            </div>
-                        <?php 
-                    } 
-                    
-                    
-                    ?>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Update Membership</h4>
                                 <p class="card-description">
-                                    Before you start writing about your new topic, it's important to do some research. This will help you to understand the topic better, This will make it easier for you to write about the topic, and it will also make it more likely that people will be interested in reading what you have to say.
+                                    Before you start writing about your new topic, it's important to do some research.
+                                    This will help you to understand the topic better, This will make it easier for you
+                                    to write about the topic, and it will also make it more likely that people will be
+                                    interested in reading what you have to say.
                                 </p>
                                 <form method="POST" action="" class="needs-validation" novalidate>
 
                                     <div class="row g-3">
                                         <div class="col-lg-6">
                                             <label for="membershipname" class="form-label">Membership Name</label>
-                                            <input type="text" class="form-control" placeholder="Membership name" value="<?php echo _getSingleMembership($_id, '_membershipname'); ?>" aria-label="Membership name" id="membershipname" name="membershipname" required>
+                                            <input type="text" class="form-control" placeholder="Membership name"
+                                                value="<?php echo _getSingleMembership($_id, '_membershipname'); ?>"
+                                                aria-label="Membership name" id="membershipname" name="membershipname"
+                                                required>
                                             <div class="invalid-feedback">Please type correct membership name</div>
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="duration" class="form-label">Duration(Months)</label>
                                             <select name="duration" id="duration" class="form-control" required>
                                                 <?php
-                                                $duration  = _getSingleMembership($_id, '_duration');
+                                                $duration = _getSingleMembership($_id, '_duration');
 
                                                 for ($i = 1; $i <= 12; $i++) {
 
                                                     if ($duration == $i) {
                                                 ?>
-                                                        <option value="<?php echo $duration ?>" selected> <?php echo $duration ?> month </option>
-                                                    <?php
+                                                <option value="<?php echo $duration ?>" selected>
+                                                    <?php echo $duration ?> month
+                                                </option>
+                                                <?php
                                                     } else {
                                                     ?>
-                                                        <option value="<?php echo $i ?>"> <?php echo $i ?> month </option>
+                                                <option value="<?php echo $i ?>">
+                                                    <?php echo $i ?> month
+                                                </option>
                                                 <?php
                                                     }
                                                 }
@@ -161,7 +175,9 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 10px;">
                                         <div class="col-lg-6">
                                             <label for="price" class="form-label">Membership Price</label>
-                                            <input type="number" class="form-control" name="price" value="<?php echo _getSingleMembership($_id, '_price'); ?>" id="price" placeholder="Price" required>
+                                            <input type="number" class="form-control" name="price"
+                                                value="<?php echo _getSingleMembership($_id, '_price'); ?>" id="price"
+                                                placeholder="Price" required>
                                             <div class="invalid-feedback">Please type correct price</div>
                                         </div>
                                         <div class="col-lg-6">
@@ -174,14 +190,13 @@ if (isset($_POST['submit'])) {
 
                                                 if ($benetype == 'Fixed') {
                                                 ?>
-                                                    <option selected value="Fixed">Fixed</option>
-                                                    <option value="Variable">Percentage</option>
+                                                <option selected value="Fixed">Fixed</option>
+                                                <option value="Variable">Percentage</option>
                                                 <?php
-                                                }
-                                                else{
+                                                } else {
                                                 ?>
-                                                    <option value="Fixed">Fixed</option>
-                                                    <option selected value="Variable">Percentage</option>
+                                                <option value="Fixed">Fixed</option>
+                                                <option selected value="Variable">Percentage</option>
                                                 <?php
                                                 }
 
@@ -194,29 +209,38 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 10px;">
                                         <div class="col-lg-6">
                                             <label for="discount" class="form-label">Discount</label>
-                                            <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" value="<?php echo _getSingleMembership($_id, '_benefit'); ?>" required>
+                                            <input type="text" class="form-control" id="discount" name="discount"
+                                                placeholder="Discount"
+                                                value="<?php echo _getSingleMembership($_id, '_benefit'); ?>" required>
                                             <div class="invalid-feedback">Please type correct discount</div>
                                         </div>
                                         <div class="col" style="margin-top: 40px;">
                                             <label class="checkbox-inline" style="margin-left: 20px;">
                                                 <?php
-                                                if (_getSingleMembership($_id, '_status') == true) { ?><input name="isactive" value="true" checked type="checkbox">&nbsp;Is Active<?php }
-                                                                                                                                                                                if (_getSingleMembership($_id, '_status') != true) { ?><input name="isactive" value="true" type="checkbox">&nbsp;Is Active<?php }
-                                                                                                                                                                            ?>
+                                                if (_getSingleMembership($_id, '_status') == true) { ?><input
+                                                    name="isactive" value="true" checked type="checkbox">&nbsp;Is Active
+                                                <?php }
+                                                if (_getSingleMembership($_id, '_status') != true) { ?><input
+                                                    name="isactive" value="true" type="checkbox">&nbsp;Is Active
+                                                <?php }
+                                                          ?>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="membershipdesc" class="form-label">Membership Description</label>
-                                            <textarea name="membershipdesc" id="mytextarea" style="width:100%" rows="10">
+                                            <label for="membershipdesc" class="form-label">Membership
+                                                Description</label>
+                                            <textarea name="membershipdesc" id="mytextarea" style="width:100%"
+                                                rows="10">
                                             <?php echo _getSingleMembership($_id, '_membershipdesc'); ?>
                                         </textarea>
                                             <div class="invalid-feedback">Please type correct membership desc</div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 200px;margin-left: -10px" class="btn btn-primary">Update Membership</button>
+                                        <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
+                                            class="btn btn-primary">Update Membership</button>
 
                                     </div>
 
@@ -247,13 +271,16 @@ if (isset($_POST['submit'])) {
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form action="" method="post"  class="needs-validation" novalidate>
+                <form action="" method="post" class="needs-validation" novalidate>
                     <div class="modal-content" style="padding: 10px;">
                         <div class="modal-header" style="padding: 0px;margin-bottom: 20px;padding-bottom:10px">
                             <h4 class="modal-title fs-5" id="exampleModalLabel">Add Pricing</h4>
-                            <button type="button" class="btn-close" style="border: none;;background-color:white" data-bs-dismiss="modal" aria-label="Close"><svg style="width: 15px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+                            <button type="button" class="btn-close" style="border: none;;background-color:white"
+                                data-bs-dismiss="modal" aria-label="Close"><svg style="width: 15px;"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
                                     <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
-                                    <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" />
+                                    <path
+                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" />
                                 </svg></button>
                         </div>
                         <div class="modal-body" style="padding: 0px;">
@@ -281,7 +308,8 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="price" class="form-label">Price</label>
-                                    <input type="text" class="form-control" name="price" id="price" placeholder="Price" required>
+                                    <input type="text" class="form-control" name="price" id="price" placeholder="Price"
+                                        required>
                                     <div class="invalid-feedback">Please type correct price</div>
                                 </div>
                             </div>
@@ -289,7 +317,8 @@ if (isset($_POST['submit'])) {
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-lg-6">
                                     <label for="discount" class="form-label">Discount</label>
-                                    <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" required>
+                                    <input type="text" class="form-control" id="discount" name="discount"
+                                        placeholder="Discount" required>
                                     <div class="invalid-feedback">Please type correct discount</div>
                                 </div>
 
@@ -474,7 +503,9 @@ if (isset($_POST['submit'])) {
 <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>
