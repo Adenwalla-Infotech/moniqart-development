@@ -178,6 +178,21 @@
           </ul>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-pageSettings" aria-expanded="false" aria-controls="ui-pageSettings">
+          <i class="mdi mdi-email-outline menu-icon"></i>
+          <span class="menu-title">Page Settings</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-pageSettings">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="pageSetting-about">About Us</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pageSetting-contact">Contact Us</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pageSetting-privacypolicy">Privacy Policy</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pageSetting-termsandcondition">Terms</a></li>
+          </ul>
+        </div>
+      </li>
     <!-- <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-invoice" aria-expanded="false" aria-controls="ui-basic">
           <i class="mdi mdi-cash-multiple menu-icon"></i>

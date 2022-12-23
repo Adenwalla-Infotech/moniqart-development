@@ -65,24 +65,25 @@ if (isset($_POST['submit'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea',
-            statusbar: false,
-            branding: false,
-            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
-            setup: function (editor) {
-                var max = 500;
-                editor.on('submit', function (event) {
-                    var numChars = tinymce.activeEditor.plugins.wordcount.body.getCharacterCountWithoutSpaces();
-                    if (numChars > max) {
-                        alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
-                        event.preventDefault();
-                        return false;
-                    }
-                });
+    tinymce.init({
+        selector: '#mytextarea',
+        statusbar: false,
+        branding: false,
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
+        setup: function(editor) {
+            var max = 500;
+            editor.on('submit', function(event) {
+                var numChars = tinymce.activeEditor.plugins.wordcount.body
+                    .getCharacterCountWithoutSpaces();
+                if (numChars > max) {
+                    alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
+                    event.preventDefault();
+                    return false;
+                }
+            });
 
-            }
-        });
+        }
+    });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -504,8 +505,8 @@ if (isset($_POST['submit'])) {
 <!-- endinject -->
 <!-- Plugin js for this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-    crossorigin="anonymous"></script>
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+</script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

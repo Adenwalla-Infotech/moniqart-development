@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="../assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
-    <!-- Plugin css for this page -->
+    <!-- Plugin css htmlFor this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
-    <!-- End plugin css for this page -->
+    <!-- End plugin css htmlFor this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
     <!-- endinject -->
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
                                 <h4 class="card-title">Create Course</h4>
                                 <p class="card-description">
                                     Before you start writing about your new topic, it's important to do some research.
-                                    This will help you to understand the topic better, This will make it easier for you
+                                    This will help you to understand the topic better, This will make it easier htmlFor you
                                     to write about the topic, and it will also make it more likely that people will be
                                     interested in reading what you have to say.
                                 </p>
@@ -184,7 +184,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row g-3">
                                         <div class="col-lg-6">
-                                            <label for="teacheremailid" class="form-label">Teacher Email</label>
+                                            <label htmlFor="teacheremailid" class="form-label">Teacher Email</label>
                                             <select id="teacheremailid" name="teacheremailid"
                                                 class="form-control select2" required>
                                                 <option>Select Teacher</option>
@@ -192,7 +192,7 @@ if (isset($_POST['submit'])) {
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label for="coursetype" class="form-label">Course Type</label>
+                                            <label htmlFor="coursetype" class="form-label">Course Type</label>
                                             <select name="coursetype" id="coursetype" class="form-control  form-control-lg" required>
                                                 <option selected value="">Type</option>
 
@@ -205,13 +205,13 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
-                                            <label for="pricing" class="form-label">Course Price</label>
+                                            <label htmlFor="pricing" class="form-label">Course Price</label>
                                             <input type="number" class="form-control" name="pricing" id="pricing"
                                                 placeholder="Price" required>
                                             <div class="invalid-feedback">Please type correct pricing</div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label for="capacity" class="form-label">Capacity</label>
+                                            <label htmlFor="capacity" class="form-label">Capacity</label>
                                             <input type="number" class="form-control" name="capacity" id="capacity"
                                                 placeholder="Capacity" required>
                                             <div class="invalid-feedback">Please type correct capacity</div>
@@ -220,7 +220,7 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
-                                        <label for="courselevel" class="form-label">Course Level</label>
+                                        <label htmlFor="courselevel" class="form-label">Course Level</label>
                                         <select name="courselevel" id="courselevel" class="form-control  form-control-lg" required>
                                             <option selected value="">Level</option>
                                             <option value="Beginner">Beginner</option>
@@ -230,7 +230,7 @@ if (isset($_POST['submit'])) {
                                         </select>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label for="evaluationlink" class="form-label">Evaluation Link</label>
+                                            <label htmlFor="evaluationlink" class="form-label">Evaluation Link</label>
                                             <input type="text" class="form-control" name="evaluationlink" id="evaluationlink"
                                                 required>
                                             <div class="invalid-feedback">Please type correct link</div>
@@ -239,13 +239,13 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
-                                            <label for="startdate" class="form-label">Start Date</label>
+                                            <label htmlFor="startdate" class="form-label">Start Date</label>
                                             <input type="date" class="form-control" name="startdate" id="startdate"
                                                 required>
                                             <div class="invalid-feedback">Please type correct date</div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label for="enddate" class="form-label">End Date</label>
+                                            <label htmlFor="enddate" class="form-label">End Date</label>
                                             <input type="date" class="form-control" name="enddate" id="enddate"
                                                 required>
                                             <div class="invalid-feedback">Please type correct date</div>
@@ -255,14 +255,14 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 20px;">
                                        
                                         <div class="col-lg-6">
-                                            <label for="coursechannel" class="form-label">Course Channel</label>
+                                            <label htmlFor="coursechannel" class="form-label">Course Channel</label>
                                             <input type="text" class="form-control" name="coursechannel" id="coursechannel"
                                                 required>
                                             <div class="invalid-feedback">Please type correct course channel</div>
                                         </div>
                                        
                                         <div class="col-lg-6">
-                                            <label for="discountprice" class="form-label">Discount Price</label>
+                                            <label htmlFor="discountprice" class="form-label">Discount Price</label>
                                             <input type="text" class="form-control" name="discountprice" id="discountprice"
                                             placeholder="Discount Price"
                                                 required>
@@ -294,14 +294,14 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
-                                            <label for="thumbnail" class="form-label">Thumbnail Image</label>
+                                            <label htmlFor="thumbnail" class="form-label">Thumbnail Image</label>
                                             <input class="form-control" name="thumbnail" type="file" id="thumbnail"
                                                 required>
                                             <div class="invalid-feedback">Featured Image Required</div>
                                         </div>
 
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
-                                            <label for="banner" class="form-label">Banner Image</label>
+                                            <label htmlFor="banner" class="form-label">Banner Image</label>
                                             <input class="form-control" name="banner" type="file" id="banner" required>
                                             <div class="invalid-feedback">Featured Image Required</div>
                                         </div>
@@ -311,7 +311,7 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="coursename" class="form-label">Course Name</label>
+                                            <label htmlFor="coursename" class="form-label">Course Name</label>
                                             <input class="form-control" name="coursename" type="text" id="coursename"
                                                 required>
                                             <div class="invalid-feedback">Please type correct course name</div>
@@ -322,7 +322,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="courseDesc" class="form-label">Course Description</label>
+                                            <label htmlFor="courseDesc" class="form-label">Course Description</label>
                                             <textarea name="courseDesc" id="mytextarea" style="width:100%"
                                                 rows="10"></textarea>
                                             <div class="invalid-feedback">Please type correct course desc</div>
@@ -330,7 +330,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="eligibitycriteria" class="form-label">Course Eligibility
+                                            <label htmlFor="eligibitycriteria" class="form-label">Course Eligibility
                                                 Criteria</label>
                                             <textarea name="eligibitycriteria" id="mytextarea" style="width:100%"
                                                 rows="10"></textarea>
@@ -339,7 +339,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="whatlearn" class="form-label">What will you Learn</label>
+                                            <label htmlFor="whatlearn" class="form-label">What will you Learn</label>
                                             <textarea name="whatlearn" id="mytextarea" style="width:100%"
                                                 rows="10"></textarea>
                                             <div class="invalid-feedback">Please type correct course learning</div>
@@ -347,7 +347,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="requirements" class="form-label">Requirements</label>
+                                            <label htmlFor="requirements" class="form-label">Requirements</label>
                                             <textarea name="requirements" id="mytextarea" style="width:100%"
                                                 rows="10"></textarea>
                                             <div class="invalid-feedback">Please type correct course requirements</div>
@@ -407,11 +407,11 @@ if (isset($_POST['submit'])) {
 </body>
 <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
-<!-- Plugin js for this page -->
+<!-- Plugin js htmlFor this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
     crossorigin="anonymous"></script>
-<!-- End plugin js for this page -->
+<!-- End plugin js htmlFor this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>
 <script src="../assets/js/hoverable-collapse.js"></script>

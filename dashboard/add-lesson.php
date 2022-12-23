@@ -205,8 +205,6 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 30px;">
 
-
-
                                         <div class="col">
                                             <label class="checkbox-inline" style="margin-left: 5px;">
                                                 <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active

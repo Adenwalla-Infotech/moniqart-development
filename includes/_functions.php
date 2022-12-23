@@ -189,17 +189,17 @@ function _sendotp($otp, $userphone, $useremail)
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => $baseurl,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => json_encode($fields),
-                CURLOPT_HTTPHEADER => array(
+            CURLOPT_URL => $baseurl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($fields),
+            CURLOPT_HTTPHEADER => array(
                     "authorization: $apikey",
                     "accept: */*",
                     "cache-control: no-cache",
@@ -511,6 +511,16 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
+            $pageSettings = "CREATE TABLE IF NOT EXISTS `tblpagesettings` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_aboutuspage` text NOT NULL,
+                `_contactuspage` text NOT NULL,
+                `_privacypolicypage` text NOT NULL,
+                `_termsandconditionpage` text NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
 
             $invoice = "CREATE TABLE IF NOT EXISTS `tblinvoice` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -604,9 +614,19 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
 
 
+            $faqs = "CREATE TABLE IF NOT EXISTS `tblfaqs` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_question` varchar(55) NOT NULL,
+                `_answer` varchar(55) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb,$attachmentsDB];
+
+
+
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings ,$faqs];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -631,7 +651,9 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
                 $template_data = "INSERT INTO `tblemailtemplates`(`_purchasetemplate`, `_remindertemplate`, `_lecturetemplate`, `_signuptemplate`, `_canceltemplate`, `_paymenttemplate`) VALUES ('Your Html Code','Your Html Code','Your Html Code','Your Html Code','Your Html Code','Your Html Code')";
 
-                $data = [$admin_data, $sms_data, $email_data, $site_data, $payment_data, $template_data];
+                $pageSettingsData = "INSERT INTO `tblpagesettings`(`_aboutuspage`, `_contactuspage`, `_privacypolicypage`, `_termsandconditionpage`) VALUES ('About us Page','Contact Us Page','Privacy Policy Page','Terms and Conditions Page')";
+
+                $data = [$admin_data, $sms_data, $email_data, $site_data, $payment_data, $template_data, $pageSettingsData];
 
                 foreach ($data as $k => $sql) {
                     $query = @$temp_conn->query($sql);
@@ -748,17 +770,17 @@ function _notifyuser($useremail = '', $userphone = '', $sendmail = '', $message 
             curl_setopt_array(
                 $curl,
                 array(
-                    CURLOPT_URL => $baseurl,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 30,
-                    CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_SSL_VERIFYPEER => 0,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => json_encode($fields),
-                    CURLOPT_HTTPHEADER => array(
+                CURLOPT_URL => $baseurl,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => json_encode($fields),
+                CURLOPT_HTTPHEADER => array(
                         "authorization: $apikey",
                         "accept: */*",
                         "cache-control: no-cache",
@@ -944,11 +966,11 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
 
     if ($createdat != '') {
 
-        $sql = "SELECT * FROM `tblusers` WHERE `Creation_at_Date` LIKE '$createdat' ";      
+        $sql = "SELECT * FROM `tblusers` WHERE `Creation_at_Date` LIKE '$createdat' ";
 
         $query = mysqli_query($conn, $sql);
 
-        
+
         if ($query) {
             foreach ($query as $data) { ?>
                 <tr>
@@ -1341,7 +1363,7 @@ function _saveticket($subject, $category, $status, $image, $user, $message)
     }
 }
 
-function _gettickets($ticketid = '', $status = '',$createdAt='', $limit = '', $startfrom = '')
+function _gettickets($ticketid = '', $status = '', $createdAt = '', $limit = '', $startfrom = '')
 {
     require('_config.php');
     $user = $_SESSION['userEmailId'];
@@ -1352,22 +1374,19 @@ function _gettickets($ticketid = '', $status = '',$createdAt='', $limit = '', $s
         } else {
             $sql = "SELECT * FROM `tbltickets` WHERE `_status` = '$status' AND `_useremail` = '$user'";
         }
-    }
-     else if ($ticketid != '' && $status == '') {
+    } else if ($ticketid != '' && $status == '') {
         if ($_SESSION['userType'] == 2) {
             $sql = "SELECT * FROM `tbltickets` WHERE `_id` = '$ticketid'";
         } else {
             $sql = "SELECT * FROM `tbltickets` WHERE `_id` = '$ticketid'  AND `_useremail` = '$user'";
         }
-    } 
-     else if ($createdAt != '' && $ticketid == '') {
+    } else if ($createdAt != '' && $ticketid == '') {
         if ($_SESSION['userType'] == 2) {
             $sql = "SELECT * FROM `tbltickets` WHERE `Creation_at_Date` = '$createdAt'";
         } else {
             $sql = "SELECT * FROM `tbltickets` WHERE `Creation_at_Date` = '$createdAt'  AND `_useremail` = '$user'";
         }
-    } 
-    else {
+    } else {
         if ($_SESSION['userType'] == 2) {
             $sql = "SELECT * FROM `tbltickets` ORDER BY `CreationDate` DESC LIMIT $startfrom, $limit";
         } else {
@@ -2322,7 +2341,7 @@ function _validatecoupon($amount, $coupon, $currency, $prod)
                 $couponprod = $data['_couponprod'];
             }
             $vamount = _conversion($vamount, $currency);
-            if($prod == $couponprod){
+            if ($prod == $couponprod) {
                 if ($vusage < $vlimit) {
                     if ($vcondition == 'less') {
                         if ($amount < $vamount) {
@@ -2369,7 +2388,7 @@ function _validatecoupon($amount, $coupon, $currency, $prod)
                 } else {
                     return null;
                 }
-            }else{
+            } else {
                 return null;
             }
         } else {
@@ -2378,7 +2397,7 @@ function _validatecoupon($amount, $coupon, $currency, $prod)
     }
 }
 
-function _coupon($amount,$coupon,$currency)
+function _coupon($amount, $coupon, $currency)
 {
     require('_config.php');
     $useremail = $_SESSION['userEmailId'];
@@ -2395,16 +2414,16 @@ function _updatecoupon($id, $status)
     $sql = "UPDATE `tblcoupontrans` SET `_couponstatus`='$status' WHERE `_id` = $id";
     $query = mysqli_query($conn, $sql);
     if ($query) {
-        if($status == 'success'){
+        if ($status == 'success') {
             $sql = "SELECT * FROM `tblcoupontrans` WHERE `_id` = $id";
-            $query = mysqli_query($conn,$sql);
-            foreach($query as $data){
+            $query = mysqli_query($conn, $sql);
+            foreach ($query as $data) {
                 $couponname = $data['_couponname'];
             }
             $sql = "UPDATE `tblcoupon` SET `_totaluse`= _totaluse + 1 WHERE `_couponname` = '$couponname'";
             echo $sql;
-            $query = mysqli_query($conn,$sql);
-        }        
+            $query = mysqli_query($conn, $sql);
+        }
     }
 }
 
@@ -2857,7 +2876,7 @@ function _updateEmailTemplate($templateName, $templateCode)
     require('_config.php');
 
     $emailtemp = $conn->real_escape_string($templateCode);
-    $sql = "UPDATE `tblemailtemplates` SET `$templateName`='" . $emailtemp . "' WHERE `_id` = 2 ";
+    $sql = "UPDATE `tblemailtemplates` SET `$templateName`='" . $emailtemp . "' WHERE `_id` = 1 ";
 
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -2872,7 +2891,7 @@ function _updateEmailTemplate($templateName, $templateCode)
 function _getSingleEmailTemplate($templateName)
 {
     require('_config.php');
-    $sql = "SELECT * FROM `tblemailtemplates` WHERE `_id` = 2 ";
+    $sql = "SELECT * FROM `tblemailtemplates` WHERE `_id` = 1 ";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) {
@@ -3281,17 +3300,11 @@ function _getCourse($coursename = '', $teacheremailid = '', $createdat = '', $st
 
     if ($coursename && !$teacheremailid) {
         $sql = "SELECT * FROM `tblcourse` where `_coursename` LIKE '%$coursename%' ";
-    }
-
-    else if (!$coursename && $teacheremailid) {
+    } else if (!$coursename && $teacheremailid) {
         $sql = "SELECT * FROM `tblcourse` where `_teacheremailid` LIKE '%$teacheremailid%' ";
-    }
-
-    else if (!$teacheremailid && $createdat) {
+    } else if (!$teacheremailid && $createdat) {
         $sql = "SELECT * FROM `tblcourse` where `Creation_at_Date`='$createdat' ";
-    }
-
-    else if (!$coursename && !$teacheremailid) {
+    } else if (!$coursename && !$teacheremailid) {
         $sql = "SELECT * FROM `tblcourse` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
     }
 
@@ -3483,13 +3496,9 @@ function _getLessons($coursename = '', $lessonname = '', $createdAt = '', $start
 
     if ($coursename && !$lessonname) {
         $sql = "SELECT * FROM `tbllessons` where `_courseid`='$coursename' ";
-    }
-
-    else if (!$createdAt && $lessonname) {
+    } else if (!$createdAt && $lessonname) {
         $sql = "SELECT * FROM `tbllessons` where `_lessonname` LIKE '%$lessonname%' ";
-    }
-
-    else if (!$lessonname && $createdAt) {
+    } else if (!$lessonname && $createdAt) {
         $sql = "SELECT * FROM `tbllessons` where `Creation_at_Date`='$createdAt' ";
     }
 
@@ -3772,7 +3781,7 @@ function _createAttachment($_lessonid, $_attachementurl)
 }
 
 
-function _getSingleAttachment($id,$param)
+function _getSingleAttachment($id, $param)
 {
 
     require('_config.php');
@@ -3796,7 +3805,7 @@ function _updateAttachment($_id, $_attachementurl)
     $query = mysqli_query($conn, $sql);
 
 
-  
+
     if ($query) {
         $_SESSION['attachment_edit_success'] = true;
         header("location:");
@@ -3807,7 +3816,7 @@ function _updateAttachment($_id, $_attachementurl)
 }
 
 
-function _deleteAttachment($id,$locationid)
+function _deleteAttachment($id, $locationid)
 {
     require('_config.php');
 
@@ -3834,7 +3843,7 @@ function _getAttachments($id, $startfrom = '', $limit = '')
 
     if ($query) {
         foreach ($query as $data) {
-        ?>
+            ?>
             <tr>
                 <td><?php echo $data['_id']; ?></td>
                 
@@ -3871,6 +3880,160 @@ function _getAttachments($id, $startfrom = '', $limit = '')
         }
     }
 }
+
+
+// Page Seetings
+
+function _updatePageInformation($pageData, $pageName)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+    $pageDataaaa = $conn->real_escape_string($pageData);
+    $sql = "UPDATE `tblpagesettings` SET `$pageName`='" . $pageDataaaa . "' WHERE `_id` = 1 ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Page Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Page Updation Failed");
+    }
+
+}
+
+function _getPageInformation($pageName)
+{
+    require('_config.php');
+    $sql = "SELECT * FROM `tblpagesettings` WHERE `_id` = 1 ";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$pageName];
+        }
+    }
+}
+
+
+// FAQS //
+function _createfaq($question, $answer)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+
+    $sql = "INSERT INTO `tblfaqs` (`_question`,`_answer`) VALUES ('$question','$answer')";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Faq Created");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Faq Creation Failed");
+    }
+}
+
+
+
+function _getSingleFaq($id, $param)
+{
+
+    require('_config.php');
+    $sql = "SELECT * FROM `tblfaqs` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+
+function _updateFaq($_id, $question , $answer)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+
+    $sql = "UPDATE `tblfaqs` SET `_question`='$question',`_answer`='$answer'  WHERE `_id` = '$_id'  ";
+    $query = mysqli_query($conn, $sql);
+
+
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Faq Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Faq Updation Failed");
+    }
+}
+
+
+function _deleteFaq($id)
+{
+    require('_config.php');
+
+
+    $sql = "DELETE FROM `tblfaqs` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        header("location:pageSetting-about");
+    } 
+}
+
+
+
+function _getFaqs($startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+
+    $sql = "SELECT * FROM `tblfaqs` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+            ?>
+            <tr>
+                <td><?php echo $data['_id']; ?></td>
+                
+
+                <td><?php echo $data['_question']; ?></td>
+                <td><?php echo $data['_answer']; ?></td>
+                
+                <td>
+                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                </td>
+                <td>
+                    <?php
+            if (strtotime($data['UpdationDate']) == '') {
+                echo "Not Updated Yet";
+            } else {
+                echo date("M j, Y", strtotime($data['UpdationDate']));
+            }
+                    ?>
+                </td>
+                <td>
+                    <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditFaq(<?php echo $data['_id']; ?>)"></span>
+                    
+                    <a href='pageSetting-about?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                </td>
+            </tr>
+        <?php
+        }
+    }
+}
+
+
+
 
 
 ?>
