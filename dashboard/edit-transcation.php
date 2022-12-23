@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
         $isactive = false;
     }
 
-    _updateTranscation( $_id , $useremail, $amount, $couponcode, $currency, $isactive);
+    _updateTranscation($_id, $useremail, $amount, $couponcode, $currency, $isactive);
 }
 
 ?>
@@ -71,19 +71,29 @@ if (isset($_POST['submit'])) {
                             <div class="card-body">
                                 <h4 class="card-title">Edit Transcations</h4>
                                 <p class="card-description">
-                                    When you edit user account, you must assign access credentials, a user type, and a security password to the user. User type define what actions the user has permission to perform. Security password secures users permission to access. You can create multiple user accounts that include administrative right
+                                    When you edit user account, you must assign access credentials, a user type, and a
+                                    security password to the user. User type define what actions the user has permission
+                                    to perform. Security password secures users permission to access. You can create
+                                    multiple user accounts that include administrative right
                                 </p>
 
                                 <form method="POST" action="" class="needs-validation" novalidate>
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="useremail" class="form-label">User Email</label>
-                                            <input type="text" value="<?php echo _getSingleTranscations($_id, '_useremail'); ?>" class="form-control" placeholder="User Email" aria-label="user email" id="useremail" name="useremail" required>
+                                            <input type="text"
+                                                value="<?php echo _getSingleTranscations($_id, '_useremail'); ?>"
+                                                class="form-control" placeholder="User Email" aria-label="user email"
+                                                id="useremail" name="useremail" required>
                                             <div class="invalid-feedback">Please type correct useremail</div>
                                         </div>
                                         <div class="col">
-                                            <label for="transcationamount" class="form-label">Transcations Amount</label>
-                                            <input type="text" value="<?php echo _getSingleTranscations($_id, '_amount'); ?>" class="form-control" placeholder="Transcation Amount" aria-label="Transcation Amount" name="transcationamount" required>
+                                            <label for="transcationamount" class="form-label">Transcations
+                                                Amount</label>
+                                            <input type="text"
+                                                value="<?php echo _getSingleTranscations($_id, '_amount'); ?>"
+                                                class="form-control" placeholder="Transcation Amount"
+                                                aria-label="Transcation Amount" name="transcationamount" required>
                                             <div class="invalid-feedback">Please type correct amount</div>
                                         </div>
                                     </div>
@@ -93,18 +103,43 @@ if (isset($_POST['submit'])) {
 
                                         <div class="col">
                                             <label for="couponcode" class="form-label">Coupon Code</label>
-                                            <input type="text" class="form-control" value="<?php echo _getSingleTranscations($_id, '_couponcode'); ?>" placeholder="Coupon Code" aria-label="coupon code" id="couponcode" name="couponcode" required>
+                                            <input type="text" class="form-control"
+                                                value="<?php echo _getSingleTranscations($_id, '_couponcode'); ?>"
+                                                placeholder="Coupon Code" aria-label="coupon code" id="couponcode"
+                                                name="couponcode" required>
                                             <div class="invalid-feedback">Please type correct coupon code</div>
-                                            
+
                                         </div>
 
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 20px;">
+                                            <div class="custom-control custom-switch">
+
+
                                                 <?php
-                                                if (_getSingleTranscations($_id, '_status') == true) { ?><input name="isactive" value="true" checked type="checkbox">&nbsp;Is Active<?php }
-                                                                                                                                                                                if (_getSingleTranscations($_id, '_status') != true) { ?><input name="isactive" value="true" type="checkbox">&nbsp;Is Active<?php }
-                                                                                                                                                                                                                                                                                                            ?>
-                                            </label>
+
+                                                    $status = _getSingleTranscations($_id, '_status');
+                                                    if($status==true){
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive" checked>
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive">
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                             ?>
+
+
+                                            </div>
                                             <div class="invalid-feedback">select correct status</div>
                                         </div>
 
@@ -117,8 +152,12 @@ if (isset($_POST['submit'])) {
                                         <div class="col">
 
                                             <label for="conversion" class="form-label">Conversion Currency</label>
-                                            <select name="currency" style="height: 46px;" class="form-control form-control-lg" id="exampleFormControlSelect2">
-                                                <option selected value="<?php echo _getSingleTranscations($_id, '_currency'); ?>" required ><?php echo _getSingleTranscations($_id, '_currency'); ?></option>
+                                            <select name="currency" style="height: 46px;"
+                                                class="form-control form-control-lg" id="exampleFormControlSelect2">
+                                                <option selected
+                                                    value="<?php echo _getSingleTranscations($_id, '_currency'); ?>"
+                                                    required><?php echo _getSingleTranscations($_id, '_currency'); ?>
+                                                </option>
                                                 <option value="USD">America (United States) Dollars – USD</option>
                                                 <option value="AFN">Afghanistan Afghanis – AFN</option>
                                                 <option value="ALL">Albania Leke – ALL</option>
@@ -249,7 +288,8 @@ if (isset($_POST['submit'])) {
                                     </div>
 
                                     <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 250px;margin-left: -10px" class="btn btn-primary">Update Payment Transaction</button>
+                                        <button type="submit" name="submit" style="width: 250px;margin-left: -10px"
+                                            class="btn btn-primary">Update Payment Transaction</button>
                                     </div>
                                 </form>
                             </div>

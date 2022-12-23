@@ -206,9 +206,13 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 30px;">
 
                                         <div class="col">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                            </label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -262,11 +266,11 @@ if (isset($_POST['submit'])) {
         <script>
 
             let lessontype = document.getElementById('lessontype');
-            
+
             let lessonurl = document.getElementById('lessonurl');
             let lessondate = document.getElementById('lessondate');
             let lessontime = document.getElementById('lessontime');
-            
+
             let lessonfile = document.getElementById('lessonfile');
 
 
@@ -277,10 +281,10 @@ if (isset($_POST['submit'])) {
                 if (input == 'Live') {
                     lessonurl.style.display = 'block'
                     lessonurl.children[1].setAttribute('required', true);
-                   
+
                     lessondate.style.display = 'block'
                     lessondate.children[1].setAttribute('required', true);
-                   
+
                     lessontime.style.display = 'block'
                     lessontime.children[1].setAttribute('required', true);
 

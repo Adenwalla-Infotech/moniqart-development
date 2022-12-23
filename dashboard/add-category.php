@@ -26,16 +26,15 @@ if (isset($_POST['submit'])) {
 
 
 
-    
+
     if (isset($_POST['isactive'])) {
         $isactive = $_POST['isactive'];
-    }
-    else{
+    } else {
         $isactive = false;
 
     }
 
-    _createCategory($categoryname, $categoryDesc,$isactive);
+    _createCategory($categoryname, $categoryDesc, $isactive);
 }
 
 ?>
@@ -71,29 +70,36 @@ if (isset($_POST['submit'])) {
             <div class="main-panel">
                 <div class="content-wrapper">
                     <?php if ($_SESSION['forgot_success']) { ?>
-                        <div id="liveAlertPlaceholder">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>Category Created!</strong> New Category created successfully.
-                            </div>
+                    <div id="liveAlertPlaceholder">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Category Created!</strong> New Category created successfully.
                         </div>
+                    </div>
                     <?php } ?>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Create Parent (New Category)</h4>
                                 <p class="card-description">
-                                Before you start writing about your new topic, it's important to do some research. This will help you to understand the topic better, This will make it easier for you to write about the topic, and it will also make it more likely that people will be interested in reading what you have to say.
+                                    Before you start writing about your new topic, it's important to do some research.
+                                    This will help you to understand the topic better, This will make it easier for you
+                                    to write about the topic, and it will also make it more likely that people will be
+                                    interested in reading what you have to say.
                                 </p>
                                 <form method="POST" action="" class="needs-validation" novalidate>
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="categoryname" class="form-label">Category Name</label>
-                                            <input type="text" class="form-control" placeholder="Category name" aria-label="Category name" id="categoryname" name="categoryname" required>
+                                            <input type="text" class="form-control" placeholder="Category name"
+                                                aria-label="Category name" id="categoryname" name="categoryname"
+                                                required>
                                             <div class="invalid-feedback">Please type correct category name</div>
                                         </div>
                                         <div class="col">
                                             <label for="categoryDesc" class="form-label">Category Description</label>
-                                            <input type="text" class="form-control" placeholder="Category Description" aria-label="Category Description" id="categoryDesc" name="categoryDesc" required>
+                                            <input type="text" class="form-control" placeholder="Category Description"
+                                                aria-label="Category Description" id="categoryDesc" name="categoryDesc"
+                                                required>
                                             <div class="invalid-feedback">Please type correct category description</div>
                                         </div>
                                     </div>
@@ -101,15 +107,20 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 10px;">
 
                                         <div class="col" style="margin-top: 10px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                            </label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                            </div>
                                         </div>
 
                                     </div>
 
                                     <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 160px;margin-left: -10px" class="btn btn-primary">Create Category</button>
+                                        <button type="submit" name="submit" style="width: 160px;margin-left: -10px"
+                                            class="btn btn-primary">Create Category</button>
                                     </div>
 
                                 </form>
@@ -126,7 +137,7 @@ if (isset($_POST['submit'])) {
             <!-- page-body-wrapper ends -->
         </div>
         <div class="container"></div>
-        
+
         <script src="../includes/_validation.js"></script>
 
 </body>

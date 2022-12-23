@@ -79,29 +79,34 @@ if (isset($_POST['submit'])) {
             <div class="main-panel">
                 <div class="content-wrapper">
                     <?php if ($_SESSION['forgot_success']) { ?>
-                        <div id="liveAlertPlaceholder">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>User Created!</strong> New user created successfully.
-                            </div>
+                    <div id="liveAlertPlaceholder">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>User Created!</strong> New user created successfully.
                         </div>
+                    </div>
                     <?php } ?>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Create a New User Account</h4>
                                 <p class="card-description">
-                                    When you create a new user account, you must assign access credentials, a user type, and a security password to the user. User type define what actions the user has permission to perform. Security password secures users permission to access. You can create multiple user accounts that include administrative right
+                                    When you create a new user account, you must assign access credentials, a user type,
+                                    and a security password to the user. User type define what actions the user has
+                                    permission to perform. Security password secures users permission to access. You can
+                                    create multiple user accounts that include administrative right
                                 </p>
                                 <form method="POST" action="" class="needs-validation" novalidate>
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="username" class="form-label">User Name</label>
-                                            <input type="text" class="form-control" placeholder="User name" aria-label="user name" id="username" name="username" required>
+                                            <input type="text" class="form-control" placeholder="User name"
+                                                aria-label="user name" id="username" name="username" required>
                                             <div class="invalid-feedback">Please type correct username</div>
                                         </div>
                                         <div class="col">
                                             <label for="useremail" class="form-label">User Email</label>
-                                            <input type="email" class="form-control" placeholder="Email ID" aria-label="Email Id" id="useremail" name="useremail" required>
+                                            <input type="email" class="form-control" placeholder="Email ID"
+                                                aria-label="Email Id" id="useremail" name="useremail" required>
                                             <div class="invalid-feedback">Please type correct email</div>
 
                                         </div>
@@ -109,8 +114,9 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col">
                                             <label for="usertype" class="form-label">Account Type</label>
-                                            <select style="height: 46px;" id="usertype" name="usertype" class="form-control form-control-lg"  required>
-                                                <option   selected disabled value="" >Account Type</option>
+                                            <select style="height: 46px;" id="usertype" name="usertype"
+                                                class="form-control form-control-lg" required>
+                                                <option selected disabled value="">Account Type</option>
                                                 <option value="0">Student</option>
                                                 <option value="1">Teacher</option>
                                                 <option value="2">Site Admin</option>
@@ -120,7 +126,9 @@ if (isset($_POST['submit'])) {
 
                                         <div class="col">
                                             <label for="userphone" class="form-label">User Phone</label>
-                                            <input type="tel" class="form-control" placeholder="Phone Number" aria-label="phone" id="userphone" name="userphone" pattern="[1-9]{1}[0-9]{9}" required>
+                                            <input type="tel" class="form-control" placeholder="Phone Number"
+                                                aria-label="phone" id="userphone" name="userphone"
+                                                pattern="[1-9]{1}[0-9]{9}" required>
                                             <div class="invalid-feedback">Please type correct Number</div>
                                         </div>
                                     </div>
@@ -137,22 +145,35 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 30px;">
 
                                         <div class="col" style="margin-top: 10px;">
-                                            <label class="checkbox-inline" style="margin-left: 20px;">
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                            </label>
-                                            <label class="checkbox-inline" style="margin-left: 20px;">
-                                                <input name="isverified" value="true" type="checkbox"> &nbsp; Is Verified
-                                            </label>
-                                            <label class="checkbox-inline" style="margin-left: 20px;">
-                                                <input name="notify" value="true" type="checkbox"> &nbsp; Notify User (SMS/Email)
-                                            </label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                            </div>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="isverified"
+                                                    id="isverified">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isverified">Is
+                                                    Verified</label>
+                                            </div>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="notify"
+                                                    id="notify">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="notify"> Notify User
+                                                (SMS/Email)</label>
+                                            </div>
                                         </div>
 
 
                                     </div>
 
                                     <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 150px;margin-left: -10px" class="btn btn-primary">Create Account</button>
+                                        <button type="submit" name="submit" style="width: 150px;margin-left: -10px"
+                                            class="btn btn-primary">Create Account</button>
                                     </div>
 
                                 </form>

@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
                 editor.on('submit', function (event) {
                     var numChars = tinymce.activeEditor.plugins.wordcount.body.getCharacterCountWithoutSpaces();
                     if (numChars > max) {
-                        
+
                         let box = document.querySelector('.descAlert')
                         box.style.display = 'block';
 
@@ -118,7 +118,7 @@ if (isset($_POST['submit'])) {
                     }
 
                     if ($_SESSION['membership_error']) {
-                        ?>
+                    ?>
                     <div id="liveAlertPlaceholder">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>Membership Creation Failed!</strong> Error while creating membership.
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
                     <?php
                     }
                     ?>
-                     <div id="liveAlertPlaceholder" class="descAlert" style="display: none;" >
+                    <div id="liveAlertPlaceholder" class="descAlert" style="display: none;">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>Membership Creation Failed!</strong>
                             <p>Max Character Count 500</p>
@@ -200,9 +200,13 @@ if (isset($_POST['submit'])) {
                                             <div class="invalid-feedback">Please type correct discount</div>
                                         </div>
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                            </label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 30px;">

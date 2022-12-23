@@ -78,11 +78,11 @@ if (isset($_POST['submit'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea',
-            statusbar: false,
-            branding: false,
-        });
+    tinymce.init({
+        selector: '#mytextarea',
+        statusbar: false,
+        branding: false,
+    });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -140,10 +140,11 @@ if (isset($_POST['submit'])) {
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
                                             <label for="formFile" class="form-label">Blog Title</label>
                                             <input type="text" class="form-control" placeholder="Blog Title"
-                                                aria-label="Blog Title" id="blogtitle"  name="_blogtitle" required>
+                                                aria-label="Blog Title" id="blogtitle" name="_blogtitle" required>
                                             <div class="invalid-feedback">Blog Title Needed</div>
-                                            <div id="wordCountDisplay" style="margin: 10px 5px; display: none;" >
-                                                <p style="color: red;" >Word Count <strong style="color: red;" id="wordCount" ></strong> </p>
+                                            <div id="wordCountDisplay" style="margin: 10px 5px; display: none;">
+                                                <p style="color: red;">Word Count <strong style="color: red;"
+                                                        id="wordCount"></strong> </p>
                                             </div>
                                         </div>
 
@@ -173,9 +174,13 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="col" style="margin: 15px 0  15px 10px;">
-                                            <label class="checkbox-inline">
-                                                <input name="_status" type="checkbox"> &nbsp; Is Active
-                                            </label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="_status"
+                                                    id="_status">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="_status">Is
+                                                    Active</label>
+                                            </div>
                                         </div>
 
 
@@ -194,12 +199,13 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3">
                                         <div class="col" style="margin-top: 30px;">
                                             <label for="_blogmetadesc" class="form-label">Meta Description</label>
-                                            <textarea name="_blogmetadesc" id="metaDescriptionInput" rows="5" class="form-control"
-                                                required></textarea>
+                                            <textarea name="_blogmetadesc" id="metaDescriptionInput" rows="5"
+                                                class="form-control" required></textarea>
                                             <div class="invalid-feedback">Blog Meta Description Required </div>
                                         </div>
-                                        <div id="metaDescwordCountDisplay" style="margin: 10px 5px; display: none;" >
-                                                <p style="color: red;" >Word Count <strong style="color: red;" id="metaDescwordCount" ></strong> </p>
+                                        <div id="metaDescwordCountDisplay" style="margin: 10px 5px; display: none;">
+                                            <p style="color: red;">Word Count <strong style="color: red;"
+                                                    id="metaDescwordCount"></strong> </p>
                                         </div>
                                     </div>
 
@@ -223,46 +229,41 @@ if (isset($_POST['submit'])) {
         <div class="container"></div>
 
         <script>
-            const getSubCategory = (val) => {
-                $.ajax({
-                    type: "POST",
-                    url: "getSubCategory.php",
-                    data: 'catid=' + val,
-                    success: function (data) {
-                        $(`#subcategoryId`).html(data);
-                    }
-                });
-            }
-
-            let blogtitle = document.getElementById('blogtitle');
-            blogtitle.addEventListener('input',(ele)=>{
-                let value = ele.target.value;
-                if(value.length > 0){
-
-                    let wordCountDisplay = document.getElementById('wordCountDisplay');
-                    let wordCount = document.getElementById('wordCount');
-                    wordCountDisplay.style.display = 'block'
-                    wordCount.innerText = value.length;
+        const getSubCategory = (val) => {
+            $.ajax({
+                type: "POST",
+                url: "getSubCategory.php",
+                data: 'catid=' + val,
+                success: function(data) {
+                    $(`#subcategoryId`).html(data);
                 }
-            })
+            });
+        }
 
-            // let metaDescriptionInput = document.getElementById('metaDescriptionInput');
-            // metaDescriptionInput.addEventListener('input',(ele)=>{
-            //     let value = ele;
-            //     console.log(value);
-            //     if(value.length > 0){
+        let blogtitle = document.getElementById('blogtitle');
+        blogtitle.addEventListener('input', (ele) => {
+            let value = ele.target.value;
+            if (value.length > 0) {
 
-            //         let wordCountDisplay = document.getElementById('metaDescwordCountDisplay');
-            //         let wordCount = document.getElementById('metaDescwordCount');
-            //         wordCountDisplay.style.display = 'block'
-            //         wordCount.innerText = value.length;
-            //     }
-            // })
+                let wordCountDisplay = document.getElementById('wordCountDisplay');
+                let wordCount = document.getElementById('wordCount');
+                wordCountDisplay.style.display = 'block'
+                wordCount.innerText = value.length;
+            }
+        })
 
+        // let metaDescriptionInput = document.getElementById('metaDescriptionInput');
+        // metaDescriptionInput.addEventListener('input',(ele)=>{
+        //     let value = ele;
+        //     console.log(value);
+        //     if(value.length > 0){
 
-            
-
-
+        //         let wordCountDisplay = document.getElementById('metaDescwordCountDisplay');
+        //         let wordCount = document.getElementById('metaDescwordCount');
+        //         wordCountDisplay.style.display = 'block'
+        //         wordCount.innerText = value.length;
+        //     }
+        // })
         </script>
 
         <script src="../includes/_validation.js"></script>

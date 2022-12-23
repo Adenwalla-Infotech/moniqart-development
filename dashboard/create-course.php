@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
         $enrollstatus = false;
     }
 
-    _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate ,$discountprice);
+    _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
 }
 
 ?>
@@ -165,7 +165,8 @@ if (isset($_POST['submit'])) {
                                 <h4 class="card-title">Create Course</h4>
                                 <p class="card-description">
                                     Before you start writing about your new topic, it's important to do some research.
-                                    This will help you to understand the topic better, This will make it easier htmlFor you
+                                    This will help you to understand the topic better, This will make it easier htmlFor
+                                    you
                                     to write about the topic, and it will also make it more likely that people will be
                                     interested in reading what you have to say.
                                 </p>
@@ -193,7 +194,8 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="col-lg-6">
                                             <label htmlFor="coursetype" class="form-label">Course Type</label>
-                                            <select name="coursetype" id="coursetype" class="form-control  form-control-lg" required>
+                                            <select name="coursetype" id="coursetype"
+                                                class="form-control  form-control-lg" required>
                                                 <option selected value="">Type</option>
 
                                                 <option value="Recorded">Recorded</option>
@@ -220,19 +222,20 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
-                                        <label htmlFor="courselevel" class="form-label">Course Level</label>
-                                        <select name="courselevel" id="courselevel" class="form-control  form-control-lg" required>
-                                            <option selected value="">Level</option>
-                                            <option value="Beginner">Beginner</option>
-                                            <option value="Intermediate">Intermediate</option>
-                                            <option value="Advanced">Advanced</option>
+                                            <label htmlFor="courselevel" class="form-label">Course Level</label>
+                                            <select name="courselevel" id="courselevel"
+                                                class="form-control  form-control-lg" required>
+                                                <option selected value="">Level</option>
+                                                <option value="Beginner">Beginner</option>
+                                                <option value="Intermediate">Intermediate</option>
+                                                <option value="Advanced">Advanced</option>
 
-                                        </select>
+                                            </select>
                                         </div>
                                         <div class="col-lg-6">
                                             <label htmlFor="evaluationlink" class="form-label">Evaluation Link</label>
-                                            <input type="text" class="form-control" name="evaluationlink" id="evaluationlink"
-                                                required>
+                                            <input type="text" class="form-control" name="evaluationlink"
+                                                id="evaluationlink" required>
                                             <div class="invalid-feedback">Please type correct link</div>
                                         </div>
                                     </div>
@@ -253,20 +256,20 @@ if (isset($_POST['submit'])) {
                                     </div>
 
                                     <div class="row g-3" style="margin-top: 20px;">
-                                       
+
                                         <div class="col-lg-6">
                                             <label htmlFor="coursechannel" class="form-label">Course Channel</label>
-                                            <input type="text" class="form-control" name="coursechannel" id="coursechannel"
-                                                required>
+                                            <input type="text" class="form-control" name="coursechannel"
+                                                id="coursechannel" required>
                                             <div class="invalid-feedback">Please type correct course channel</div>
                                         </div>
-                                       
+
                                         <div class="col-lg-6">
                                             <label htmlFor="discountprice" class="form-label">Discount Price</label>
-                                            <input type="text" class="form-control" name="discountprice" id="discountprice"
-                                            placeholder="Discount Price"
-                                                required>
-                                            <div class="invalid-feedback">Please type correct course discount price</div>
+                                            <input type="text" class="form-control" name="discountprice"
+                                                id="discountprice" placeholder="Discount Price" required>
+                                            <div class="invalid-feedback">Please type correct course discount price
+                                            </div>
                                         </div>
                                     </div>
 
@@ -275,16 +278,24 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
-                                                <input name="enrollstatus" value="true" type="checkbox"> &nbsp; Enroll
-                                                Status
-                                            </label>
+                                           
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                    id="enrollstatus">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="enrollstatus">Is
+                                                    Active</label>
+                                            </div>
                                         </div>
 
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                            </label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -315,8 +326,9 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" name="coursename" type="text" id="coursename"
                                                 required>
                                             <div class="invalid-feedback">Please type correct course name</div>
-                                            <div id="wordCountDisplay" style="margin: 10px 5px; display: none;" >
-                                                <p style="color: red;" >Word Count <strong style="color: red;" id="wordCount" ></strong> </p>
+                                            <div id="wordCountDisplay" style="margin: 10px 5px; display: none;">
+                                                <p style="color: red;">Word Count <strong style="color: red;"
+                                                        id="wordCount"></strong> </p>
                                             </div>
                                         </div>
                                     </div>
@@ -388,9 +400,9 @@ if (isset($_POST['submit'])) {
             $('.select2').select2();
 
             let courseTitle = document.getElementById('coursename');
-            courseTitle.addEventListener('input',(ele)=>{
+            courseTitle.addEventListener('input', (ele) => {
                 let value = ele.target.value;
-                if(value.length > 0){
+                if (value.length > 0) {
 
                     let wordCountDisplay = document.getElementById('wordCountDisplay');
                     let wordCount = document.getElementById('wordCount');

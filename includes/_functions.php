@@ -622,11 +622,22 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
+            $menuSettings = "CREATE TABLE IF NOT EXISTS `tblmenusettings` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_name` varchar(55) NOT NULL,
+                `_url` varchar(55) NOT NULL,
+                `_menu` varchar(55) NOT NULL,
+                `_indexing` varchar(55) NOT NULL,
+                `_status` varchar(55) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
 
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings ,$faqs];
+
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -3953,7 +3964,7 @@ function _getSingleFaq($id, $param)
 }
 
 
-function _updateFaq($_id, $question , $answer)
+function _updateFaq($_id, $question, $answer)
 {
 
     require('_config.php');
@@ -3984,7 +3995,7 @@ function _deleteFaq($id)
 
     if ($query) {
         header("location:pageSetting-about");
-    } 
+    }
 }
 
 
@@ -4001,7 +4012,7 @@ function _getFaqs($startfrom = '', $limit = '')
 
     if ($query) {
         foreach ($query as $data) {
-            ?>
+        ?>
             <tr>
                 <td><?php echo $data['_id']; ?></td>
                 
@@ -4033,7 +4044,142 @@ function _getFaqs($startfrom = '', $limit = '')
 }
 
 
+// Menu Settings
+$menuSettings = "CREATE TABLE IF NOT EXISTS `tblmenusettings` (
+    `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `_name` varchar(55) NOT NULL,
+    `_url` varchar(55) NOT NULL,
+    `_menu` varchar(55) NOT NULL,
+    `_indexing` varchar(55) NOT NULL,
+    `_status` varchar(55) NOT NULL,
+    `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+
+// FAQS //
+function _createMenuSettings($_name, $_url, $_menu, $_indexing, $_status)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+
+    $sql = "INSERT INTO `tblmenusettings` (`_name`,`_url`,`_menu`,`_indexing`,`_status`) VALUES ('$_name','$_url','$_menu','$_indexing','$_status')";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Menu Settings Created");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Menu Settings Creation Failed");
+    }
+}
+
+
+function _getSingleMenuSettings($id, $param)
+{
+
+    require('_config.php');
+    $sql = "SELECT * FROM `tblmenusettings` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
 
 
 
-?>
+function _updateMenuSettings($_id, $_name, $_url, $_menu, $_indexing, $_status)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+
+    $sql = "UPDATE `tblmenusettings` SET `_name`='$_name',`_url`='$_url',`_menu`='$_menu',`_indexing`='$_indexing',`_status`='$_status'  WHERE `_id` = '$_id'  ";
+    $query = mysqli_query($conn, $sql);
+
+
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Menu Settings Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Menu Settings Updation Failed");
+    }
+}
+
+
+function _deleteMenuSettings($id)
+{
+    require('_config.php');
+
+
+    $sql = "DELETE FROM `tblmenusettings` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        header("location:pageSettings-menuSettings");
+    }
+}
+
+
+function _getMenuSettings($startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+
+    $sql = "SELECT * FROM `tblmenusettings` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+        ?>
+            <tr>
+                <td><?php echo $data['_id']; ?></td>
+                
+
+                <td><?php echo $data['_name']; ?></td>
+                <td><?php echo $data['_indexing']; ?></td>
+                
+                <td>
+                <label class="checkbox-inline form-switch">
+                            <?php
+            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                        </label>
+                </td>
+
+                <td>
+                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                </td>
+                <td>
+                    <?php
+            if (strtotime($data['UpdationDate']) == '') {
+                echo "Not Updated Yet";
+            } else {
+                echo date("M j, Y", strtotime($data['UpdationDate']));
+            }
+                    ?>
+                </td>
+                <td>
+                    <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditMenuSettings(<?php echo $data['_id']; ?>)"></span>
+                    
+                    <a href='pageSettings-menuSettings?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                </td>
+            </tr>
+        <?php
+        }
+    }
+}
+
+
+
+        ?>

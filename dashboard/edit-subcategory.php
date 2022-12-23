@@ -123,15 +123,34 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="col" style="margin-top: 20px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
+                                            <div class="custom-control custom-switch">
+
+
                                                 <?php
 
-                                                $status = _getSingleSubCategory($_id, '_status');
+                                                    $status = _getSingleSubCategory($_id, '_status');
+                                                    if($status==true){
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive" checked>
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive">
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                             ?>
 
-                                                if ( $status == 'true') { ?><input name="isactive" value="true"  checked type="checkbox">&nbsp;Is Active<?php }
-                                                if ( $status != 'true') { ?><input name="isactive" value="true" type="checkbox">&nbsp;Is Active<?php }
-                                                                                                                                                                                                                                                                                                            ?>
-                                            </label>
+
+                                            </div>
                                         </div>
 
 

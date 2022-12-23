@@ -333,25 +333,34 @@ if (isset($_POST['editAttachment'])) {
                                     <div class="row g-3" style="margin-top: 30px;">
 
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
+                                            <div class="custom-control custom-switch">
+
+
                                                 <?php
 
-                                                $_status = _getSingleLesson($id, '_status');
+                                                    $status = _getSingleLesson($_id, '_status');
+                                                    if($status==true){
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive" checked>
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive">
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                             ?>
 
-                                                if ($_status) {
-                                                ?>
-                                                <input name="isactive" value="true" checked type="checkbox"> &nbsp; Is
-                                                Active
-                                                <?php
-                                                } else {
-                                                ?>
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                                <?php
-                                                }
 
-                                                ?>
-
-                                            </label>
+                                            </div>
                                         </div>
                                     </div>
 

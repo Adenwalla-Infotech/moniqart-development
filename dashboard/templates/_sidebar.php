@@ -190,6 +190,7 @@
             <li class="nav-item"> <a class="nav-link" href="pageSetting-contact">Contact Us</a></li>
             <li class="nav-item"> <a class="nav-link" href="pageSetting-privacypolicy">Privacy Policy</a></li>
             <li class="nav-item"> <a class="nav-link" href="pageSetting-termsandcondition">Terms</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pageSettings-menuSettings">Menu Settings</a></li>
           </ul>
         </div>
       </li>

@@ -93,12 +93,32 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 15px;">
                                         <div class="col" style="margin-top: 10px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
+                                        
+                                        <div class="custom-control custom-switch">
+                                             
+
                                                 <?php
-                                                if (_getSingleCategory($_id, '_status') == true) { ?><input name="isactive" value="true" checked type="checkbox">&nbsp;Is Active<?php }
-                                                if (_getSingleCategory($_id, '_status') != true) { ?><input name="isactive" value="true" type="checkbox">&nbsp;Is Active<?php }
-                                                                                                                                                                                                                                                                                                    ?>
-                                            </label>
+
+                                                $status = _getSingleCategory($_id, '_status');
+                                                if($status==true){
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive" id="isactive" checked>
+                                                    <label class="custom-control-label" style="margin-left: 20px;" for="isactive">Is
+                                                Active</label>
+                                                    <?php
+                                                }
+                                                else{
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive" id="isactive" >
+                                                    <label class="custom-control-label" style="margin-left: 20px;" for="isactive">Is
+                                                Active</label>
+                                                    <?php
+                                                }
+                                                ?>
+
+
+                                        </div>
+
                                         </div>
 
 

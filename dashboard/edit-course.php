@@ -194,11 +194,11 @@ if (isset($_POST['editSlide'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea',
-            statusbar: false,
-            branding: false,
-        });
+    tinymce.init({
+        selector: '#mytextarea',
+        statusbar: false,
+        branding: false,
+    });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -451,49 +451,65 @@ if (isset($_POST['editSlide'])) {
 
 
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
+                                                <div class="custom-control custom-switch">
+
 
                                                 <?php
 
-                                                $isenroll = _getSingleCourse($id, '_enrollstatus');
+                                                    $status = _getSingleCourse($_id, '_enrollstatus');
+                                                    if($status==true){
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                            id="enrollstatus" checked>
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="enrollstatus">Enroll
+                                                            Status</label>
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                            id="enrollstatus">
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="enrollstatus">Enroll
+                                                            Status</label>
+                                                        <?php
+                                                    }
+                                             ?>
 
-                                                if ($isenroll) {
-                                                ?>
-                                                <input name="enrollstatus" value="true" checked type="checkbox"> &nbsp;
-                                                Is Enroll
-                                                <?php
-                                                } else {
-                                                ?>
-                                                <input name="enrollstatus" value="true" type="checkbox"> &nbsp; Is
-                                                Enroll
-                                                <?php
-                                                }
 
-                                                ?>
-
-                                            </label>
+                                            </div>
                                         </div>
 
                                         <div class="col" style="margin-top: 40px;">
-                                            <label class="checkbox-inline" style="margin-left: 5px;">
+                                            <div class="custom-control custom-switch">
+
+
                                                 <?php
 
-                                                $_status = _getSingleCourse($id, '_status');
+                                                    $status = _getSingleCourse($_id, '_status');
+                                                    if($status==true){
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive" checked>
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <input type="checkbox" class="custom-control-input" name="isactive"
+                                                            id="isactive">
+                                                        <label class="custom-control-label" style="margin-left: 20px;"
+                                                            for="isactive">Is
+                                                            Active</label>
+                                                        <?php
+                                                    }
+                                             ?>
 
-                                                if ($_status) {
-                                                ?>
-                                                <input name="isactive" value="true" checked type="checkbox"> &nbsp; Is
-                                                Active
-                                                <?php
-                                                } else {
-                                                ?>
-                                                <input name="isactive" value="true" type="checkbox"> &nbsp; Is Active
-                                                <?php
-                                                }
 
-                                                ?>
-
-                                            </label>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -729,48 +745,47 @@ if (isset($_POST['editSlide'])) {
 
 
         <script>
-            const getSubCategory = (val) => {
-                $.ajax({
-                    type: "POST",
-                    url: "getSubCategory.php",
-                    data: 'catid=' + val,
-                    success: function (data) {
-                        $(`#subcategoryId`).html(data);
-                    }
-                });
-            }
-
-            const callEditSlide = (courseid, slideid) => {
-
-
-                $.ajax({
-                    type: "POST",
-                    url: `editslidebanner.php`,
-                    data: {
-                        "edit": true,
-                        "courseid": courseid,
-                        "slideid": slideid,
-                    },
-                    success: function (data) {
-                        $(`#editBannerBody`).html(data);
-                        $(`#editBanner`).modal("show");
-                    }
-                });
-
-            }
-
-            let courseTitle = document.getElementById('coursename');
-            courseTitle.addEventListener('input', (ele) => {
-                let value = ele.target.value;
-                if (value.length > 0) {
-
-                    let wordCountDisplay = document.getElementById('wordCountDisplay');
-                    let wordCount = document.getElementById('wordCount');
-                    wordCountDisplay.style.display = 'block'
-                    wordCount.innerText = value.length;
+        const getSubCategory = (val) => {
+            $.ajax({
+                type: "POST",
+                url: "getSubCategory.php",
+                data: 'catid=' + val,
+                success: function(data) {
+                    $(`#subcategoryId`).html(data);
                 }
-            })
+            });
+        }
 
+        const callEditSlide = (courseid, slideid) => {
+
+
+            $.ajax({
+                type: "POST",
+                url: `editslidebanner.php`,
+                data: {
+                    "edit": true,
+                    "courseid": courseid,
+                    "slideid": slideid,
+                },
+                success: function(data) {
+                    $(`#editBannerBody`).html(data);
+                    $(`#editBanner`).modal("show");
+                }
+            });
+
+        }
+
+        let courseTitle = document.getElementById('coursename');
+        courseTitle.addEventListener('input', (ele) => {
+            let value = ele.target.value;
+            if (value.length > 0) {
+
+                let wordCountDisplay = document.getElementById('wordCountDisplay');
+                let wordCount = document.getElementById('wordCount');
+                wordCountDisplay.style.display = 'block'
+                wordCount.innerText = value.length;
+            }
+        })
         </script>
 
 
@@ -782,7 +797,7 @@ if (isset($_POST['editSlide'])) {
 <!-- Plugin js for this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
+</script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>
