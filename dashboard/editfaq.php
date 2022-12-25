@@ -34,22 +34,22 @@ if (isset($_POST['edit'])) {
                 <div class="col-lg-12">
                     <label for="question" class="form-label" style="display: block;">Faq
                         Question</label>
-                    <textarea name="question" id="question" class="form-label" style="width: 100%;">
-                    <?php echo _getSingleFaq($faqid , '_question') ?>
-                </textarea>
+                    <input type="text" value="<?php echo _getSingleFaq($faqid, '_question') ?>" name="question"
+                        id="question" class="form-control">
+
                 </div>
 
                 <div class="col-lg-12" style="margin-top: 20px;">
                     <label for="answer" class="form-label" style="display: block;">Faq Answer</label>
-                    <textarea name="answer" id="answer" class="form-label" style="width: 100%;">
-                    <?php echo _getSingleFaq($faqid , '_answer') ?>
+                    <textarea name="answer" id="answer" class="form-control" rows="10" style="width: 100%;">
+                    <?php echo _getSingleFaq($faqid, '_answer') ?>
                 </textarea>
 
                 </div>
 
                 <div class="col-lg-12" style="margin-top: 20px; display: none; ">
                     <label for="answer" class="form-label" style="display: block;">Faq Id</label>
-                    <input type="text" class="form-control" name="faqid" value="<?php echo $faqid ?>" >
+                    <input type="text" class="form-control" name="faqid" value="<?php echo $faqid ?>">
 
                 </div>
 
@@ -58,7 +58,7 @@ if (isset($_POST['edit'])) {
         </div>
         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="editFaq" class="btn btn-primary">Save changes</button>
+            <button type="submit" name="editFaq" class="btn btn-primary"><i class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
         </div>
     </div>
 </form>

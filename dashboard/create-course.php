@@ -110,6 +110,7 @@ if (isset($_POST['submit'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">

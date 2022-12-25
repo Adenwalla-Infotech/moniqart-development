@@ -145,6 +145,7 @@ if (isset($_POST['editAttachment'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
     <!-- End plugin css for this page -->

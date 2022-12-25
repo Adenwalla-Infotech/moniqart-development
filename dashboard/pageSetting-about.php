@@ -87,6 +87,7 @@ if (isset($_POST['editFaq'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
     <!-- End plugin css for this page -->
@@ -149,7 +150,7 @@ if (isset($_POST['editFaq'])) {
 
 
                             <div class="card-body" style="margin-top: 30px ;">
-                                <h4 class="card-title">Manage Slide </h4>
+                                <h4 class="card-title">Manage Faqs </h4>
                                 <p class="card-description">
                                     From here, you'll see a list of all the categories on your site. You can edit or
                                     delete them from here. You can also change the order of your categories by dragging
@@ -251,14 +252,13 @@ if (isset($_POST['editFaq'])) {
                                 <div class="col-lg-12">
                                     <label for="question" class="form-label" style="display: block;">Faq
                                         Question</label>
-                                    <textarea name="question" id="question" class="form-label"
-                                        style="width: 100%;"></textarea>
+                                    <input type="text" name="question" id="question" class="form-control" >
                                 </div>
 
                                 <div class="col-lg-12" style="margin-top: 20px;">
                                     <label for="answer" class="form-label" style="display: block;">Faq Answer</label>
-                                    <textarea name="answer" id="answer" class="form-label"
-                                        style="width: 100%;"></textarea>
+                                    <textarea name="answer" id="answer" class="form-control"
+                                        style="width: 100%;" rows="10" ></textarea>
 
                                 </div>
 
@@ -270,7 +270,7 @@ if (isset($_POST['editFaq'])) {
                         </div>
                         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="addFaq" class="btn btn-primary">Save changes</button>
+                            <button type="submit" name="addFaq" class="btn btn-primary"><i class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
                         </div>
                     </div>
                 </form>

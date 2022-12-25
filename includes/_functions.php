@@ -617,7 +617,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
             $faqs = "CREATE TABLE IF NOT EXISTS `tblfaqs` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_question` varchar(55) NOT NULL,
-                `_answer` varchar(55) NOT NULL,
+                `_answer` text NOT NULL,
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
@@ -633,11 +633,20 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
+            $socialMediaDB = "CREATE TABLE IF NOT EXISTS `tblsocialmedia` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_name` varchar(55) NOT NULL,
+                `_url` varchar(55) NOT NULL,
+                `_indexing` varchar(55) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
 
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings];
+
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings , $socialMediaDB];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -3935,8 +3944,9 @@ function _createfaq($question, $answer)
     require('_config.php');
     require('_alert.php');
 
+    $answerData = $conn->real_escape_string($answer);
 
-    $sql = "INSERT INTO `tblfaqs` (`_question`,`_answer`) VALUES ('$question','$answer')";
+    $sql = "INSERT INTO `tblfaqs` (`_question`,`_answer`) VALUES ('$question','$answerData')";
 
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -4045,19 +4055,6 @@ function _getFaqs($startfrom = '', $limit = '')
 
 
 // Menu Settings
-$menuSettings = "CREATE TABLE IF NOT EXISTS `tblmenusettings` (
-    `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `_name` varchar(55) NOT NULL,
-    `_url` varchar(55) NOT NULL,
-    `_menu` varchar(55) NOT NULL,
-    `_indexing` varchar(55) NOT NULL,
-    `_status` varchar(55) NOT NULL,
-    `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `UpdationDate` datetime NULL ON UPDATE current_timestamp()
-)  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
-
-// FAQS //
 function _createMenuSettings($_name, $_url, $_menu, $_indexing, $_status)
 {
 
@@ -4123,7 +4120,7 @@ function _deleteMenuSettings($id)
     $query = mysqli_query($conn, $sql);
 
     if ($query) {
-        header("location:pageSettings-menuSettings");
+        header("location:pagesetting-menusettings");
     }
 }
 
@@ -4172,7 +4169,7 @@ function _getMenuSettings($startfrom = '', $limit = '')
                 <td>
                     <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditMenuSettings(<?php echo $data['_id']; ?>)"></span>
                     
-                    <a href='pageSettings-menuSettings?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                    <a href='pagesetting-menusettings?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
                 </td>
             </tr>
         <?php
@@ -4182,4 +4179,123 @@ function _getMenuSettings($startfrom = '', $limit = '')
 
 
 
+
+// Menu Settings
+function _createSocialMedia( $_name, $_url, $_indexing)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+
+    $sql = "INSERT INTO `tblsocialmedia` (`_name`,`_url`,`_indexing`) VALUES ('$_name','$_url','$_indexing')";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Social Media Created");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Social Media Creation Failed");
+    }
+}
+
+
+function _getSingleSocialMedia($id, $param)
+{
+
+    require('_config.php');
+    $sql = "SELECT * FROM `tblsocialmedia` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+
+
+function _updateSocialMedia($_id, $_name, $_url, $_indexing)
+{
+
+    require('_config.php');
+    require('_alert.php');
+
+
+    $sql = "UPDATE `tblsocialmedia` SET `_name`='$_name',`_url`='$_url',`_indexing`='$_indexing'  WHERE `_id` = '$_id'  ";
+    $query = mysqli_query($conn, $sql);
+
+
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Social Media Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Social Media Updation Failed");
+    }
+}
+
+
+function _deleteSocialMedia($id)
+{
+    require('_config.php');
+
+
+    $sql = "DELETE FROM `tblsocialmedia` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        header("location:site-config");
+    }
+}
+
+
+function _getSocialMedia($startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+
+    $sql = "SELECT * FROM `tblsocialmedia` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
         ?>
+            <tr>
+                <td><?php echo $data['_id']; ?></td>
+                
+
+                <td><?php echo $data['_name']; ?></td>
+                <td><?php echo $data['_url']; ?></td>
+                <td><?php echo $data['_indexing']; ?></td>
+
+                <td>
+                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                </td>
+                <td>
+                    <?php
+            if (strtotime($data['UpdationDate']) == '') {
+                echo "Not Updated Yet";
+            } else {
+                echo date("M j, Y", strtotime($data['UpdationDate']));
+            }
+                    ?>
+                </td>
+                <td>
+                    <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditSocialMedia(<?php echo $data['_id']; ?>)"></span>
+                    
+                    <a href='site-config?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                </td>
+            </tr>
+        <?php
+        }
+    }
+}
+
+
+
+
+?>

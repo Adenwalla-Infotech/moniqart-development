@@ -63,6 +63,7 @@ if (isset($_POST['submit'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
 </head>

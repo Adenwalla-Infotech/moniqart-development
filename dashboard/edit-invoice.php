@@ -125,6 +125,7 @@ if (isset($_GET['del'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
 </head>

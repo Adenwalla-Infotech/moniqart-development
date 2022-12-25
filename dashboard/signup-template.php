@@ -56,6 +56,7 @@ if (isset($_POST['submit'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
     <!-- End plugin css for this page -->
@@ -74,46 +75,52 @@ if (isset($_POST['submit'])) {
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                <?php
-                     
-                     if ($_SESSION['template_success']) {
-                         ?>
-                             <div id="liveAlertPlaceholder">
-                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                     <strong>Template Update</strong> Template saved successfully.
-                                 </div>
-                             </div>
-                         <?php 
-                     } 
-                      
-                     if ($_SESSION['template_error']) {
-                         ?>
-                             <div id="liveAlertPlaceholder">
-                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                     <strong>Error</strong> while updating template.
-                                 </div>
-                             </div>
-                         <?php 
-                     } 
-                     ?>
+                    <?php
+
+                    if ($_SESSION['template_success']) {
+                    ?>
+                    <div id="liveAlertPlaceholder">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Template Update</strong> Template saved successfully.
+                        </div>
+                    </div>
+                    <?php
+                    }
+
+                    if ($_SESSION['template_error']) {
+                    ?>
+                    <div id="liveAlertPlaceholder">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error</strong> while updating template.
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
 
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Add Signup Template</h4>
                                 <p class="card-description">
-                                    Web Help Desk uses tickets to manage service requests. These tickets can be initiated through email, created in the application, and imported from another application. Techs, admins, and clients can also manage tickets through email or through the application in a web browser.
+                                    Web Help Desk uses tickets to manage service requests. These tickets can be
+                                    initiated through email, created in the application, and imported from another
+                                    application. Techs, admins, and clients can also manage tickets through email or
+                                    through the application in a web browser.
                                 </p>
-                                <form method="POST" action="" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                <form method="POST" action="" enctype="multipart/form-data" class="needs-validation"
+                                    novalidate>
 
                                     <div class="row g-3">
                                         <div class="col">
-                                            <textarea name="signupcode" class="form-control" rows="20"><?php echo _getSingleEmailTemplate('_signuptemplate');  ?></textarea>
+                                            <textarea name="signupcode" class="form-control"
+                                                rows="20"><?php echo _getSingleEmailTemplate('_signuptemplate'); ?></textarea>
                                             <div class="invalid-feedback">Please enter code</div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 150px;margin-left: -10px" class="btn btn-primary">Update</button>
+                                        <button type="submit" name="submit" style="width: 150px;margin-left: -10px"
+                                            class="btn btn-primary">Update</button>
                                     </div>
 
                                 </form>

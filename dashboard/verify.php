@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require('../includes/_functions.php'); 
+require('../includes/_functions.php');
 
 session_start();
 
@@ -10,11 +10,11 @@ session_start();
 //   echo "</script>";
 // }
 
-if(isset($_POST['submit'])){
-    $userotp = $_POST['userotp'];
-    _verifyotp($userotp);
+if (isset($_POST['submit'])) {
+  $userotp = $_POST['userotp'];
+  _verifyotp($userotp);
 }
-if(isset($_POST['otp'])){
+if (isset($_POST['otp'])) {
   _resendtop();
 }
 
@@ -54,11 +54,16 @@ if(isset($_POST['otp'])){
               <h6 class="font-weight-light">Enter OTP recieved on you mobile number</h6>
               <form class="pt-3" method="POST" action="">
                 <div class="form-group">
-                  <input type="text" name="userotp" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="OTP">
+                  <input type="text" name="userotp" class="form-control form-control-lg" id="exampleInputPassword1"
+                    placeholder="OTP">
                 </div>
-                <button name="otp" style="cursor: pointer;float:right;margin-bottom: 20px; border: none; background-color:white" class="auth-link text-black"><img src="../assets/icons/send.png" style="width: 15px;height: 15px" alt="send">&nbsp;&nbsp;Resend OTP</button>
+                <button name="otp"
+                  style="cursor: pointer;float:right;margin-bottom: 20px; border: none; background-color:white"
+                  class="auth-link text-black"><img src="../assets/icons/send.png" style="width: 15px;height: 15px"
+                    alt="send">&nbsp;&nbsp;Resend OTP</button>
                 <div class="mt-3">
-                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="submit">VERIFY ACCOUNT</button>
+                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" name="submit">VERIFY
+                    ACCOUNT</button>
                 </div>
               </form>
             </div>

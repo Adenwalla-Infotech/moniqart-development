@@ -186,11 +186,11 @@
         </a>
         <div class="collapse" id="ui-pageSettings">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pageSetting-about">About Us</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pageSetting-contact">Contact Us</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pageSetting-privacypolicy">Privacy Policy</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pageSetting-termsandcondition">Terms</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pageSettings-menuSettings">Menu Settings</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pagesetting-about">About Us</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pagesetting-contact">Contact Us</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pagesetting-privacypolicy">Privacy Policy</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pagesetting-termsandcondition">Terms</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pagesetting-menusettings">Menu Settings</a></li>
           </ul>
         </div>
       </li>

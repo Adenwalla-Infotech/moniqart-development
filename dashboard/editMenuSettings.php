@@ -27,20 +27,20 @@ if (isset($_POST['edit'])) {
                 </svg></button>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body" style="padding: 0px;">
 
 
                 <div class="row">
 
                     <div class="col-lg-6">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Menu Name</label>
                         <input type="text" id="name" name="name"
                             value="<?php echo _getSingleMenuSettings($menuid, '_name') ?>" class="form-control"
                             required>
                     </div>
 
                     <div class="col-lg-6">
-                        <label for="url" class="form-label">Url</label>
+                        <label for="url" class="form-label">Menu Url</label>
                         <input type="text" id="url" name="url"
                             value="<?php echo _getSingleMenuSettings($menuid, '_url') ?>" class="form-control" required>
                     </div>
@@ -51,14 +51,14 @@ if (isset($_POST['edit'])) {
                 <div class="row" style="margin-top:20px;">
 
                     <div class="col-lg-6">
-                        <label for="menu" class="form-label">Menu</label>
+                        <label for="menu" class="form-label">Menu Icon</label>
                         <input type="text" id="menu" name="menu"
                             value="<?php echo _getSingleMenuSettings($menuid, '_menu') ?>" class="form-control"
                             required>
                     </div>
 
                     <div class="col-lg-6">
-                        <label for="indexing" class="form-label">Indexing</label>
+                        <label for="indexing" class="form-label">Menu Indexing</label>
                         <input type="text" id="indexing" name="indexing"
                             value="<?php echo _getSingleMenuSettings($menuid, '_indexing') ?>" class="form-control"
                             required>
@@ -108,7 +108,7 @@ if (isset($_POST['edit'])) {
         </div>
         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="editMenuSetting" class="btn btn-primary">Save changes</button>
+            <button type="submit" name="editMenuSetting" class="btn btn-primary"><i class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
         </div>
     </div>
 </form>

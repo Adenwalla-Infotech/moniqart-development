@@ -69,11 +69,12 @@ if (isset($_POST['update'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-    tinymce.init({
-        selector: '#mytextarea',
-        statusbar: false,
-        branding: false,
-    });
+        tinymce.init({
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
+            promotion: false,
+        });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -82,71 +83,71 @@ if (isset($_POST['update'])) {
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
 
     <style>
-    .img-account-profile {
-        height: 10rem;
-        width: 10rem;
-    }
+        .img-account-profile {
+            height: 10rem;
+            width: 10rem;
+        }
 
-    .rounded-circle {
-        border-radius: 50% !important;
-    }
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
 
-    .card {
-        /* box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%); */
-    }
+        .card {
+            /* box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%); */
+        }
 
-    .card .card-header {
-        font-weight: 500;
-    }
+        .card .card-header {
+            font-weight: 500;
+        }
 
-    .card-header:first-child {
-        border-radius: 1.35rem 1.35rem 0 0;
-    }
+        .card-header:first-child {
+            border-radius: 1.35rem 1.35rem 0 0;
+        }
 
-    .card-header {
-        padding: 1rem 1.35rem;
-        margin-bottom: 0;
-        background-color: rgba(33, 40, 50, 0.03);
-        border-bottom: 1px solid rgba(33, 40, 50, 0.125);
-    }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
 
-    .form-control,
-    .dataTable-input {
-        display: block;
-        width: 100%;
-        padding: 0.875rem 1.125rem;
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1;
-        color: #69707a;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #c5ccd6;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border-radius: 0.35rem;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
+        .form-control,
+        .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
 
-    .stretch-card {
-        padding: 0px;
-    }
+        .stretch-card {
+            padding: 0px;
+        }
 
-    .price-label {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 1.34;
-        margin-bottom: 0;
-        padding: 6px 15px;
-        display: inline-block;
-        border-radius: 3px;
-    }
+        .price-label {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.34;
+            margin-bottom: 0;
+            padding: 6px 15px;
+            display: inline-block;
+            border-radius: 3px;
+        }
 
-    .price-label.basic {
-        background: #E8EAF6;
-        color: #3F51B5;
-    }
+        .price-label.basic {
+            background: #E8EAF6;
+            color: #3F51B5;
+        }
     </style>
 </head>
 
@@ -172,8 +173,8 @@ if (isset($_POST['update'])) {
                                             <div class="card-body text-center">
                                                 <!-- Profile picture image-->
                                                 <?php
-                                                    $userDp = _getsingleuser($_id, '_userdp');
-                                                    if ($userDp) { ?>
+                                                $userDp = _getsingleuser($_id, '_userdp');
+                                                if ($userDp) { ?>
                                                 <img class="img-account-profile rounded-circle mb-2"
                                                     src="../uploads/profile/<?php echo _getsingleuser($_id, '_userdp'); ?>"
                                                     alt="" onclick="selectDP()">
@@ -590,8 +591,7 @@ if (isset($_POST['update'])) {
                                                             <label for="usercurrency" class="small mb-1">User
                                                                 Currency</label>
                                                             <select name="usercurrency" style="height: 46px;"
-                                                                class="form-control form-control-lg"
-                                                                id="usercurrency">
+                                                                class="form-control form-control-lg" id="usercurrency">
                                                                 <option selected
                                                                     value="<?php echo _getsingleuser($_id, '_usercurrency'); ?>"
                                                                     required>
@@ -766,12 +766,11 @@ if (isset($_POST['update'])) {
                                                                 (Bio will appear on the site to other users)</label>
                                                             <textarea name="userbio" class="form-control" cols="10"
                                                                 rows="5" style="padding: 16px; line-height: 1.5;"
-                                                                maxlength="500"><?php 
-                                                                $userbio = _getsingleuser($_id, '_userbio'); 
-                                                                if($userbio){
+                                                                maxlength="500"><?php
+                                                                $userbio = _getsingleuser($_id, '_userbio');
+                                                                if ($userbio) {
                                                                     echo $userbio;
-                                                                }
-                                                                else{
+                                                                } else {
                                                                     echo "Max 500 Words";
                                                                 }
                                                                 ?></textarea>
@@ -813,9 +812,9 @@ if (isset($_POST['update'])) {
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 <script>
-function selectDP() {
-    document.getElementById('userdp').click();
-}
+    function selectDP() {
+        document.getElementById('userdp').click();
+    }
 </script>
 
 </html>

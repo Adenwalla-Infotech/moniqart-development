@@ -375,15 +375,17 @@ if (isset($_POST['submit'])) {
               <input type="text" class="form-control" name="amount" placeholder="Tax Amount">
             </div>
             <div class="col-lg-6" style="margin-top:30px;">
-              <label class="checkbox-inline">
-                <input name="status" value="true" type="checkbox"> &nbsp; Is Active
-              </label>
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="status" id="status">
+                <label class="custom-control-label" style="margin-left: 20px;" for="status">Is
+                  Active</label>
+              </div>
             </div>
           </div>
         </div>
         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" name="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" name="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
         </div>
       </div>
     </form>

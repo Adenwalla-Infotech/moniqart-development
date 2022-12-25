@@ -252,26 +252,26 @@ if (isset($_POST['submit'])) {
                             <th>Conversion</th>
                             <th>Base Price</th>
                             <th>Status</th>
-                            <th>Created at</th>
+                            <th>Created at  </th>
                             <th>Action</th>
                             <th></th>
                           </tr>
                         </thead>
                         <tbody style="text-align: left;margin-left: 30px">
                           <?php
-                            if (isset($_POST['search'])) {
-                              if (isset($_POST['conversion'])) {
-                                $conversion = $_POST['conversion'];
-                              } else {
-                                $conversion = null;
-                              }
-                              $status = $_POST['statustype'];
-                              _getmarkup($conversion, $status);
+                          if (isset($_POST['search'])) {
+                            if (isset($_POST['conversion'])) {
+                              $conversion = $_POST['conversion'];
+                            } else {
+                              $conversion = null;
                             }
-                            if (!isset($_POST['search'])) {
-                              _getmarkup('', '', $record_per_page, $start_from);
-                            }
-                            ?>
+                            $status = $_POST['statustype'];
+                            _getmarkup($conversion, $status);
+                          }
+                          if (!isset($_POST['search'])) {
+                            _getmarkup('', '', $record_per_page, $start_from);
+                          }
+                          ?>
                         </tbody>
                       </table>
                     </div>
@@ -280,31 +280,31 @@ if (isset($_POST['submit'])) {
                 <nav aria-label="Page navigation example" style="margin-top: 30px;">
                   <ul class="pagination">
                     <?php
-                      $query = mysqli_query($conn, "SELECT * FROM `tblcurrency`");
-                      $total_records = mysqli_num_rows($query);
-                      $total_pages = ceil($total_records / $record_per_page);
-                      $start_loop = $page;
-                      $difference = $total_pages - $page;
-                      if ($difference <= 4) {
-                        $start_loop = $total_pages - 4;
-                      }
-                      $end_loop = $start_loop + 3;
-                      if ($page > 1) {
-                        echo "<li class='page-item'>
+                    $query = mysqli_query($conn, "SELECT * FROM `tblcurrency`");
+                    $total_records = mysqli_num_rows($query);
+                    $total_pages = ceil($total_records / $record_per_page);
+                    $start_loop = $page;
+                    $difference = $total_pages - $page;
+                    if ($difference <= 4) {
+                      $start_loop = $total_pages - 4;
+                    }
+                    $end_loop = $start_loop + 3;
+                    if ($page > 1) {
+                      echo "<li class='page-item'>
                         <a href='manage-currency?page=" . ($page - 1) . "' class='page-link'>Previous</a>
                       </li>";
-                      }
-                      if ($total_records > 5) {
-                        for ($i = 1; $i <= $total_pages; $i++) {
-                          echo "
+                    }
+                    if ($total_records > 5) {
+                      for ($i = 1; $i <= $total_pages; $i++) {
+                        echo "
                       <li class='page-item'><a class='page-link' href='manage-currency?page=" . $i . "'>$i</a></li>";
-                        }
                       }
-                      if ($page <= $end_loop) {
-                        echo "<li class='page-item'>
+                    }
+                    if ($page <= $end_loop) {
+                      echo "<li class='page-item'>
                         <a class='page-link' href='manage-currency?page=" . ($page + 1) . "'>Next</a>
                       </li>";
-                      } ?>
+                    } ?>
                   </ul>
                 </nav>
               </div>
@@ -619,15 +619,18 @@ if (isset($_POST['submit'])) {
               <input type="text" class="form-control" name="amount" placeholder="Price">
             </div>
             <div class="col-lg-6" style="margin-top:30px;">
-              <label class="checkbox-inline">
-                <input name="status" value="true" type="checkbox"> &nbsp; Is Active
-              </label>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="status" id="status">
+                <label class="custom-control-label" style="margin-left: 20px;" for="status">Is
+                  Active</label>
+              </div>
             </div>
           </div>
         </div>
         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" name="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" name="submit" class="btn btn-primary"><i
+              class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
         </div>
       </div>
     </form>

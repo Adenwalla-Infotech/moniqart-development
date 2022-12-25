@@ -48,7 +48,7 @@ if (isset($_POST['edit'])) {
         </div>
         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="editAttachment" class="btn btn-primary">Save changes</button>
+            <button type="submit" name="editAttachment" class="btn btn-primary"><i class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
         </div>
     </div>
 </form>

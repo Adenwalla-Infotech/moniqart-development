@@ -55,6 +55,7 @@ if (isset($_POST['submit'])) {
             selector: '#mytextarea',
             statusbar: false,
             branding: false,
+            promotion: false,
         });
     </script>
     <!-- End plugin css for this page -->
@@ -107,7 +108,7 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3">
                                         <div class="col">
-                                            <textarea name="purchasecode" rows="20" class="form-control"><?php echo _getSingleEmailTemplate('_purchasetemplate');  ?></textarea>
+                                            <textarea name="purchasecode" rows="20" class="form-control"><?php echo _getSingleEmailTemplate('_purchasetemplate'); ?></textarea>
                                             <div class="invalid-feedback">Please enter code</div>
                                         </div>
                                     </div>

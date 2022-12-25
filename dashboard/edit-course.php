@@ -194,11 +194,12 @@ if (isset($_POST['editSlide'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-    tinymce.init({
-        selector: '#mytextarea',
-        statusbar: false,
-        branding: false,
-    });
+        tinymce.init({
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
+            promotion: false,
+        });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -385,21 +386,21 @@ if (isset($_POST['editSlide'])) {
                                                 <?php
                                                 }
                                                 if ($level == 'Intermediate') {
-                                                        ?>
+                                                ?>
                                                 <option value="Beginner">Beginner</option>
                                                 <option selected value="Intermediate">Intermediate</option>
                                                 <option value="Advanced">Advanced</option>
                                                 <?php
                                                 }
                                                 if ($level == 'Advanced') {
-                                                        ?>
+                                                ?>
                                                 <option value="Beginner">Beginner</option>
                                                 <option value="Intermediate">Intermediate</option>
                                                 <option selected value="Advanced">Advanced</option>
                                                 <?php
                                                 }
 
-                                                        ?>
+                                                ?>
 
                                             </select>
                                         </div>
@@ -451,31 +452,30 @@ if (isset($_POST['editSlide'])) {
 
 
                                         <div class="col" style="margin-top: 40px;">
-                                                <div class="custom-control custom-switch">
+                                            <div class="custom-control custom-switch">
 
 
                                                 <?php
 
-                                                    $status = _getSingleCourse($_id, '_enrollstatus');
-                                                    if($status==true){
+                                                $status = _getSingleCourse($_id, '_enrollstatus');
+                                                if ($status == true) {
+                                                ?>
+                                                <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                    id="enrollstatus" checked>
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="enrollstatus">Enroll
+                                                    Status</label>
+                                                <?php
+                                                } else {
                                                         ?>
-                                                        <input type="checkbox" class="custom-control-input" name="enrollstatus"
-                                                            id="enrollstatus" checked>
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="enrollstatus">Enroll
-                                                            Status</label>
-                                                        <?php
-                                                    }
-                                                    else{
+                                                <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                    id="enrollstatus">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="enrollstatus">Enroll
+                                                    Status</label>
+                                                <?php
+                                                }
                                                         ?>
-                                                        <input type="checkbox" class="custom-control-input" name="enrollstatus"
-                                                            id="enrollstatus">
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="enrollstatus">Enroll
-                                                            Status</label>
-                                                        <?php
-                                                    }
-                                             ?>
 
 
                                             </div>
@@ -487,26 +487,25 @@ if (isset($_POST['editSlide'])) {
 
                                                 <?php
 
-                                                    $status = _getSingleCourse($_id, '_status');
-                                                    if($status==true){
+                                                $status = _getSingleCourse($_id, '_status');
+                                                if ($status == true) {
+                                                ?>
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive" checked>
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                                <?php
+                                                } else {
                                                         ?>
-                                                        <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive" checked>
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="isactive">Is
-                                                            Active</label>
-                                                        <?php
-                                                    }
-                                                    else{
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                                <?php
+                                                }
                                                         ?>
-                                                        <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive">
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="isactive">Is
-                                                            Active</label>
-                                                        <?php
-                                                    }
-                                             ?>
 
 
                                             </div>
@@ -745,47 +744,47 @@ if (isset($_POST['editSlide'])) {
 
 
         <script>
-        const getSubCategory = (val) => {
-            $.ajax({
-                type: "POST",
-                url: "getSubCategory.php",
-                data: 'catid=' + val,
-                success: function(data) {
-                    $(`#subcategoryId`).html(data);
-                }
-            });
-        }
-
-        const callEditSlide = (courseid, slideid) => {
-
-
-            $.ajax({
-                type: "POST",
-                url: `editslidebanner.php`,
-                data: {
-                    "edit": true,
-                    "courseid": courseid,
-                    "slideid": slideid,
-                },
-                success: function(data) {
-                    $(`#editBannerBody`).html(data);
-                    $(`#editBanner`).modal("show");
-                }
-            });
-
-        }
-
-        let courseTitle = document.getElementById('coursename');
-        courseTitle.addEventListener('input', (ele) => {
-            let value = ele.target.value;
-            if (value.length > 0) {
-
-                let wordCountDisplay = document.getElementById('wordCountDisplay');
-                let wordCount = document.getElementById('wordCount');
-                wordCountDisplay.style.display = 'block'
-                wordCount.innerText = value.length;
+            const getSubCategory = (val) => {
+                $.ajax({
+                    type: "POST",
+                    url: "getSubCategory.php",
+                    data: 'catid=' + val,
+                    success: function (data) {
+                        $(`#subcategoryId`).html(data);
+                    }
+                });
             }
-        })
+
+            const callEditSlide = (courseid, slideid) => {
+
+
+                $.ajax({
+                    type: "POST",
+                    url: `editslidebanner.php`,
+                    data: {
+                        "edit": true,
+                        "courseid": courseid,
+                        "slideid": slideid,
+                    },
+                    success: function (data) {
+                        $(`#editBannerBody`).html(data);
+                        $(`#editBanner`).modal("show");
+                    }
+                });
+
+            }
+
+            let courseTitle = document.getElementById('coursename');
+            courseTitle.addEventListener('input', (ele) => {
+                let value = ele.target.value;
+                if (value.length > 0) {
+
+                    let wordCountDisplay = document.getElementById('wordCountDisplay');
+                    let wordCount = document.getElementById('wordCount');
+                    wordCountDisplay.style.display = 'block'
+                    wordCount.innerText = value.length;
+                }
+            })
         </script>
 
 
@@ -797,7 +796,7 @@ if (isset($_POST['editSlide'])) {
 <!-- Plugin js for this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-</script>
+    </script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

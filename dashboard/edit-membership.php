@@ -65,25 +65,26 @@ if (isset($_POST['submit'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-    tinymce.init({
-        selector: '#mytextarea',
-        statusbar: false,
-        branding: false,
-        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
-        setup: function(editor) {
-            var max = 500;
-            editor.on('submit', function(event) {
-                var numChars = tinymce.activeEditor.plugins.wordcount.body
-                    .getCharacterCountWithoutSpaces();
-                if (numChars > max) {
-                    alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
-                    event.preventDefault();
-                    return false;
-                }
-            });
+        tinymce.init({
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
+            promotion: false,
+            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
+            setup: function (editor) {
+                var max = 500;
+                editor.on('submit', function (event) {
+                    var numChars = tinymce.activeEditor.plugins.wordcount.body
+                        .getCharacterCountWithoutSpaces();
+                    if (numChars > max) {
+                        alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
+                        event.preventDefault();
+                        return false;
+                    }
+                });
 
-        }
-    });
+            }
+        });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -103,28 +104,28 @@ if (isset($_POST['submit'])) {
                 <div class="content-wrapper">
                     <?php
 
-                if ($_SESSION['membership_success']) {
-                ?>
+                    if ($_SESSION['membership_success']) {
+                    ?>
                     <div id="liveAlertPlaceholder">
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>Membership Created!</strong> New Membership created successfully.
                         </div>
                     </div>
                     <?php
-                }
+                    }
 
-                if ($_SESSION['membership_error']) {
-                        ?>
+                    if ($_SESSION['membership_error']) {
+                    ?>
                     <div id="liveAlertPlaceholder">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <strong>Membership Creation Failed!</strong> Error while creating membership.
                         </div>
                     </div>
                     <?php
-                }
+                    }
 
 
-                        ?>
+                    ?>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -161,7 +162,7 @@ if (isset($_POST['submit'])) {
                                                 </option>
                                                 <?php
                                                     } else {
-                                                    ?>
+                                                ?>
                                                 <option value="<?php echo $i ?>">
                                                     <?php echo $i ?> month
                                                 </option>
@@ -216,31 +217,30 @@ if (isset($_POST['submit'])) {
                                             <div class="invalid-feedback">Please type correct discount</div>
                                         </div>
                                         <div class="col" style="margin-top: 40px;">
-                                               <div class="custom-control custom-switch">
+                                            <div class="custom-control custom-switch">
 
 
                                                 <?php
 
-                                                    $status = _getSingleMembership($_id, '_status');
-                                                    if($status==true){
+                                                $status = _getSingleMembership($_id, '_status');
+                                                if ($status == true) {
+                                                ?>
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive" checked>
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                                <?php
+                                                } else {
                                                         ?>
-                                                        <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive" checked>
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="isactive">Is
-                                                            Active</label>
-                                                        <?php
-                                                    }
-                                                    else{
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                                <?php
+                                                }
                                                         ?>
-                                                        <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive">
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="isactive">Is
-                                                            Active</label>
-                                                        <?php
-                                                    }
-                                             ?>
 
 
                                             </div>
@@ -286,7 +286,7 @@ if (isset($_POST['submit'])) {
 
 
 
-        
+
 
 
         <script src="../includes/_validation.js"></script>
@@ -297,7 +297,7 @@ if (isset($_POST['submit'])) {
 <!-- Plugin js for this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-</script>
+    </script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>
