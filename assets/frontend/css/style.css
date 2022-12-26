@@ -11,6 +11,9 @@
     --font-1: 'Libre Baskerville', serif;
     --font-2: 'PT Sans', sans-serif;
 
+    /* Border Colors */
+    --border-color-1 : #DBDBDB;
+
 }
 
 /* Base Configuration */
@@ -103,6 +106,7 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid var(--border-color-1);
 }
 
 .navbar__container-left {
@@ -170,7 +174,9 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-}
+    border-left: 1px solid var(--light-color-1);
+    padding-left: 0.4rem;
+}   
 
 .navbar__search-box input {
     width: 100%;
@@ -307,7 +313,7 @@ button {
     display: grid;
     grid-template-columns: 65% 35%;
     align-items: center;
-    border-bottom: 1px solid rgba(40, 44, 53, 0.413);
+    border-bottom: 1px solid var(--border-color-1);
 }
 
 .card__title {
@@ -335,7 +341,7 @@ button {
 }
 
 .card__button:nth-child(1) {
-    border: 1px solid rgba(40, 44, 53, 0.413);
+    border: 1px solid var(--border-color-1);
     border-top: none;
     border-bottom: none;
 }
@@ -352,7 +358,7 @@ button {
 
 
 .card__description {
-    border-bottom: 1px solid rgba(40, 44, 53, 0.413);
+    border-bottom: 1px solid var(--border-color-1);
 }
 
 .card__description p {
@@ -380,6 +386,10 @@ button {
     .card__container {
         grid-template-columns: repeat(2,1fr);
     }
+    
+    .navbar__logo{
+        margin: 0;
+    }
 
 }
 
@@ -403,7 +413,8 @@ button {
     }
 
     .topbar__container {
-        flex-direction: column;
+        flex-direction: row;
+        padding: 1rem 0;
     }
 
     .topbar__item span {
@@ -434,7 +445,7 @@ button {
 
     .card__button:nth-child(1) {
         border: none;
-        border-right: 1px solid rgba(40, 44, 53, 0.413);
+        border-right: 1px solid var(--border-color-1);
     }
 
 
