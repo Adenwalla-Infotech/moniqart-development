@@ -12,7 +12,7 @@
     --font-2: 'PT Sans', sans-serif;
 
     /* Border Colors */
-    --border-color-1 : #DBDBDB;
+    --border-color-1: #DBDBDB;
 
 }
 
@@ -36,6 +36,7 @@ span {
 
 ul {
     list-style: none;
+    margin-bottom: 0;
 }
 
 li {
@@ -71,8 +72,11 @@ button {
 
 /* Topbar */
 
-.topbar__container {
+.topbar {
     background: var(--bg-black-1);
+}
+
+.topbar__container {
     display: flex;
     flex-direction: row;
     color: aliceblue;
@@ -101,7 +105,8 @@ button {
 /* Navbar */
 
 .navbar__container {
-    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -175,8 +180,8 @@ button {
     align-items: center;
     justify-content: center;
     border-left: 1px solid var(--light-color-1);
-    padding-left: 0.4rem;
-}   
+    padding-left: 1rem;
+}
 
 .navbar__search-box input {
     width: 100%;
@@ -196,7 +201,7 @@ button {
     cursor: pointer;
 }
 
-.navbar__container li:hover a {
+.navbar li:hover a {
     color: var(--hover-color-1);
 }
 
@@ -384,10 +389,10 @@ button {
     }
 
     .card__container {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
-    
-    .navbar__logo{
+
+    .navbar__logo {
         margin: 0;
     }
 
@@ -397,7 +402,7 @@ button {
 
 @media screen and (max-width : 800px) {
 
-  
+
     .card__container {
         grid-template-columns: 1fr;
     }
@@ -449,5 +454,19 @@ button {
     }
 
 
+
+}
+
+
+/* Smaller than Mobile Screen Device */
+
+@media screen and (max-width : 400px) {
+
+
+
+    .topbar__item i {
+        font-size: 0.7rem;
+        padding: 0.2rem;
+    }
 
 }
