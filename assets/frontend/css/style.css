@@ -10,7 +10,7 @@
     --white-color-1: rgb(255, 255, 255);
 
     --light-color-1: rgb(149, 149, 149);
-    --light-color-2: rgba(149, 149, 149,0.5);
+    --light-color-2: rgba(149, 149, 149, 0.5);
 
     /* Hover Colors */
     --hover-color-1: #1ab8a6;
@@ -520,7 +520,7 @@ button {
     margin-top: 3rem;
     padding-top: 1rem;
     display: grid;
-    grid-template-columns:85% 15%;
+    grid-template-columns: 85% 15%;
     border-top: 0.1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -549,27 +549,27 @@ button {
 /* Contac Us Page */
 
 
-.contact{
+.contact {
     margin: 5rem 0;
 }
 
-.contactform__container{
+.contactform__container {
     display: grid;
     grid-template-columns: 70% 30%
 }
 
 
-.contactform__heading{
+.contactform__heading {
     font-size: 1.3rem;
     color: var(--bg-black-2);
 }
 
-.contactform__heading span{
+.contactform__heading span {
     font-size: 1.3rem;
     color: var(--hover-color-1);
 }
 
-.contactform__desc{
+.contactform__desc {
     font-size: 1rem;
     color: var(--light-color-1);
     font-family: var(--font-2);
@@ -589,7 +589,7 @@ button {
     margin: 1rem 0;
 }
 
-.contact__form-form input:focus{
+.contact__form-form input:focus {
     border: 1px solid var(--hover-color-1);
 }
 
@@ -604,7 +604,7 @@ button {
     margin: 1rem 0;
 }
 
-.contact__form-form button{
+.contact__form-form button {
     border: 1px solid transparent;
     background: var(--hover-color-1);
     color: var(--white-color-1);
@@ -616,35 +616,35 @@ button {
     transition: 400ms;
 }
 
-.contact__form-form button:hover{
+.contact__form-form button:hover {
     border: 1px solid var(--hover-color-1);
     color: var(--hover-color-1);
     background: var(--white-color-1);
 }
 
-.contact__form-form textarea:focus{
+.contact__form-form textarea:focus {
     border: 1px solid var(--hover-color-1);
 }
 
 
-.contactform-right{
+.contactform-right {
     background: var(--white-color-1);
     padding: 2rem 3rem;
-    border: 1px solid rgba(0, 0, 0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.contactform-card:nth-child(2){
+.contactform-card:nth-child(2) {
     margin: 2rem 0;
 }
 
-.contact__card-heading{
+.contact__card-heading {
     text-transform: uppercase;
     font-size: 1.1rem;
     font-family: var(--font-1);
     font-weight: 500;
 }
 
-.contact__card-link{
+.contact__card-link {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -655,11 +655,11 @@ button {
     font-family: var(--font-2);
 }
 
-.contact__card-link:hover i{
-        color: var(--hover-color-1);
+.contact__card-link:hover i {
+    color: var(--hover-color-1);
 }
 
-.contact__card-link i{
+.contact__card-link i {
     margin-right: 1rem;
     font-size: 1.3rem;
     color: var(--light-color-1);
@@ -669,19 +669,277 @@ button {
 
 
 
+/* About Us */
+
+.about__features {
+    background: var(--bg-black-1);
+    margin: 3rem 0;
+}
+
+.about__features__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+    padding: 3rem 0;
+}
+
+.features__card {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem;
+}
+
+
+.features__card-left {
+    margin-right: 1rem;
+}
+
+.features__card-left i {
+    color: var(--hover-color-1);
+    font-size: 3rem;
+    transition: 400ms;
+}
+
+.features__card-left i:hover {
+    color: var(--white-color-1);
+}
+
+.features__heading {
+    font-size: 1rem;
+    color: var(--white-color-1);
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.features__desc {
+    color: var(--light-color-2);
+    font-size: 1.1rem;
+    font-family: var(--font-2);
+}
+
+
+
+/* Team */
+
+.team {
+    margin: 3rem 0;
+}
+
+.team h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.team p {
+    text-align: center;
+    margin: 1rem 10rem;
+    color: var(--light-color-1);
+    font-family: var(--font-2);
+    font-size: 1.2rem;
+}
+
+.team__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    margin-top: 3rem;
+}
+
+.team__card {
+    border: 1px solid var(--light-color-2);
+    margin: 1rem 1rem;
+}
+
+.team__img {
+    width: 270px;
+}
+
+.team__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem 0;
+}
+
+.team__info h4 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--bg-black-2);
+    font-weight: 600;
+}
+
+.team__info span {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--hover-color-1);
+}
+
+.team__social {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 3rem;
+    border-top: 1px solid var(--light-color-2);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.team__social i {
+    font-size: 1.7rem;
+    color: var(--bg-black-1);
+    transition: 400ms;
+}
+
+.team__social i:hover {
+    color: var(--hover-color-1);
+}
 
 
 
 
+/* About Us */
+
+.about__us{
+    margin: 3rem 0;
+}
+
+.about__us__container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    place-items: center;
+    margin-top: 2rem;
+}
+
+.about__us-left{
+    margin: 5rem 0;
+}
+
+.about__us-left h3{
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    color: var(--bg-black-1);
+    font-weight: 600;
+}
+
+.about__us-left p{
+    font-size: 1rem;
+    color: var(--light-color-2);
+    font-family: var(--font-2);
+    margin: 2rem 0;
+}
 
 
+.about__us-left button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1.2rem;
+    font-style: italic;
+    color: var(--bg-color-1);
+    transition: 400ms;
+}
+
+.about__us-left button i{
+    font-size: 2rem ;
+    color: var(--bg-color-1);
+    margin-right: 0.8rem;
+    transition: 400ms;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.about__us-left button:hover{
+    background: var(--hover-color-1);
+    color: var(--white-color-1);
+}
+
+.about__us-left button:hover i{
+    transform: translateX(5px);
+    color: var(--white-color-1);
+    border-right: 1px solid var(--white-color-1);
+}
+
+.about__us-right{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
 
 
+.faq{
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    height: fit-content;
+    /* background: var(--color-primary); */
+    cursor: pointer;
+    overflow: hidden;
+}
 
+.faq.active h4{
+    color: var(--hover-color-1);
+}
 
+.faq.active h4 i{
+    transform: translateY(-50%) rotate(180deg);
+}
 
+.faq.active p{
+    display: block;
+}
 
+.question__answer{
+    width: 100%;
+}
 
+.faq h4{
+    width: 100%;
+    font-size: 1rem;
+    text-transform: capitalize;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.2rem;
+    position: relative;
+    transition: 400ms;
+}
+
+.faq h4:hover{
+    color: var(--hover-color-1);
+}
+
+.faq h4 i{
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%) rotate(0);
+    color: var(--bg-black-1);
+    transition: 400ms;
+}
+
+.faq__icon{
+    align-self: flex-start;
+    font-size: 1.2rem;
+}
+
+.faq p {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(40, 44, 53, 0.8);
+    font-family: var(--font-2);
+    padding: 1rem 1.2rem;
+    display: none;
+}
 
 
 
@@ -716,13 +974,22 @@ button {
         margin: 0;
     }
 
-    .contactform__container{
+    .contactform__container {
         grid-template-columns: 1fr;
     }
-    
-    .contactform-right{
+
+    .contactform-right {
         margin-top: 3rem;
     }
+
+    .team__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about__us__container{
+        grid-template-columns: 1fr;
+    }
+
 
 
 }
@@ -740,7 +1007,7 @@ button {
         grid-template-columns: 1fr;
     }
 
-    .footer__bottom{
+    .footer__bottom {
         grid-template-columns: 1fr;
         place-items: center;
     }
@@ -756,9 +1023,11 @@ button {
         align-items: flex-start;
         justify-content: center;
     }
+
     .footer__contact__form input {
         width: 90%;
     }
+
     .footer__contact__form textarea {
         width: 90%;
     }
@@ -766,6 +1035,30 @@ button {
     .footer__social-menu {
         flex-direction: row;
     }
+
+    .about__features__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .features__desc {
+        font-size: 0.9rem;
+    }
+
+    .team__container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .team__img {
+        width: 330px;
+    }
+
+
+    .team p {
+        margin: 1rem 5rem;
+        font-size: 1rem;
+    }
+
+
 
 }
 
@@ -808,15 +1101,35 @@ button {
         border: none;
         border-right: 1px solid var(--border-color-1);
     }
-    
-    
-    .contactform-right{
+
+
+    .contactform-right {
         padding: 0 1rem;
         border: none;
     }
-    
-    .contactform-left{
+
+    .contactform-left {
         padding: 0 1rem;
+    }
+
+    .about__features__container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+
+    .team__img {
+        width: 290px;
+    }
+
+    .team__card {
+        border: 1px solid var(--light-color-2);
+        margin: 1rem 0;
+    }
+
+    
+    .team p {
+        margin: 1rem 3rem;
+        font-size: 0.8rem;
     }
 
 
@@ -836,6 +1149,15 @@ button {
     .topbar__item i {
         font-size: 0.8rem;
         padding: 0.3rem;
+    }
+
+    .team__img {
+        width: 250px;
+    }
+
+    .team p {
+        margin: 1rem 1rem;
+        font-size: 0.8rem;
     }
 
 }
