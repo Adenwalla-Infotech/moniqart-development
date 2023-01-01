@@ -4253,14 +4253,9 @@ function _deleteSocialMedia($id)
 
 function _getSocialMedia($startfrom = '', $limit = '')
 {
-
     require('_config.php');
-
-
     $sql = "SELECT * FROM `tblsocialmedia` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
-
     $query = mysqli_query($conn, $sql);
-
     if ($query) {
         foreach ($query as $data) {
         ?>
@@ -4296,6 +4291,16 @@ function _getSocialMedia($startfrom = '', $limit = '')
 }
 
 
+// FRONT END FUNCTION STARTS HERE 
+
+function _getmenu(){
+    require('_config.php');
+    $sql = "SELECT * FROM `tblmenusettings` WHERE `_status` = 'on' ORDER BY _indexing DESC";
+    $query = mysqli_query($conn,$sql);
+    foreach($query as $data){
+        
+    }
+}
 
 
 ?>
