@@ -6,6 +6,9 @@
 
 
     --bg-color-1: rgb(37, 37, 37);
+    --bg-color-2: rgba(37, 37, 37, 0.5);
+    --bg-color-3: rgba(37, 37, 37, 0.7);
+
 
     --white-color-1: rgb(255, 255, 255);
 
@@ -805,29 +808,29 @@ button {
 
 /* About Us */
 
-.about__us{
+.about__us {
     margin: 3rem 0;
 }
 
-.about__us__container{
+.about__us__container {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     place-items: center;
     margin-top: 2rem;
 }
 
-.about__us-left{
+.about__us-left {
     margin: 5rem 0;
 }
 
-.about__us-left h3{
+.about__us-left h3 {
     text-transform: uppercase;
     font-size: 1.3rem;
     color: var(--bg-black-1);
     font-weight: 600;
 }
 
-.about__us-left p{
+.about__us-left p {
     font-size: 1rem;
     color: var(--light-color-2);
     font-family: var(--font-2);
@@ -835,7 +838,7 @@ button {
 }
 
 
-.about__us-left button{
+.about__us-left button {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -847,26 +850,26 @@ button {
     transition: 400ms;
 }
 
-.about__us-left button i{
-    font-size: 2rem ;
+.about__us-left button i {
+    font-size: 2rem;
     color: var(--bg-color-1);
     margin-right: 0.8rem;
     transition: 400ms;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.about__us-left button:hover{
+.about__us-left button:hover {
     background: var(--hover-color-1);
     color: var(--white-color-1);
 }
 
-.about__us-left button:hover i{
+.about__us-left button:hover i {
     transform: translateX(5px);
     color: var(--white-color-1);
     border-right: 1px solid var(--white-color-1);
 }
 
-.about__us-right{
+.about__us-right {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -875,7 +878,7 @@ button {
 }
 
 
-.faq{
+.faq {
     width: 100%;
     padding: 1rem 0;
     display: flex;
@@ -887,23 +890,23 @@ button {
     overflow: hidden;
 }
 
-.faq.active h4{
+.faq.active h4 {
     color: var(--hover-color-1);
 }
 
-.faq.active h4 i{
+.faq.active h4 i {
     transform: translateY(-50%) rotate(180deg);
 }
 
-.faq.active p{
+.faq.active p {
     display: block;
 }
 
-.question__answer{
+.question__answer {
     width: 100%;
 }
 
-.faq h4{
+.faq h4 {
     width: 100%;
     font-size: 1rem;
     text-transform: capitalize;
@@ -913,11 +916,11 @@ button {
     transition: 400ms;
 }
 
-.faq h4:hover{
+.faq h4:hover {
     color: var(--hover-color-1);
 }
 
-.faq h4 i{
+.faq h4 i {
     position: absolute;
     top: 50%;
     right: 5px;
@@ -926,7 +929,7 @@ button {
     transition: 400ms;
 }
 
-.faq__icon{
+.faq__icon {
     align-self: flex-start;
     font-size: 1.2rem;
 }
@@ -942,12 +945,311 @@ button {
 }
 
 
+/* Blog  */
+
+.blog {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.blog__container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+}
+
+.blog__card {
+    margin: 1rem 1rem;
+}
+
+.blog__img img {
+    width: 350px;
+}
+
+.blog__date {
+    color: var(--bg-color-3);
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.blog__date span {
+    font-size: 0.7rem;
+}
+
+.blog__date i {
+    font-size: 1.5rem;
+}
+
+
+.blog__date .bx-calendar {
+    margin-right: 0.5rem;
+}
+
+.blog__date .bx-share {
+    margin-left: 1rem;
+    border-left: 1px solid var(--bg-color-3);
+    padding-left: 0.5rem;
+}
+
+.blog__title h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.blog__description p {
+    font-size: 0.9rem;
+    color: var(--light-color-1);
+    font-family: var(--font-2);
+}
+
+
+.blog__button button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1.2rem;
+    font-style: italic;
+    color: var(--bg-color-3);
+    transition: 400ms;
+    text-transform: lowercase;
+}
+
+.blog__button button i {
+    font-size: 2rem;
+    color: var(--bg-color-3);
+    margin-right: 0.8rem;
+    transition: 400ms;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.blog__button button:hover {
+    background: var(--hover-color-1);
+    color: var(--white-color-1);
+}
+
+.blog__button button:hover i {
+    transform: translateX(5px);
+    color: var(--white-color-1);
+    border-right: 1px solid var(--white-color-1);
+}
 
 
 
+/* Signle Course  */
+
+.single__course-header {
+    padding: 2rem 5rem;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    background: var(--bg-color-1);
+    color: whitesmoke;
+}
+
+.single__course-header-left {
+    padding: 2rem;
+}
+
+
+.single__course-header-left .category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.single__course-header-left .category span {
+    font-size: 1rem;
+    font-family: var(--font-2);
+}
+
+.single__course-header-left .category span i {
+    font-size: 2rem;
+    font-family: var(--font-2);
+}
+
+.single__course-header-left .title h5 {
+    font-size: 2.2rem;
+    margin: 1rem 0;
+}
+
+.single__course-header-left p {
+    font-size: 1.5rem;
+    font-family: var(--font-2);
+}
+
+.single__course-header-left .createdBy span {
+    font-size: 1rem;
+    font-family: var(--font-2);
+}
+
+.single__course-header-left .createdBy span a {
+    margin: 0;
+    color: wheat;
+}
+
+
+.single__course-header-right {
+    padding: 2rem;
+}
+
+.single__course-main {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: grid;
+    grid-template-columns: 50%;
+    padding: 3rem;
+}
+
+.main-learn {
+    margin-left: 5rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+}
+
+.main-learn h6 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--bg-black-1);
+    margin-bottom: 1rem;
+}
+
+.main-learn .learn-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+}
+
+.main-learn .learn-list li {
+    list-style: circle;
+    font-size: 0.9rem;
+    font-family: var(--font-2);
+    font-weight: 700;
+    color: var(--bg-black-1);
+    margin: 0.5rem;
+}
+
+
+.main-content {
+    margin-top: 2rem;
+    margin-left: 5rem;
+    padding: 2rem;
+}
+
+.main-content h6 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--bg-black-1);
+    margin-bottom: 1rem;
+}
 
 
 
+.content {
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* background-color: rgba(255, 255, 255,0.1); */
+}
+
+.content h5 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.4rem;
+    font-family: var(--font-2);
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--bg-black-1);
+}
+
+.content h5 i {
+    font-size: 1.4rem;
+    margin: 0 1rem;
+    transition: 100ms;
+}
+
+
+.content.active h5 i {
+    transform: rotate(180deg);
+}
+
+
+.content ul {
+    margin-top: 1rem;
+    display: none;
+}
+
+.content.active ul {
+    display: block;
+}
+
+.content ul li {
+    font-size: 0.9rem;
+    font-family: var(--font-2);
+    font-weight: 700;
+    color: var(--bg-black-1);
+    margin: 0.5rem;
+    list-style: circle;
+}
+
+.main-requirements {
+    margin-top: 2rem;
+    margin-left: 5rem;
+    padding: 2rem;
+}
+
+
+.main-requirements h6 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--bg-black-1);
+    margin-bottom: 1rem;
+}
+
+
+.main-requirements .requirements-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0;
+}
+
+.main-requirements .requirements-list li {
+    list-style: circle;
+    font-size: 0.9rem;
+    font-family: var(--font-2);
+    font-weight: 700;
+    color: var(--bg-black-1);
+    margin: 0.5rem;
+}
+
+
+
+.main-description {
+    margin-top: 2rem;
+    margin-left: 5rem;
+    padding: 2rem;
+}
+
+
+.main-description h6 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--bg-black-1);
+    margin-bottom: 1rem;
+}
+
+
+.main-description p {
+    font-size: 0.9rem;
+    font-family: var(--font-2);
+    font-weight: 700;
+    color: var(--bg-black-1);
+}
 
 
 
@@ -986,10 +1288,38 @@ button {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .about__us__container{
+    .about__us__container {
         grid-template-columns: 1fr;
     }
 
+    .blog__container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .blog__img img {
+        width: 400px;
+    }
+
+    .single__course-header {
+        grid-template-columns: 1fr;
+        /* padding: ; */
+    }
+
+    .single__course-header-right {
+        grid-row-start: 1;
+    }
+
+    .single__course-main {
+        grid-template-columns: 1fr;
+    }
+
+    .main-learn,
+    .main-content,
+    .main-requirements,
+    .main-description {
+        margin-left: 0;
+    }
 
 
 }
@@ -1059,6 +1389,13 @@ button {
     }
 
 
+    .blog__img img {
+        width: 300px;
+    }
+
+    .single__course-header {
+        padding: 1rem;
+    }
 
 }
 
@@ -1126,13 +1463,80 @@ button {
         margin: 1rem 0;
     }
 
-    
+
     .team p {
         margin: 1rem 3rem;
         font-size: 0.8rem;
     }
 
+    .blog__container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
 
+    .blog__img img {
+        width: 400px;
+    }
+
+    .single__course-main{
+        padding: 1rem;
+    }
+
+    .single__course-header-left {
+        padding: 0.3rem;
+    }
+
+    .single__course-header-right {
+        padding: 0.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .single__course-header-left .title h5 {
+        font-size: 1.5rem;
+    }
+
+    .single__course-header-left p {
+        font-size: 1rem;
+    }
+
+
+    .main-learn .learn-list {
+        grid-template-columns:  1fr;
+    }
+
+    .main-learn,
+    .main-content,
+    .main-requirements,
+    .main-description {
+       padding: 1rem;
+    }
+
+    .main-learn h6  ,
+    .main-content h6  ,
+    .main-requirements h6  ,
+    .main-description  h6  {
+        font-size: 1rem;
+    }
+
+    .main-learn .learn-list li {
+        font-size: 0.7rem;
+    }
+
+    .main-requirements .requirements-list li {
+        font-size: 0.7rem;
+    }
+
+    .main-description p {
+        font-size: 0.7rem;
+    }
+
+    .content h5{
+        font-size: 0.9rem;
+    }
+
+    .content ul li{
+        font-size: 0.6rem;
+    }
 
 }
 
@@ -1159,5 +1563,19 @@ button {
         margin: 1rem 1rem;
         font-size: 0.8rem;
     }
+
+
+    .blog__img img {
+        width: 250px;
+    }
+
+    .single__course-header-left .title h5 {
+        font-size: 1rem;
+    }
+
+    .single__course-header-left p {
+        font-size: 0.7rem;
+    }
+
 
 }

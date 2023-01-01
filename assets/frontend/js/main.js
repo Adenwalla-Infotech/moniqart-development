@@ -35,3 +35,21 @@ faqs.forEach((faq)=>{
     })
 
 })
+
+
+// Single Course Content
+
+const allContent = document.querySelectorAll('.content');
+
+allContent.forEach((content)=>{
+
+    const header = content.querySelector(" h5");
+    const paragraph = content.querySelector(" ul");
+
+    // console.log(header);
+    
+    content.addEventListener("click",()=>{
+        content.classList.toggle("active");
+    })
+
+})
