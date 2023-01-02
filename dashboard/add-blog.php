@@ -233,7 +233,7 @@ if (isset($_POST['submit'])) {
         const getSubCategory = (val) => {
             $.ajax({
                 type: "POST",
-                url: "getSubCategory.php",
+                url: "getSubCategory.php", 
                 data: 'catid=' + val,
                 success: function(data) {
                     $(`#subcategoryId`).html(data);
