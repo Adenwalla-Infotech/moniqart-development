@@ -20,7 +20,7 @@ require('../includes/_config.php');
 
 if (isset($_GET['del'])) {
     $_id = $_GET['id'];
-    _deleteCourse($_id);
+    _deleteProduct($_id);
 }
 
 
@@ -40,7 +40,7 @@ $start_from = ($page - 1) * $record_per_page;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Manage Courses |
+    <title>Manage Products |
         <?php echo _siteconfig('_sitetitle'); ?>
     </title>
     <!-- plugins:css -->
@@ -70,40 +70,14 @@ $start_from = ($page - 1) * $record_per_page;
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Manage Course</h4>
+                                <h4 class="card-title">Manage Products</h4>
                                 <p class="card-description">
                                     Web Help Desk uses tickets to manage service requests. These tickets can be
                                     initiated through email, created in the application, and imported from another
                                     application. Techs, admins, and clients can also manage tickets through email or
                                     through the application in a web browser.
                                 </p>
-                                <form method="POST" action="">
-                                    <div class="row">
 
-                                        <div class="col-lg-3" style="margin-bottom: 20px;">
-                                            <input type="text" class="form-control form-control-md" name="coursename"
-                                                placeholder="Course name">
-                                        </div>
-
-                                        <div class="col-lg-3" style="margin-bottom: 20px;">
-                                            <select id="teacheremailid" name="teacheremailid"
-                                                class="form-control select2" required>
-                                                <option>Email</option>
-                                                <?php _getTeachers() ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-3" style="margin-bottom: 20px;">
-                                            <input type="date" class="form-control form-control-sm" name="createdat">
-                                        </div>
-
-                                        <div class="col-lg-2">
-                                            <button name="search"
-                                                class="btn btn-block btn-primary btn-sm font-weight-medium auth-form-btn"
-                                                style="height:40px" name="submit"><i
-                                                    class="mdi mdi-account-search"></i>&nbsp;SEARCH</button>
-                                        </div>
-                                    </div>
-                                </form>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive">
@@ -113,9 +87,9 @@ $start_from = ($page - 1) * $record_per_page;
                                                     <tr>
 
                                                         <th>No</th>
-                                                        <th>Course Name</th>
-                                                        <th>Teacher Email Id</th>
-                                                        <th>Course Type</th>
+                                                        <th>Product Name</th>
+                                                        <th>SKU</th>
+                                                        <th>Price</th>
                                                         <th>Status</th>
                                                         <th>Created at</th>
                                                         <th>Updated at</th>
@@ -125,23 +99,9 @@ $start_from = ($page - 1) * $record_per_page;
                                                 </thead>
                                                 <tbody style="text-align: left;margin-left: 30px">
                                                     <?php
-                                                    if (isset($_POST['search'])) {
-
-                                                        $coursename = $_POST['coursename'];
-                                                        $teacheremailid = $_POST['teacheremailid'];
-                                                        $createdat = $_POST['createdat'];
-
-                                                        if ($coursename) {
-                                                            _getCourse($coursename, '', '', '', '');
-                                                        } else if ($teacheremailid) {
-                                                            _getCourse('', $teacheremailid, '', '', '');
-                                                        } else if ($createdat) {
-                                                            _getCourse('', '', $createdat, '', '');
-                                                        }
-
-                                                    }
+                                              
                                                     if (!isset($_POST['search'])) {
-                                                        _getCourse('', '', '', $start_from, $record_per_page);
+                                                        _getAllProducts($start_from, $record_per_page);
                                                     }
                                                     ?>
                                                 </tbody>
@@ -152,7 +112,7 @@ $start_from = ($page - 1) * $record_per_page;
                                 <nav aria-label="Page navigation example" style="margin-top: 30px;">
                                     <ul class="pagination">
                                         <?php
-                                        $query = mysqli_query($conn, "SELECT * FROM `tblcourse`");
+                                        $query = mysqli_query($conn, "SELECT * FROM `tblproducts`");
                                         $total_records = mysqli_num_rows($query);
                                         $total_pages = ceil($total_records / $record_per_page);
                                         $start_loop = $page;
@@ -163,18 +123,18 @@ $start_from = ($page - 1) * $record_per_page;
                                         $end_loop = $start_loop + 3;
                                         if ($page > 1) {
                                             echo "<li class='page-item'>
-                        <a href='manage-course?page=" . ($page - 1) . "' class='page-link'>Previous</a>
+                        <a href='manage-products?page=" . ($page - 1) . "' class='page-link'>Previous</a>
                       </li>";
                                         }
                                         if ($total_records > 5) {
                                             for ($i = 1; $i <= $total_pages; $i++) {
                                                 echo "
-                      <li class='page-item'><a class='page-link' href='manage-course?page=" . $i . "'>$i</a></li>";
+                      <li class='page-item'><a class='page-link' href='manage-products?page=" . $i . "'>$i</a></li>";
                                             }
                                         }
                                         if ($page <= $end_loop) {
                                             echo "<li class='page-item'>
-                        <a class='page-link' href='manage-course?page=" . ($page + 1) . "'>Next</a>
+                        <a class='page-link' href='manage-products?page=" . ($page + 1) . "'>Next</a>
                       </li>";
                                         } ?>
                                     </ul>
