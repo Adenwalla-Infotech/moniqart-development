@@ -2575,7 +2575,7 @@ function _getMembership($membershipname = '', $limit = '', $startfrom = '')
                                                             <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
                                                             <?php
                                                 }
-                                                if (!$data['_status']) {
+                                                if (!$data['_status'] || $data['_status'] == 'false') {
                                                     ?>
                                                             <input disabled role="switch" name="isactive" value="false" type="checkbox">
                                                             <?php
