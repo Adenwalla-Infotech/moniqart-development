@@ -150,7 +150,7 @@ if (isset($_POST['submit'])) {
                                         </div>
 
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
-                                            <?php _showCategoryOptions() ?>
+                                            <?php _showCategoryOptions("","blog") ?>
 
                                         </div>
                                     </div>

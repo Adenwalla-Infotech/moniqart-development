@@ -35,6 +35,8 @@ if (isset($_POST['submit'])) {
     $discountprice = $_POST['discountprice'];
     $productDesc = $_POST['productDesc'];
 
+    $categoryId = $_POST['categoryId'];
+    $subcategoryId = $_POST['subcategoryId'];
 
 
     if (isset($_POST['isactive'])) {
@@ -43,7 +45,7 @@ if (isset($_POST['submit'])) {
         $isactive = false;
     }
 
-    _updateProduct($id, $name, $sku, $price, $discountprice, $productDesc, $isactive);
+    _updateProduct($id, $name, $sku, $price, $discountprice, $productDesc, $isactive, $categoryId, $subcategoryId);
 }
 
 $record_per_page = 5;
@@ -201,8 +203,28 @@ if (isset($_POST['updateImgInGallery'])) {
                                 <form method="POST" action="" enctype="multipart/form-data" class="needs-validation"
                                     novalidate>
 
+                                    <div class="row g-3">
 
-                                    <div class="row g-3" style="margin-top: 20px;">
+
+                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                            <?php
+                                            $categoryId = _getSingleProduct($id, '_productcategory');
+                                            _showCategoryOptions($categoryId, "product")
+                                                ?>
+
+                                        </div>
+
+                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                            <?php
+                                            $subcategoryId = _getSingleProduct($id, '_productsubcategory');
+                                            _showSubCategoryOptions($subcategoryId)
+                                                ?>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row g-3">
                                         <div class="col-lg-6">
                                             <label htmlFor="name" class="form-label">Product Name</label>
                                             <input type="text" class="form-control" name="name" id="name"
@@ -428,6 +450,16 @@ if (isset($_POST['updateImgInGallery'])) {
 
             const callUpdateImgInGallery = (imgid) => {
 
+                const getSubCategory = (val) => {
+                    $.ajax({
+                        type: "POST",
+                        url: "getSubCategory.php",
+                        data: 'catid=' + val,
+                        success: function (data) {
+                            $(`#subcategoryId`).html(data);
+                        }
+                    });
+                }
 
                 $.ajax({
                     type: "POST",

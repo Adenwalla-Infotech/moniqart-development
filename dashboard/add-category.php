@@ -24,6 +24,8 @@ if (isset($_POST['submit'])) {
     $categoryname = $_POST['categoryname'];
     $categoryDesc = $_POST['categoryDesc'];
 
+    $_categorytype = $_POST['_categorytype'];
+
 
 
 
@@ -34,7 +36,7 @@ if (isset($_POST['submit'])) {
 
     }
 
-    _createCategory($categoryname, $categoryDesc, $isactive);
+    _createCategory($categoryname, $categoryDesc, $isactive, $_categorytype);
 }
 
 ?>
@@ -70,12 +72,12 @@ if (isset($_POST['submit'])) {
             <div class="main-panel">
                 <div class="content-wrapper">
                     <?php if ($_SESSION['forgot_success']) { ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Category Created!</strong> New Category created successfully.
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Category Created!</strong> New Category created successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php } ?>
+                        <?php } ?>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
@@ -106,11 +108,24 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 10px;">
 
-                                        <div class="col" style="margin-top: 10px;">
+                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                            <label for="_categorytype" class="form-label">Select Type</label>
+                                            <select style="height: 46px;" name="_categorytype"
+                                                class="form-control form-control-lg" id="_categorytype"
+                                                required>
+                                                <option selected disabled value="">Type</option>
+                                                <option value="blog">Blog</option>
+                                                <option value="courses">Course</option>
+                                                <option value="product">Product</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select categorytype</div>
+                                        </div>
+
+                                        <div class="col-6" style="margin-top: 40px;">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
                                                     id="isactive">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                <label class="custom-control-label"
                                                     for="isactive">Is
                                                     Active</label>
                                             </div>

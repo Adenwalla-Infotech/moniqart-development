@@ -41,7 +41,7 @@ require('../includes/_config.php');
 
 require('../includes/_functions.php');
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['lessonname'])) {
 
     $_lessonname = $_POST['lessonname'];
     $_courseid = $_POST['courseid'];
@@ -65,14 +65,14 @@ if (isset($_POST['submit'])) {
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only mp4 / mkv/ webm /avi format allowed');</script>";
         } else {
-            $lessonurl = '';
-            $lessondate = '';
-            $lessontime = '';
+            $lessonurl = null;
+            $lessondate = null;
+            $lessontime = null;
             $recorderfile = md5($lessonfile) . $extension;
             move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
         }
     } else {
-        $recorderfile = '';
+        $recorderfile = _getSingleLesson($id, '_recordedfilename');
         $lessonurl = $_POST['lessonurl'];
         $lessondate = $_POST['lessondate'];
         $lessontime = $_POST['lessontime'];
@@ -146,6 +146,8 @@ if (isset($_POST['editAttachment'])) {
             statusbar: false,
             branding: false,
             promotion: false,
+            plugins: 'wordcount',
+            toolbar: 'wordcount'
         });
     </script>
     <!-- End plugin css for this page -->
@@ -167,63 +169,63 @@ if (isset($_POST['editAttachment'])) {
                     <?php
 
                     if ($_SESSION['course_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Lesson Updated!</strong> Lesson Updated successfully.
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Lesson Updated!</strong> Lesson Updated successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['course_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Lesson Updation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Lesson Updation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['attachment_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Attachment Added</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Attachment Added</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['attachment_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Attachment Creation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Attachment Creation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['attachment_edit_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Attachment Updated</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Attachment Updated</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['attachment_edit_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Attachment Updation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Attachment Updation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     ?>
@@ -237,8 +239,8 @@ if (isset($_POST['editAttachment'])) {
                                     to write about the topic, and it will also make it more likely that people will be
                                     interested in reading what you have to say.
                                 </p>
-                                <form method="POST" action="" enctype="multipart/form-data" class="needs-validation"
-                                    novalidate>
+                                <form method="POST" action="" id="submitForm" enctype="multipart/form-data"
+                                    class="needs-validation" novalidate>
 
                                     <div class="row g-3">
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
@@ -273,15 +275,15 @@ if (isset($_POST['editAttachment'])) {
                                                 $lessontype = _getSingleLesson($id, '_lessontype');
 
                                                 if ($lessontype == 'Live') {
-                                                ?>
-                                                <option selected value="Live">Live</option>
-                                                <option value="Recorded">Recorded</option>
-                                                <?php
+                                                    ?>
+                                                    <option selected value="Live">Live</option>
+                                                    <option value="Recorded">Recorded</option>
+                                                    <?php
                                                 } else {
-                                                ?>
-                                                <option value="Live">Live</option>
-                                                <option selected value="Recorded">Recorded</option>
-                                                <?php
+                                                    ?>
+                                                    <option value="Live">Live</option>
+                                                    <option selected value="Recorded">Recorded</option>
+                                                    <?php
                                                 }
 
                                                 ?>
@@ -310,16 +312,16 @@ if (isset($_POST['editAttachment'])) {
                                             ;
 
                                             if ($lecture) {
-                                            ?>
-                                            <a href="../uploads/recordedlesson/<?php echo _getSingleLesson($id, '_recordedfilename'); ?>"
-                                                target="_blank">Open Video Lecture &nbsp;<svg
-                                                    xmlns="http://www.w3.org/2000/svg" style="width: 15px;"
-                                                    viewBox="0 0 512 512">
-                                                    <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
-                                                    <path
-                                                        d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z" />
-                                                </svg></a>
-                                            <?php
+                                                ?>
+                                                <a href="../uploads/recordedlesson/<?php echo _getSingleLesson($id, '_recordedfilename'); ?>"
+                                                    target="_blank">Open Video Lecture &nbsp;<svg
+                                                        xmlns="http://www.w3.org/2000/svg" style="width: 15px;"
+                                                        viewBox="0 0 512 512">
+                                                        <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                                                        <path
+                                                            d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z" />
+                                                    </svg></a>
+                                                <?php
 
                                             }
 
@@ -339,26 +341,25 @@ if (isset($_POST['editAttachment'])) {
 
                                                 <?php
 
-                                                    $status = _getSingleLesson($_id, '_status');
-                                                    if($status==true){
-                                                        ?>
-                                                        <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive" checked>
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="isactive">Is
-                                                            Active</label>
-                                                        <?php
-                                                    }
-                                                    else{
-                                                        ?>
-                                                        <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive">
-                                                        <label class="custom-control-label" style="margin-left: 20px;"
-                                                            for="isactive">Is
-                                                            Active</label>
-                                                        <?php
-                                                    }
-                                             ?>
+                                                $status = _getSingleLesson($id, '_status');
+                                                if ($status == true) {
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive"
+                                                        id="isactive" checked>
+                                                    <label class="custom-control-label" style="margin-left: 20px;"
+                                                        for="isactive">Is
+                                                        Active</label>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive"
+                                                        id="isactive">
+                                                    <label class="custom-control-label" style="margin-left: 20px;"
+                                                        for="isactive">Is
+                                                        Active</label>
+                                                    <?php
+                                                }
+                                                ?>
 
 
                                             </div>
@@ -375,7 +376,7 @@ if (isset($_POST['editAttachment'])) {
                                                 value="<?php echo _getSingleLesson($id, '_lessonname'); ?>" required>
                                             <div class="invalid-feedback">Please type correct Description</div>
                                             <div id="wordCountDisplay" style="margin: 10px 5px; display: none;">
-                                                <p style="color: red;">Word Count <strong style="color: red;"
+                                                <p style="color: green;">Word Count <strong style="color: green;"
                                                         id="wordCount"></strong> </p>
                                             </div>
                                         </div>
@@ -410,20 +411,46 @@ if (isset($_POST['editAttachment'])) {
                                         </div>
                                     </div>
 
-                                    <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
-                                            class="btn btn-primary">Update Lesson</button>
-                                        <button type="button"
-                                            class="btn btn-primary btn-sm font-weight-medium auth-form-btn"
-                                            style="height:40px; float:right; " data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" style="width: 15px;"
-                                                viewBox="0 0 448 512">
-                                                <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
-                                                <path
-                                                    d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                                            </svg>&nbsp;&nbsp;Add Attachment
-                                        </button>
+                                    <div class="row" style="margin-top: 30px;">
+
+
+                                        <div class="col-6" style="margin-top: 30px;">
+
+                                            <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
+                                                class="btn btn-primary">Update Lesson</button>
+
+                                        </div>
+
+                                        <div class="col-6" style="margin-top: 40px; display: none; "
+                                            id="progressBarDiv">
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar" role="progressbar" id="progressbar"
+                                                    style="width: 0%;" aria-valuenow="50" aria-valuemin="0"
+                                                    aria-valuemax="100">0%</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row" style="margin-top: 30px;">
+
+                                        <div class="col-6">
+                                        </div>
+
+                                        <div class="col-6">
+                                            <button type="button"
+                                                class="btn btn-primary btn-sm font-weight-medium auth-form-btn"
+                                                style="height:40px; float:right; " data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="white"
+                                                    style="width: 15px;" viewBox="0 0 448 512">
+                                                    <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                                                    <path
+                                                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                                                </svg>&nbsp;&nbsp;Add Attachment
+                                            </button>
+                                        </div>
+
                                     </div>
 
                                 </form>
@@ -554,7 +581,6 @@ if (isset($_POST['editAttachment'])) {
 
 
         <script>
-
             const callEditAttachment = (lessonid, attachmentid) => {
 
 
@@ -628,8 +654,7 @@ if (isset($_POST['editAttachment'])) {
 
                     lessonfile.style.display = 'none'
                     lessonfile.children[1].removeAttribute('required');
-                }
-                else if (input == 'Recorded') {
+                } else if (input == 'Recorded') {
                     lessonfile.style.display = 'block'
                     lessonfile.children[1].setAttribute('required', true);
 
@@ -658,6 +683,67 @@ if (isset($_POST['editAttachment'])) {
                 }
             })
 
+
+            const form = document.getElementById("submitForm");
+
+            const progressBarDiv = document.getElementById("progressBarDiv");
+            const progressbar = document.getElementById("progressbar");
+
+
+            form.onsubmit = function (e) {
+
+
+                e.preventDefault();
+
+                let lessonname = e.target.lessonname.value
+                let availablity = e.target.availablity.value;
+                let courseid = e.target.courseid.value
+                let lessonDescription = e.target.lessonDescription.value
+                let lessontype = e.target.lessontype.value
+
+
+
+                if (lessonname != "" && availablity != "" && courseid != "" && lessonDescription != "" && lessontype !=
+                    "") {
+
+                    progressBarDiv.style.display = "block"
+
+                    let uploadFormData = new FormData(form);
+
+
+                    // Initiate the AJAX request
+                    let request = new XMLHttpRequest();
+
+                    // Ensure the request method is POST
+                    request.open('POST', form.action);
+
+                    // Attach the progress event handler to the AJAX request
+                    request.upload.addEventListener('progress', event => {
+                        // Add the current progress to the button
+
+                        let progress = ((event.loaded / event.total) * 100).toFixed(0);
+
+                        progressbar.style.width = `${progress}%`
+                        progressbar.innerHTML = `${progress}%`
+
+                    });
+
+
+                    request.onreadystatechange = () => {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    };
+
+                    // Execute request
+                    const res = request.send(uploadFormData);
+
+
+                } else {
+                    // alert("All Fields Are Required")
+                    // Bootstrap Alert
+                }
+            }
         </script>
 
 

@@ -394,6 +394,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_categoryname` varchar(50) NOT NULL,
                 `_categoryDescription` varchar(100) NOT NULL,
+                `_categorytype` varchar(100) NOT NULL,
                 `_status` varchar(20) NOT NULL,
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
@@ -652,6 +653,8 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_discountprice` varchar(100) NOT NULL,
                 `_desc` text NOT NULL,
                 `_status` varchar(100) NOT NULL,
+                `_productcategory` varchar(100) NOT NULL,
+                `_productsubcategory` varchar(100) NOT NULL,
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
@@ -675,8 +678,48 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_star3` varchar(55) NULL,
                 `_star4` varchar(55) NULL,
                 `_star5` varchar(55) NULL,
-                `_comment` varchar(100) NULL,
-                `_status` varchar(55) NULL,
+                `_comment` varchar(100) NOT NULL,
+                `_status` varchar(100) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+            $countryDB = "CREATE TABLE IF NOT EXISTS `tblcountry` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_countryname` varchar(255) NOT NULL,
+                `_countrycode` varchar(255) NULL,
+                `_flag` varchar(255) NULL,
+                `_status` varchar(100) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+            $stateDB = "CREATE TABLE IF NOT EXISTS `tblstates` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_statename` varchar(255) NOT NULL,
+                `_statecode` varchar(255) NULL,
+                `_countryid` varchar(255) NULL,
+                `_status` varchar(100) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+
+            $shippingDB = "CREATE TABLE IF NOT EXISTS `tblshipping` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_country` varchar(255) NOT NULL,
+                `_state` varchar(255) NULL,
+                `_feetype` varchar(255) NULL,
+                `_price` varchar(255) NULL,
+                `_status` varchar(100) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+            $ordersDB = "CREATE TABLE IF NOT EXISTS `tblorders` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_productid` varchar(255) NOT NULL,
+                `_productprice` varchar(255) NULL,
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
@@ -685,7 +728,8 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
 
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB];
+
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -917,60 +961,54 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
         $query = mysqli_query($conn, $sql);
         if ($query) {
             foreach ($query as $data) { ?>
-                                                <tr>
-                                                    <td><?php echo $data['_username']; ?></td>
-                                                    <td><?php echo $data['_useremail']; ?></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($data['_usertype'] == 0) { ?>
-                                                                    <span>Student</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 1) { ?>
-                                                                    <span>Teacher</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 2) { ?>
-                                                                    <span>Site Admin</span>
-                                                                    <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline form-switch">
-                                                            <?php
-                                                            if ($data['_userstatus'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userstatus'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline">
-                                                            <?php
-                                                            if ($data['_userverify'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userverify'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if (strtotime($data['UpdationDate']) == '') {
-                                                            echo "Not Updated Yet";
-                                                        } else {
-                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                            class="mdi mdi-pencil-box"></a>
-                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
-                                                    </td>
-                                                </tr>
-                                            <?php }
+                                                                <tr>
+                                                                    <td><?php echo $data['_username']; ?></td>
+                                                                    <td><?php echo $data['_useremail']; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($data['_usertype'] == 0) { ?>
+                                                                                        <span>Student</span>
+                                                                                <?php }
+                                                                        if ($data['_usertype'] == 1) { ?>
+                                                                                        <span>Teacher</span>
+                                                                                <?php }
+                                                                        if ($data['_usertype'] == 2) { ?>
+                                                                                        <span>Site Admin</span>
+                                                                                <?php } ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="checkbox-inline form-switch">
+                                                                            <?php
+                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                            ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="checkbox-inline">
+                                                                            <?php
+                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                            ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                                            echo "Not Updated Yet";
+                                                                        } else {
+                                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php }
         }
     }
     if ($username != '') {
@@ -978,60 +1016,54 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
         $query = mysqli_query($conn, $sql);
         if ($query) {
             foreach ($query as $data) { ?>
-                                                <tr>
-                                                    <td><?php echo $data['_username']; ?></td>
-                                                    <td><?php echo $data['_useremail']; ?></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($data['_usertype'] == 0) { ?>
-                                                                    <span>Student</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 1) { ?>
-                                                                    <span>Teacher</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 2) { ?>
-                                                                    <span>Site Admin</span>
-                                                                    <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline form-switch">
-                                                            <?php
-                                                            if ($data['_userstatus'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userstatus'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline">
-                                                            <?php
-                                                            if ($data['_userverify'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userverify'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if (strtotime($data['UpdationDate']) == '') {
-                                                            echo "Not Updated Yet";
-                                                        } else {
-                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                            class="mdi mdi-pencil-box"></a>
-                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
-                                                    </td>
-                                                </tr>
-                                            <?php }
+                                                                <tr>
+                                                                    <td><?php echo $data['_username']; ?></td>
+                                                                    <td><?php echo $data['_useremail']; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($data['_usertype'] == 0) { ?>
+                                                                                        <span>Student</span>
+                                                                                <?php }
+                                                                        if ($data['_usertype'] == 1) { ?>
+                                                                                        <span>Teacher</span>
+                                                                                <?php }
+                                                                        if ($data['_usertype'] == 2) { ?>
+                                                                                        <span>Site Admin</span>
+                                                                                <?php } ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="checkbox-inline form-switch">
+                                                                            <?php
+                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                            ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="checkbox-inline">
+                                                                            <?php
+                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                            ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                                            echo "Not Updated Yet";
+                                                                        } else {
+                                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php }
         }
     }
 
@@ -1044,120 +1076,108 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
 
         if ($query) {
             foreach ($query as $data) { ?>
-                                                <tr>
-                                                    <td><?php echo $data['_username']; ?></td>
-                                                    <td><?php echo $data['_useremail']; ?></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($data['_usertype'] == 0) { ?>
-                                                                    <span>Student</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 1) { ?>
-                                                                    <span>Teacher</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 2) { ?>
-                                                                    <span>Site Admin</span>
-                                                                    <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline form-switch">
-                                                            <?php
-                                                            if ($data['_userstatus'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userstatus'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline">
-                                                            <?php
-                                                            if ($data['_userverify'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userverify'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if (strtotime($data['UpdationDate']) == '') {
-                                                            echo "Not Updated Yet";
-                                                        } else {
-                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                            class="mdi mdi-pencil-box"></a>
-                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
-                                                    </td>
-                                                </tr>
-                                            <?php }
+                                                                <tr>
+                                                                    <td><?php echo $data['_username']; ?></td>
+                                                                    <td><?php echo $data['_useremail']; ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($data['_usertype'] == 0) { ?>
+                                                                                        <span>Student</span>
+                                                                                <?php }
+                                                                        if ($data['_usertype'] == 1) { ?>
+                                                                                        <span>Teacher</span>
+                                                                                <?php }
+                                                                        if ($data['_usertype'] == 2) { ?>
+                                                                                        <span>Site Admin</span>
+                                                                                <?php } ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="checkbox-inline form-switch">
+                                                                            <?php
+                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                            ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="checkbox-inline">
+                                                                            <?php
+                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                            ?>
+                                                                        </label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                                            echo "Not Updated Yet";
+                                                                        } else {
+                                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                                        }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php }
         }
     } else if ($username == '' && $usertype == '' && $createdat == '') {
         $sql = "SELECT * FROM `tblusers` ORDER BY `CreationDate` DESC LIMIT $startfrom, $limit";
         $query = mysqli_query($conn, $sql);
         if ($query) {
             foreach ($query as $data) { ?>
-                                                <tr>
-                                                    <td><?php echo $data['_username']; ?></td>
-                                                    <td><?php echo $data['_useremail']; ?></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($data['_usertype'] == 0) { ?>
-                                                                    <span>Student</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 1) { ?>
-                                                                    <span>Teacher</span>
-                                                                    <?php }
-                                                        if ($data['_usertype'] == 2) { ?>
-                                                                    <span>Site Admin</span>
-                                                                    <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline form-switch">
-                                                            <?php
-                                                            if ($data['_userstatus'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userstatus'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <label class="checkbox-inline">
-                                                            <?php
-                                                            if ($data['_userverify'] == true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                            if ($data['_userverify'] != true) { ?><input disabled
-                                                                            role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                            ?>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if (strtotime($data['UpdationDate']) == '') {
-                                                            echo "Not Updated Yet";
-                                                        } else {
-                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
-                                                        }
-                                                        ?>
-                                                    </td>
-                                                    <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                            class="mdi mdi-pencil-box"></a>
-                                                        <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
-                                                    </td>
-                                                </tr>
-                                            <?php }
+                                                                    <tr>
+                                                                        <td><?php echo $data['_username']; ?></td>
+                                                                        <td><?php echo $data['_useremail']; ?></td>
+                                                                        <td>
+                                                                            <?php
+                                                                            if ($data['_usertype'] == 0) { ?>
+                                                                                            <span>Student</span>
+                                                                                <?php }
+                                                                            if ($data['_usertype'] == 1) { ?>
+                                                                                            <span>Teacher</span>
+                                                                                <?php }
+                                                                            if ($data['_usertype'] == 2) { ?>
+                                                                                            <span>Site Admin</span>
+                                                                                <?php } ?>
+                                                                        </td>
+                                                                        <td>
+                                                                            <label class="checkbox-inline form-switch">
+                                                                                <?php
+                                                                                if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                                if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                                ?>
+                                                                            </label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <label class="checkbox-inline">
+                                                                                <?php
+                                                                                if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                                                if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                                                ?>
+                                                                            </label>
+                                                                        </td>
+                                                                        <td>
+                                                                        <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php
+                                                                            if (strtotime($data['UpdationDate']) == '') {
+                                                                                echo "Not Updated Yet";
+                                                                            } else {
+                                                                                echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                                            }
+                                                                            ?>
+                                                                        </td>
+                                                                        <td><a href="edit-user?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                                            <a href='manage-users?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                        </td>
+                                                                    </tr>
+                                                        <?php }
         }
     }
 }
@@ -1479,37 +1499,35 @@ function _gettickets($ticketid = '', $status = '', $createdAt = '', $limit = '',
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <?php if ($_SESSION['userType'] == 2) { ?>
-                                                    <td><?php echo $data['_id']; ?></td>
-                                                    <?php } ?>
-                                        <td><?php echo $data['_title']; ?></td>
-                                        <?php if ($_SESSION['userType'] == 2) { ?>
-                                                    <td><?php echo $data['_useremail']; ?></td>
-                                                    <?php } ?>
-                                        <td><?php echo $data['_status']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><a href="view-ticket?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-eye"></a>
-                                            <?php if ($_SESSION['userType'] == 2) { ?>
-                                                        <a href='manage-tickets?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                <tr>
+                                                    <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                    <td><?php echo $data['_id']; ?></td>
+                                                            <?php } ?>
+                                                    <td><?php echo $data['_title']; ?></td>
+                                                    <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                    <td><?php echo $data['_useremail']; ?></td>
+                                                            <?php } ?>
+                                                    <td><?php echo $data['_status']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
                                                     </td>
-                                                    <?php } ?>
-                                    </tr>
-                                    <hr>
-                                <?php }
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><a href="view-ticket?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-eye"></a>
+                                                        <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                        <a href='manage-tickets?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                </td>
+                                                        <?php } ?>
+                                                </tr>
+                                                <hr>
+                                        <?php }
     }
 }
 
@@ -1573,18 +1591,16 @@ function _getticketres($id)
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                                        <div class="ms-2 me-auto">
-                                            <div class="fw-bold"><i class="mdi mdi-share text-primary"
-                                                    style="font-size: 18px;"></i>&nbsp;&nbsp;<strong><?php echo $data['_useremail']; ?></strong></div>
-                                            <?php echo $data['_message']; ?>
-                                        </div>
-                                        <?php if ($data['_image']) { ?>
-                                                    <a href="../uploads/tickets/<?php echo $data['_image'] ?>" class="badge bg-primary rounded-pill"><i
-                                                            style="font-size: 18px" class="mdi mdi-cloud-download text-light"></i></a>
-                                                    <?php } ?>
-                                    </li>
-                                <?php }
+                                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                    <div class="ms-2 me-auto">
+                                                        <div class="fw-bold"><i class="mdi mdi-share text-primary" style="font-size: 18px;"></i>&nbsp;&nbsp;<strong><?php echo $data['_useremail']; ?></strong></div>
+                                                        <?php echo $data['_message']; ?>
+                                                    </div>
+                                                    <?php if ($data['_image']) { ?>
+                                                                    <a href="../uploads/tickets/<?php echo $data['_image'] ?>" class="badge bg-primary rounded-pill"><i style="font-size: 18px" class="mdi mdi-cloud-download text-light"></i></a>
+                                                            <?php } ?>
+                                                </li>
+                                        <?php }
     }
 }
 
@@ -1592,7 +1608,7 @@ function _getticketres($id)
 
 // Category Functions
 
-function _createCategory($categoryname, $categoryDesc, $isactive)
+function _createCategory($categoryname, $categoryDesc, $isactive, $_categorytype)
 {
 
     require('_config.php');
@@ -1600,8 +1616,6 @@ function _createCategory($categoryname, $categoryDesc, $isactive)
 
     if ($categoryname != '') {
 
-        $subject = "Category Created";
-        $message = "Category Created Successfully";
         $sql = "SELECT * FROM `tblcategory` WHERE `_categoryname` = '$categoryname'";
         $query = mysqli_query($conn, $sql);
         if ($query) {
@@ -1611,7 +1625,7 @@ function _createCategory($categoryname, $categoryDesc, $isactive)
                 $alert->warn("Category Already Exists");
             } else {
 
-                $sql = "INSERT INTO `tblcategory`(`_categoryname`, `_categoryDescription`, `_status`) VALUES ('$categoryname','$categoryDesc','$isactive')";
+                $sql = "INSERT INTO `tblcategory`(`_categoryname`, `_categoryDescription`, `_status` , `_categorytype`) VALUES ('$categoryname','$categoryDesc','$isactive','$_categorytype')";
 
 
                 $query = mysqli_query($conn, $sql);
@@ -1641,40 +1655,36 @@ function _getCategory($_categoryname = '', $status = '', $limit = '', $startfrom
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <td><?php echo $data['_categoryname']; ?></td>
-                                        <td>
+                                                <tr>
+                                                    <td><?php echo $data['_categoryname']; ?></td>
+                                                    <td>
 
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" checked type="checkbox"><?php }
-                                                if ($data['_status'] != true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" type="checkbox"><?php }
-                                                ?>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><a href="edit-category?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <?php if ($_SESSION['userType'] == 2) { ?>
-                                                        <a href='manage-category?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
                                                     </td>
-                                                    <?php } ?>
-                                    </tr>
-                                <?php }
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><a href="edit-category?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                        <a href='manage-category?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                </td>
+                                                        <?php } ?>
+                                                </tr>
+                                        <?php }
     }
 }
 
@@ -1690,14 +1700,15 @@ function _getSingleCategory($id, $param)
     }
 }
 
-function _updateCategory($_categoryname, $categoryDesc, $isactive, $_id)
+function _updateCategory($_categoryname, $categoryDesc, $isactive, $_id, $_categorytype)
 {
 
     require('_config.php');
     require('_alert.php');
 
 
-    $sql = "UPDATE `tblcategory` SET `_categoryname`='$_categoryname' , `_categoryDescription`='$categoryDesc' , `_status`='$isactive' WHERE `_id` = $_id";
+    $sql = "UPDATE `tblcategory` SET `_categoryname`='$_categoryname' , `_categoryDescription`='$categoryDesc', `_categorytype`='$_categorytype' , `_status`='$isactive' WHERE `_id` = $_id";
+
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $alert = new PHPAlert();
@@ -1729,8 +1740,6 @@ function _createSubCategory($subCategoryname, $categoryId, $subCategoryDesc, $is
 
     if ($subCategoryname != '') {
 
-        $subject = "Sub Category Created";
-        $message = "Sub Category Created Successfully";
         $sql = "SELECT * FROM `tblsubcategory` WHERE `_subcategoryname` = '$subCategoryname'";
         $query = mysqli_query($conn, $sql);
         if ($query) {
@@ -1769,54 +1778,50 @@ function _getSubCategory($_subcategoryname = '', $limit = '', $startfrom = '')
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_subcategoryname']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_subcategoryname']; ?></td>
 
-                                        <td>
+                                                    <td>
 
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" checked type="checkbox"><?php }
-                                                if ($data['_status'] != true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" type="checkbox"><?php }
-                                                ?>
-                                            </label>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
 
 
-                                        </td>
-                                        <td><?php
-                                        $catid = $data['_categoryid'];
-                                        $sql = "SELECT * FROM `tblcategory` WHERE `_id` = $catid";
-                                        $query = mysqli_query($conn, $sql);
-                                        if ($query) {
-                                            foreach ($query as $cat_data) {
-                                                echo $cat_data['_categoryname'];
-                                            }
-                                        }
-                                        ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><a href="edit-subcategory?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <?php if ($_SESSION['userType'] == 2) { ?>
-                                                        <a href='manage-subcategory?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
                                                     </td>
-                                                    <?php } ?>
-                                    </tr>
-                                <?php }
+                                                    <td><?php
+                                                    $catid = $data['_categoryid'];
+                                                    $sql = "SELECT * FROM `tblcategory` WHERE `_id` = $catid";
+                                                    $query = mysqli_query($conn, $sql);
+                                                    if ($query) {
+                                                        foreach ($query as $cat_data) {
+                                                            echo $cat_data['_categoryname'];
+                                                        }
+                                                    }
+                                                    ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><a href="edit-subcategory?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                        <a href='manage-subcategory?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                </td>
+                                                        <?php } ?>
+                                                </tr>
+                                        <?php }
     }
 }
 
@@ -1865,67 +1870,124 @@ function _deleteSubCategory($id)
     }
 }
 
-function _showCategoryOptions($_categoryID = '')
+function _showCategoryOptions($_categoryID = '', $categoryType = '')
 {
 
     require('_config.php');
 
+    if ($categoryType != '' && $_categoryID != '') {
 
-    if ($_categoryID != '') {
+
+        $sql = "SELECT * FROM `tblcategory`  where `_categorytype`='$categoryType'  ";
+
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            ?>
+                                                <label for="categoryId" class="form-label">Select Category</label>
+                                                <select style="height: 40px;" id="categoryId" name="categoryId" onClick="getSubCategory(this.options[this.selectedIndex].value)" class="form-control form-control-lg" required>
+
+                                                    <option selected disabled value="">Category</option>
+
+                                                    <?php
+                                                    foreach ($query as $data) {
+
+                                                        $currentId = $data['_id'];
+
+                                                        if ($_categoryID == $currentId) {
+                                                            ?>
+                                                                                    <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_categoryname']; ?> </option>
+                                                                                <?php
+                                                        } else {
+                                                            ?>
+                                                                                    <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_categoryname']; ?> </option>
+                                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+
+                                                </select>
+                                                <div class="invalid-feedback">Please select proper category</div>
+                                            <?php
+
+
+        }
+
+    } else if ($_categoryID != '') {
 
         $sql = "SELECT * FROM `tblcategory`  ";
 
         $query = mysqli_query($conn, $sql);
         if ($query) {
             ?>
-                                    <label for="categoryId" class="form-label">Select Category</label>
-                                    <select style="height: 40px;" id="categoryId" name="categoryId"
-                                        onClick="getSubCategory(this.options[this.selectedIndex].value)" class="form-control form-control-lg" required>
+                                                    <label for="categoryId" class="form-label">Select Category</label>
+                                                    <select style="height: 40px;" id="categoryId" name="categoryId" onClick="getSubCategory(this.options[this.selectedIndex].value)" class="form-control form-control-lg" required>
 
-                                        <option selected disabled value="">Category</option>
+                                                        <option selected disabled value="">Category</option>
 
-                                        <?php
-                                        foreach ($query as $data) {
+                                                        <?php
+                                                        foreach ($query as $data) {
 
-                                            $currentId = $data['_id'];
+                                                            $currentId = $data['_id'];
 
-                                            if ($_categoryID == $currentId) {
-                                                ?>
-                                                                <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_categoryname']; ?> </option>
-                                                                <?php
-                                            } else {
-                                                ?>
-                                                                <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_categoryname']; ?> </option>
-                                                                <?php
-                                            }
-                                        }
-                                        ?>
+                                                            if ($_categoryID == $currentId) {
+                                                                ?>
+                                                                                        <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_categoryname']; ?> </option>
+                                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                                        <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_categoryname']; ?> </option>
+                                                                            <?php
+                                                            }
+                                                        }
+                                                        ?>
 
-                                    </select>
-                                    <div class="invalid-feedback">Please select proper category</div>
-                                <?php
+                                                    </select>
+                                                    <div class="invalid-feedback">Please select proper category</div>
+                                            <?php
 
 
         }
+    } else if ($categoryType != '') {
+
+        $sql = "SELECT * FROM `tblcategory` where `_categorytype`='$categoryType' ";
+        $query = mysqli_query($conn, $sql);
+        if ($query) {
+            ?>
+                                                        <label for="categoryId" class="form-label">Select Category</label>
+                                                        <select style="height: 46px;" id="categoryId" name="categoryId" onClick="getSubCategory(this.options[this.selectedIndex].value)" class="form-control form-control-lg" required>
+                                                            <option selected disabled value="">Select Category</option>
+                                                        <?php
+                                                        foreach ($query as $data) {
+                                                            ?>
+                                                                            <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_categoryname']; ?> </option>
+                                                                <?php
+                                                        }
+                                                        ?>
+
+                                                        </select>
+                                                        <div class="invalid-feedback">Please select proper category</div>
+                                            <?php
+        }
+
     } else {
         $sql = "SELECT * FROM `tblcategory`";
         $query = mysqli_query($conn, $sql);
-        if ($query) { ?>
-                                    <label for="categoryId" class="form-label">Select Category</label>
-                                    <select style="height: 46px;" id="categoryId" name="categoryId"
-                                        onClick="getSubCategory(this.options[this.selectedIndex].value)" class="form-control form-control-lg" required>
-                                        <option selected disabled value="">Select Category</option>
-                                        <?php
-                                        foreach ($query as $data) {
-                                            ?>
-                                                    <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_categoryname']; ?> </option>
-                                                    <?php
-                                        }
-                                        ?>
+        if ($query) {
+            ?>
+                                                        <label for="categoryId" class="form-label">Select Category</label>
+                                                        <select style="height: 46px;" id="categoryId" name="categoryId" onClick="getSubCategory(this.options[this.selectedIndex].value)" class="form-control form-control-lg" required>
+                                                            <option selected disabled value="">Select Category</option>
+                                                        <?php
+                                                        foreach ($query as $data) {
+                                                            ?>
+                                                                            <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_categoryname']; ?> </option>
+                                                                <?php
+                                                        }
+                                                        ?>
 
-                                    </select>
-                                    <div class="invalid-feedback">Please select proper category</div>
-                                <?php
+                                                        </select>
+                                                        <div class="invalid-feedback">Please select proper category</div>
+                                            <?php
         }
     }
 }
@@ -1946,22 +2008,21 @@ function _showSubCategoryOptions($_subcategoryID = '')
 
 
             ?>
-                                    <label for="subcategoryId" class="form-label">Select Sub-Category</label>
-                                    <select style="height: 40px;" id="subcategoryId" name="subcategoryId" id="subcategory"
-                                        class="form-control form-control-lg" required>
+                                                <label for="subcategoryId" class="form-label">Select Sub-Category</label>
+                                                <select style="height: 40px;" id="subcategoryId" name="subcategoryId" id="subcategory" class="form-control form-control-lg" required>
 
-                                        <?php
-
-                                        foreach ($query as $data) {
-                                            ?>
-                                                    <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_subcategoryname']; ?> </option>
                                                     <?php
-                                        }
 
-                                        ?>
+                                                    foreach ($query as $data) {
+                                                        ?>
+                                                                    <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_subcategoryname']; ?> </option>
+                                                                <?php
+                                                    }
 
-                                    </select>
-                                <?php
+                                                    ?>
+
+                                                </select>
+                                            <?php
 
 
         }
@@ -1972,13 +2033,12 @@ function _showSubCategoryOptions($_subcategoryID = '')
         if ($query) {
 
             ?>
-                                    <label for="subcategoryId" class="form-label">Select Sub-Category</label>
-                                    <select style="height: 46px;" id="subcategoryId" name="subcategoryId" id="subcategory"
-                                        class="form-control form-control-lg" required>
+                                                <label for="subcategoryId" class="form-label">Select Sub-Category</label>
+                                                <select style="height: 46px;" id="subcategoryId" name="subcategoryId" id="subcategory" class="form-control form-control-lg" required>
 
 
-                                    </select>
-                                <?php
+                                                </select>
+                                            <?php
 
 
         }
@@ -2027,62 +2087,60 @@ function _getBlogs($blogtitle = '', $blogcategory = '', $blogsubcategory = '', $
 
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_blogtitle']; ?></td>
-                                        <td>
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == 'true') {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                <tr>
+                                                    <td><?php echo $data['_blogtitle']; ?></td>
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
                                                             <?php
-                                                }
-                                                if ($data['_status'] != 'true') {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                            <?php
-                                                }
-                                                ?>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            $catid = $data['_blogcategory'];
-                                            $sql = "SELECT * FROM `tblcategory` WHERE `_id` = $catid";
-                                            $query = mysqli_query($conn, $sql);
-                                            if ($query) {
-                                                foreach ($query as $result) {
-                                                    echo $result['_categoryname'];
-                                                }
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-blog?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <?php if ($_SESSION['userType'] == 2) { ?>
-                                                        <a href='manage-blog?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                            if ($data['_status'] == 'true') {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            if ($data['_status'] != 'true') {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            ?>
+                                                        </label>
                                                     </td>
-                                                    <?php
-                                                    }
-                                                    ?>
+                                                    <td>
+                                                        <?php
+                                                        $catid = $data['_blogcategory'];
+                                                        $sql = "SELECT * FROM `tblcategory` WHERE `_id` = $catid";
+                                                        $query = mysqli_query($conn, $sql);
+                                                        if ($query) {
+                                                            foreach ($query as $result) {
+                                                                echo $result['_categoryname'];
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-blog?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                        <a href='manage-blog?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                </td>
+                                                            <?php
+                                                        }
+                                                        ?>
 
-                                    </tr>
+                                                </tr>
 
-                                <?php
+                                            <?php
 
         }
     }
@@ -2165,35 +2223,34 @@ function _getmarkup($conversion = '', $status = '', $limit = '', $startfrom = ''
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <td><?php echo $data['_basecurrency']; ?></td>
-                                        <td><?php echo $data['_conversioncurrency']; ?></td>
-                                        <td><?php echo $data['_price']; ?></td>
-                                        <td>
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == 'true') {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                <tr>
+                                                    <td><?php echo $data['_basecurrency']; ?></td>
+                                                    <td><?php echo $data['_conversioncurrency']; ?></td>
+                                                    <td><?php echo $data['_price']; ?></td>
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
                                                             <?php
-                                                }
-                                                if (!$data['_status']) {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                            <?php
-                                                }
-                                                ?>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <a href='manage-currency?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php }
+                                                            if ($data['_status'] == 'true') {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            if (!$data['_status']) {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            ?>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href='manage-currency?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
+                                        <?php }
     }
 }
 
@@ -2212,8 +2269,8 @@ function _getmarkupOnlyCurrency()
 
         foreach ($query as $data) {
             ?>
-                                    <option value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
-                                <?php
+                                                <option value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
+                                            <?php
         }
     }
 }
@@ -2276,35 +2333,34 @@ function _gettaxmarkup($name = '', $status = '', $limit = '', $startfrom = '')
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <td><?php echo $data['_taxname']; ?></td>
-                                        <td><?php echo $data['_taxtype']; ?></td>
-                                        <td><?php echo $data['_taxamount']; ?></td>
-                                        <td>
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == 'true') {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                <tr>
+                                                    <td><?php echo $data['_taxname']; ?></td>
+                                                    <td><?php echo $data['_taxtype']; ?></td>
+                                                    <td><?php echo $data['_taxamount']; ?></td>
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
                                                             <?php
-                                                }
-                                                if (!$data['_status']) {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                            <?php
-                                                }
-                                                ?>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <a href='manage-tax?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php }
+                                                            if ($data['_status'] == 'true') {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            if (!$data['_status']) {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            ?>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href='manage-tax?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
+                                        <?php }
     }
 }
 
@@ -2327,15 +2383,14 @@ function _gettaxes()
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <h5 style="margin-top:10px"><?php echo $data['_taxname']; ?></h5>
-                                    <?php if ($data['_taxtype'] == 'Variable') { ?>
-                                                <input class="form-control" name="amount" type="text" readonly value="<?php echo $data['_taxamount']; ?>%">
-                                            <?php } else {
-                                            ?><input class="form-control" name="amount" type="text" readonly
-                                                    value="<?php echo $data['_taxcurrency']; ?>&nbsp;<?php echo $data['_taxamount']; ?>">
-                                            <?php } ?>
+                                                <h5 style="margin-top:10px"><?php echo $data['_taxname']; ?></h5>
+                                                <?php if ($data['_taxtype'] == 'Variable') { ?>
+                                                                <input class="form-control" name="amount" type="text" readonly value="<?php echo $data['_taxamount']; ?>%">
+                                                        <?php } else {
+                                                    ?><input class="form-control" name="amount" type="text" readonly value="<?php echo $data['_taxcurrency']; ?>&nbsp;<?php echo $data['_taxamount']; ?>">
+                                                        <?php } ?>
 
-                                <?php }
+                                        <?php }
     }
 }
 
@@ -2395,23 +2450,22 @@ function _getcoupon($name = '', $type = '', $limit = '', $startfrom = '')
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <td><?php echo $data['_couponname']; ?></td>
-                                        <td><?php echo $data['_coupontype']; ?></td>
-                                        <td><?php echo $data['_couponamount']; ?></td>
-                                        <td><?php echo $data['_couponcondition']; ?></td>
-                                        <td><?php echo $data['_conamount']; ?></td>
-                                        <td><?php echo $data['_maxusage']; ?></td>
-                                        <td><?php echo $data['_totaluse']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <a href='manage-coupon?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php }
+                                                <tr>
+                                                    <td><?php echo $data['_couponname']; ?></td>
+                                                    <td><?php echo $data['_coupontype']; ?></td>
+                                                    <td><?php echo $data['_couponamount']; ?></td>
+                                                    <td><?php echo $data['_couponcondition']; ?></td>
+                                                    <td><?php echo $data['_conamount']; ?></td>
+                                                    <td><?php echo $data['_maxusage']; ?></td>
+                                                    <td><?php echo $data['_totaluse']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href='manage-coupon?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
+                                        <?php }
     }
 }
 
@@ -2564,46 +2618,44 @@ function _getMembership($membershipname = '', $limit = '', $startfrom = '')
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_membershipname']; ?></td>
-                                        <td>
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == 'true') {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_membershipname']; ?></td>
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
                                                             <?php
-                                                }
-                                                if (!$data['_status']) {
-                                                    ?>
-                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                            <?php
-                                                }
-                                                ?>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><a href="edit-membership?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <?php if ($_SESSION['userType'] == 2) { ?>
-                                                        <a href='manage-membership?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                            style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                            if ($data['_status'] == 'true') {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            if (!$data['_status']) {
+                                                                ?>
+                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
+                                                                        <?php
+                                                            }
+                                                            ?>
+                                                        </label>
                                                     </td>
-                                                    <?php } ?>
-                                    </tr>
-                                <?php }
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><a href="edit-membership?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <?php if ($_SESSION['userType'] == 2) { ?>
+                                                                        <a href='manage-membership?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                                </td>
+                                                        <?php } ?>
+                                                </tr>
+                                        <?php }
     }
 }
 
@@ -2688,23 +2740,22 @@ function _allmemberships()
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                    <div class="col-lg-4">
-                                        <div class="price-box">
-                                            <div class="">
-                                                <div class="price-label basic"><?php echo $data['_membershipname']; ?></div>
-                                                <div class="price">INR&nbsp;<?php echo $data['_price']; ?></div>
-                                                <div class="price-info">Per Month, For <?php echo $data['_duration']; ?> Month.</div>
-                                            </div>
-                                            <div class="info">
-                                                <ul>
-                                                    <?php echo $data['_membershipdesc']; ?>
-                                                </ul>
-                                                <a href="payment?amount=<?php echo $data['_price']; ?>&currency=INR&prod=membership&id=<?php echo $data['_id']; ?>"
-                                                    style="margin-top:-20px" class="plan-btn">Join Plan</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php }
+                                                <div class="col-lg-4">
+                                                    <div class="price-box">
+                                                        <div class="">
+                                                            <div class="price-label basic"><?php echo $data['_membershipname']; ?></div>
+                                                            <div class="price">INR&nbsp;<?php echo $data['_price']; ?></div>
+                                                            <div class="price-info">Per Month, For <?php echo $data['_duration']; ?> Month.</div>
+                                                        </div>
+                                                        <div class="info">
+                                                            <ul>
+                                                                <?php echo $data['_membershipdesc']; ?>
+                                                            </ul>
+                                                            <a href="payment?amount=<?php echo $data['_price']; ?>&currency=INR&prod=membership&id=<?php echo $data['_id']; ?>" style="margin-top:-20px" class="plan-btn">Join Plan</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <?php }
     }
 }
 
@@ -2773,33 +2824,32 @@ function _getTranscations($useremail = '', $amount = '', $status = '', $startfro
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr style="margin-bottom:-25px">
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_useremail']; ?></td>
-                                        <td><?php echo $data['_amount']; ?></td>
-                                        <td><?php echo $data['_currency']; ?></td>
-                                        <td>
-                                            <?php echo $data['_status']; ?>
-                                        </td>
-                                        <td><?php echo $data['_couponcode']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                <tr style="margin-bottom:-25px">
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_useremail']; ?></td>
+                                                    <td><?php echo $data['_amount']; ?></td>
+                                                    <td><?php echo $data['_currency']; ?></td>
+                                                    <td>
+                                                        <?php echo $data['_status']; ?>
+                                                    </td>
+                                                    <td><?php echo $data['_couponcode']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-transcation?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-transcation?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                        </td>
-                                    </tr>
-                                <?php
         } ?> <br> <?php
     }
 }
@@ -2855,26 +2905,26 @@ function _getCouponTranscation($couponname = '', $couponamount = '', $startfrom 
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_couponname']; ?></td>
-                                        <td><?php echo $data['_couponamount']; ?></td>
-                                        <td><?php echo $data['_couponcurrency']; ?></td>
-                                        <td><?php echo $data['_useremail']; ?></td>
-                                        <td><?php echo $data['_couponstatus']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                <?php
+                                                <tr>
+                                                    <td><?php echo $data['_couponname']; ?></td>
+                                                    <td><?php echo $data['_couponamount']; ?></td>
+                                                    <td><?php echo $data['_couponcurrency']; ?></td>
+                                                    <td><?php echo $data['_useremail']; ?></td>
+                                                    <td><?php echo $data['_couponstatus']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <?php
         }
     }
 }
@@ -2949,14 +2999,14 @@ function _getproduct($id, $type)
         $query = mysqli_query($conn, $sql);
         if ($query) {
             foreach ($query as $data) { ?>
-                                                <li style="border:none;" class="list-group-item d-flex justify-content-between lh-condensed">
-                                                    <div>
-                                                        <h6 class="my-0"><?php echo $data['_membershipname']; ?></h6>
-                                                        <small class="text-muted">Membership Purchase For <?php echo $data['_duration']; ?> Month.</small>
-                                                    </div>
-                                                    <span class="text-muted">INR&nbsp;<?php echo $data['_price']; ?></span>
-                                                </li>
-                                            <?php }
+                                                                <li style="border:none;" class="list-group-item d-flex justify-content-between lh-condensed">
+                                                                    <div>
+                                                                        <h6 class="my-0"><?php echo $data['_membershipname']; ?></h6>
+                                                                        <small class="text-muted">Membership Purchase For <?php echo $data['_duration']; ?> Month.</small>
+                                                                    </div>
+                                                                    <span class="text-muted">INR&nbsp;<?php echo $data['_price']; ?></span>
+                                                                </li>
+                                                        <?php }
         }
     }
     if ($type == 'invoice') {
@@ -2964,14 +3014,14 @@ function _getproduct($id, $type)
         $query = mysqli_query($conn, $sql);
         if ($query) {
             foreach ($query as $data) { ?>
-                                                <li style="border:none;" class="list-group-item d-flex justify-content-between lh-condensed">
-                                                    <div>
-                                                        <h6 class="my-0">Payment for Invoice : <?php echo $data['_refno']; ?>&nbsp;(Refrence Number)</h6>
-                                                        <small class="text-muted">Invoice payment for requested service</small>
-                                                    </div>
-                                                    <!-- <span class="text-muted">INR&nbsp;<?php echo $data['_price']; ?></span> -->
-                                                </li>
-                                            <?php }
+                                                                <li style="border:none;" class="list-group-item d-flex justify-content-between lh-condensed">
+                                                                    <div>
+                                                                        <h6 class="my-0">Payment for Invoice : <?php echo $data['_refno']; ?>&nbsp;(Refrence Number)</h6>
+                                                                        <small class="text-muted">Invoice payment for requested service</small>
+                                                                    </div>
+                                                                    <!-- <span class="text-muted">INR&nbsp;<?php echo $data['_price']; ?></span> -->
+                                                                </li>
+                                                        <?php }
         }
     }
 }
@@ -3062,54 +3112,52 @@ function _getInvoice($clientemail = '', $refno = '', $startfrom = '', $limit = '
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_clientname']; ?></td>
-                                        <td><?php echo $data['_clientemail']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_clientname']; ?></td>
+                                                    <td><?php echo $data['_clientemail']; ?></td>
 
-                                        <?php
-                                        if ($data['_paymentstatus'] == 'UnPaid') {
-                                            ?>
-                                                    <td>
-                                                        <span style="background-color:#dd4949; color:#fff; padding:3px 5px; border-radius:10px; ">
-                                                            <?php echo $data['_paymentstatus']; ?>
-                                                        </span>
-                                                    </td>
                                                     <?php
-                                        } else {
-                                            ?>
+                                                    if ($data['_paymentstatus'] == 'UnPaid') {
+                                                        ?>
+                                                                    <td>
+                                                                        <span style="background-color:#dd4949; color:#fff; padding:3px 5px; border-radius:10px; ">
+                                                                            <?php echo $data['_paymentstatus']; ?>
+                                                                        </span>
+                                                                    </td>
+                                                                <?php
+                                                    } else {
+                                                        ?>
+                                                                    <td>
+                                                                        <span style="background-color:#86bd68; color:#fff; padding:3px 5px; border-radius:10px; ">
+                                                                            <?php echo $data['_paymentstatus']; ?>
+                                                                        </span>
+                                                                    </td>
+                                                                <?php
+                                                    }
+                                                    ?>
+
+
+                                                    <td><?php echo $data['_refno']; ?></td>
+                                                    <td><?php echo date("M j, Y", strtotime($data['_duedate'])); ?></td>
                                                     <td>
-                                                        <span style="background-color:#86bd68; color:#fff; padding:3px 5px; border-radius:10px; ">
-                                                            <?php echo $data['_paymentstatus']; ?>
-                                                        </span>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
                                                     </td>
-                                                    <?php
-                                        }
-                                        ?>
-
-
-                                        <td><?php echo $data['_refno']; ?></td>
-                                        <td><?php echo date("M j, Y", strtotime($data['_duedate'])); ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-invoice?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <a href='manage-invoice?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-invoice?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <a href='manage-invoice?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -3126,46 +3174,45 @@ function _viewInvoice($startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <?php
-                                        if ($data['_paymentstatus'] == 'UnPaid') {
-                                            ?>
-                                                    <td>
-                                                        <span style="background-color:#dd4949; color:#fff; padding:3px 5px; border-radius:10px; ">
-                                                            <?php echo $data['_paymentstatus']; ?>
-                                                        </span>
-                                                    </td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
                                                     <?php
-                                        } else {
-                                            ?>
+                                                    if ($data['_paymentstatus'] == 'UnPaid') {
+                                                        ?>
+                                                                    <td>
+                                                                        <span style="background-color:#dd4949; color:#fff; padding:3px 5px; border-radius:10px; ">
+                                                                            <?php echo $data['_paymentstatus']; ?>
+                                                                        </span>
+                                                                    </td>
+                                                                <?php
+                                                    } else {
+                                                        ?>
+                                                                    <td>
+                                                                        <span style="background-color:#86bd68; color:#fff; padding:3px 5px; border-radius:10px; ">
+                                                                            <?php echo $data['_paymentstatus']; ?>
+                                                                        </span>
+                                                                    </td>
+                                                                <?php
+                                                    }
+                                                    ?>
+                                                    <td><?php echo date("M j, Y", strtotime($data['_duedate'])); ?></td>
                                                     <td>
-                                                        <span style="background-color:#86bd68; color:#fff; padding:3px 5px; border-radius:10px; ">
-                                                            <?php echo $data['_paymentstatus']; ?>
-                                                        </span>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
                                                     </td>
-                                                    <?php
-                                        }
-                                        ?>
-                                        <td><?php echo date("M j, Y", strtotime($data['_duedate'])); ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="view-invoice?invoiceno=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-eye"></a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="view-invoice?invoiceno=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-eye"></a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -3257,31 +3304,29 @@ function _getInvoiceItems($invoiceno, $startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_productname']; ?></td>
-                                        <td><?php echo $data['_productquantity']; ?></td>
-                                        <td><?php echo $data['_productamount']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_productname']; ?></td>
+                                                    <td><?php echo $data['_productquantity']; ?></td>
+                                                    <td><?php echo $data['_productamount']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditItem(<?php echo $data['_invoiceno']; ?>,<?php echo $data['_id']; ?>)"></span>
+                                                        <a href='edit-invoice?invoiceno=<?php echo $invoiceno ?>&itemno=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
-                                                onclick="callEditItem(<?php echo $data['_invoiceno']; ?>,<?php echo $data['_id']; ?>)"></span>
-                                            <a href='edit-invoice?invoiceno=<?php echo $invoiceno ?>&itemno=<?php echo $data['_id']; ?>&del=true'
-                                                class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -3343,29 +3388,29 @@ function _viewTranscation($useremail, $startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_producttitle']; ?></td>
-                                        <td><?php echo $data['_amount']; ?></td>
-                                        <td><?php echo $data['_producttype']; ?></td>
-                                        <td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_producttitle']; ?></td>
+                                                    <td><?php echo $data['_amount']; ?></td>
+                                                    <td><?php echo $data['_producttype']; ?></td>
+                                                    <td>
+                                                        <?php
+
+                                                        $couponcode = $data['_couponcode'];
+
+                                                        if ($couponcode) {
+                                                            echo $couponcode;
+                                                        } else {
+                                                            echo "No Coupon Code Applied";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><?php echo $data['_status']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                </tr>
                                             <?php
-
-                                            $couponcode = $data['_couponcode'];
-
-                                            if ($couponcode) {
-                                                echo $couponcode;
-                                            } else {
-                                                echo "No Coupon Code Applied";
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?php echo $data['_status']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -3430,37 +3475,35 @@ function _getCourse($coursename = '', $teacheremailid = '', $createdat = '', $st
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
-                                        <td><?php echo $data['_coursename']; ?></td>
-                                        <td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+                                                    <td><?php echo $data['_coursename']; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        $teacherid = $data['_teacheremailid'];
+                                                        echo _getSingleUser($teacherid, '_useremail');
+                                                        ?>
+                                                    </td>
+                                                    <td><?php echo $data['_coursetype']; ?></td>
+                                                    <td><?php echo $data['_status']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-course?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <a href='manage-course?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            $teacherid = $data['_teacheremailid'];
-                                            echo _getSingleUser($teacherid, '_useremail');
-                                            ?>
-                                        </td>
-                                        <td><?php echo $data['_coursetype']; ?></td>
-                                        <td><?php echo $data['_status']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-course?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <a href='manage-course?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -3478,30 +3521,30 @@ function _showCourses($_courseid = '')
         $query = mysqli_query($conn, $sql);
         if ($query) {
             ?>
-                                    <label for="courseid" class="form-label">Select Course</label>
-                                    <select style="height: 40px;" id="courseid" name="courseid" class="form-control form-control-lg" required>
+                                                <label for="courseid" class="form-label">Select Course</label>
+                                                <select style="height: 40px;" id="courseid" name="courseid" class="form-control form-control-lg" required>
 
 
-                                        <?php
-                                        foreach ($query as $data) {
+                                                    <?php
+                                                    foreach ($query as $data) {
 
-                                            $currentId = $data['_id'];
+                                                        $currentId = $data['_id'];
 
-                                            if ($_courseid == $currentId) {
-                                                ?>
-                                                                <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_coursename']; ?> </option>
-                                                                <?php
-                                            } else {
-                                                ?>
-                                                                <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_coursename']; ?> </option>
-                                                                <?php
-                                            }
-                                        }
-                                        ?>
+                                                        if ($_courseid == $currentId) {
+                                                            ?>
+                                                                                    <option value="<?php echo $data['_id']; ?>" selected> <?php echo $data['_coursename']; ?> </option>
+                                                                                <?php
+                                                        } else {
+                                                            ?>
+                                                                                    <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_coursename']; ?> </option>
+                                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
 
-                                    </select>
-                                    <div class="invalid-feedback">Please select proper course</div>
-                                <?php
+                                                </select>
+                                                <div class="invalid-feedback">Please select proper course</div>
+                                            <?php
 
 
         }
@@ -3509,20 +3552,20 @@ function _showCourses($_courseid = '')
         $sql = "SELECT * FROM `tblcourse`";
         $query = mysqli_query($conn, $sql);
         if ($query) { ?>
-                                    <label for="courseid" class="form-label">Select Course</label>
-                                    <select style="height: 46px;" id="courseid" name="courseid" class="form-control form-control-lg" required>
-                                        <option selected disabled value="">Course</option>
-                                        <?php
-                                        foreach ($query as $data) {
-                                            ?>
-                                                    <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_coursename']; ?> </option>
+                                                <label for="courseid" class="form-label">Select Course</label>
+                                                <select style="height: 46px;" id="courseid" name="courseid" class="form-control form-control-lg" required>
+                                                    <option selected disabled value="">Course</option>
                                                     <?php
-                                        }
-                                        ?>
+                                                    foreach ($query as $data) {
+                                                        ?>
+                                                                    <option value="<?php echo $data['_id']; ?>"> <?php echo $data['_coursename']; ?> </option>
+                                                                <?php
+                                                    }
+                                                    ?>
 
-                                    </select>
-                                    <div class="invalid-feedback">Please select proper course</div>
-                                <?php
+                                                </select>
+                                                <div class="invalid-feedback">Please select proper course</div>
+                                            <?php
         }
     }
 }
@@ -3630,42 +3673,40 @@ function _getLessons($coursename = '', $lessonname = '', $createdAt = '', $start
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
-                                        <td>
+                                                    <td>
+                                                        <?php
+
+                                                        $courseid = $data['_courseid'];
+                                                        echo _getSingleCourse($courseid, '_coursename');
+
+                                                        ?>
+                                                    </td>
+
+                                                    <td><?php echo $data['_lessonname']; ?></td>
+                                                    <td><?php echo $data['_status']; ?></td>
+                                                    <td><?php echo $data['_lessontype']; ?></td>
+                                                    <td><?php echo $data['_availablity']; ?></td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-lesson?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+                                                        <a href='manage-lesson?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-
-                                            $courseid = $data['_courseid'];
-                                            echo _getSingleCourse($courseid, '_coursename');
-
-                                            ?>
-                                        </td>
-
-                                        <td><?php echo $data['_lessonname']; ?></td>
-                                        <td><?php echo $data['_status']; ?></td>
-                                        <td><?php echo $data['_lessontype']; ?></td>
-                                        <td><?php echo $data['_availablity']; ?></td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-lesson?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-                                            <a href='manage-lesson?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -3760,42 +3801,40 @@ function _getSlides($id, $startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
-                                        <td>
-                                            <?php
+                                                    <td>
+                                                        <?php
 
-                                            $courseid = $data['_courseid'];
-                                            echo _getSingleCourse($courseid, '_coursename');
+                                                        $courseid = $data['_courseid'];
+                                                        echo _getSingleCourse($courseid, '_coursename');
 
-                                            ?>
-                                        </td>
+                                                        ?>
+                                                    </td>
 
-                                        <td>
-                                            <a href="../uploads/banner/<?php echo $data['_slideurl']; ?>" target="_blank" class="mdi mdi-eye"></a>
-                                        </td>
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
-                                                onclick="callEditSlide(<?php echo $data['_courseid']; ?>,<?php echo $data['_id']; ?>)"></span>
+                                                    <td>
+                                                        <a href="../uploads/banner/<?php echo $data['_slideurl']; ?>" target="_blank" class="mdi mdi-eye"></a>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditSlide(<?php echo $data['_courseid']; ?>,<?php echo $data['_id']; ?>)"></span>
 
-                                            <a href='edit-course?id=<?php echo $data['_courseid']; ?>&slideid=<?php echo $data['_id']; ?>&del=true'
-                                                class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
+                                                        <a href='edit-course?id=<?php echo $data['_courseid']; ?>&slideid=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
+                                                <?php
         }
     }
 }
@@ -3854,13 +3893,13 @@ function _getTeachers($id = '')
 
             if ($id == $rowId) {
                 ?>
-                                                <option value="<?php echo htmlentities($row['_id']); ?>" selected><?php echo htmlentities($row['_useremail']); ?>
-                                                </option>
-                                            <?php
+                                                                <option value="<?php echo htmlentities($row['_id']); ?>" selected><?php echo htmlentities($row['_useremail']); ?>
+                                                                </option>
+                                                            <?php
             } else {
                 ?>
-                                                <option value="<?php echo htmlentities($row['_id']); ?>"><?php echo htmlentities($row['_useremail']); ?></option>
-                                            <?php
+                                                                <option value="<?php echo htmlentities($row['_id']); ?>"><?php echo htmlentities($row['_useremail']); ?></option>
+                                                            <?php
             }
         }
     } else {
@@ -3868,8 +3907,8 @@ function _getTeachers($id = '')
 
         while ($row = mysqli_fetch_array($query)) {
             ?>
-                                    <option value="<?php echo htmlentities($row['_id']); ?>"><?php echo htmlentities($row['_useremail']); ?></option>
-                                <?php
+                                                <option value="<?php echo htmlentities($row['_id']); ?>"><?php echo htmlentities($row['_useremail']); ?></option>
+                                            <?php
         }
     }
 }
@@ -3960,41 +3999,39 @@ function _getAttachments($id, $startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
-                                        <td>
+                                                    <td>
+                                                        <?php
+
+                                                        $lessonid = $data['_lessonid'];
+                                                        echo _getSingleLesson($lessonid, '_lessonname');
+
+                                                        ?>
+                                                    </td>
+
+                                                    <td><?php echo $data['_attachementurl']; ?></td>
+
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditAttachment(<?php echo $data['_lessonid']; ?>,<?php echo $data['_id']; ?>)"></span>
+
+                                                        <a href='edit-lesson?id=<?php echo $data['_lessonid']; ?>&attachmentid=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-
-                                            $lessonid = $data['_lessonid'];
-                                            echo _getSingleLesson($lessonid, '_lessonname');
-
-                                            ?>
-                                        </td>
-
-                                        <td><?php echo $data['_attachementurl']; ?></td>
-
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
-                                                onclick="callEditAttachment(<?php echo $data['_lessonid']; ?>,<?php echo $data['_id']; ?>)"></span>
-
-                                            <a href='edit-lesson?id=<?php echo $data['_lessonid']; ?>&attachmentid=<?php echo $data['_id']; ?>&del=true'
-                                                class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -4120,34 +4157,32 @@ function _getFaqs($startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
 
-                                        <td><?php echo $data['_question']; ?></td>
-                                        <td><?php echo $data['_answer']; ?></td>
+                                                    <td><?php echo $data['_question']; ?></td>
+                                                    <td><?php echo $data['_answer']; ?></td>
 
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditFaq(<?php echo $data['_id']; ?>)"></span>
+
+                                                        <a href='pageSetting-about?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
-                                                onclick="callEditFaq(<?php echo $data['_id']; ?>)"></span>
-
-                                            <a href='pageSetting-about?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -4237,45 +4272,41 @@ function _getMenuSettings($startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
 
-                                        <td><?php echo $data['_name']; ?></td>
-                                        <td><?php echo $data['_indexing']; ?></td>
+                                                    <td><?php echo $data['_name']; ?></td>
+                                                    <td><?php echo $data['_indexing']; ?></td>
 
-                                        <td>
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" checked type="checkbox"><?php }
-                                                if ($data['_status'] != true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" type="checkbox"><?php }
-                                                ?>
-                                            </label>
-                                        </td>
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
+                                                    </td>
 
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditMenuSettings(<?php echo $data['_id']; ?>)"></span>
+
+                                                        <a href='pagesetting-menusettings?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
-                                                onclick="callEditMenuSettings(<?php echo $data['_id']; ?>)"></span>
-
-                                            <a href='pagesetting-menusettings?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -4362,35 +4393,33 @@ function _getSocialMedia($startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
 
-                                        <td><?php echo $data['_name']; ?></td>
-                                        <td><?php echo $data['_url']; ?></td>
-                                        <td><?php echo $data['_indexing']; ?></td>
+                                                    <td><?php echo $data['_name']; ?></td>
+                                                    <td><?php echo $data['_url']; ?></td>
+                                                    <td><?php echo $data['_indexing']; ?></td>
 
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box" onclick="callEditSocialMedia(<?php echo $data['_id']; ?>)"></span>
+
+                                                        <a href='site-config?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
-                                                onclick="callEditSocialMedia(<?php echo $data['_id']; ?>)"></span>
-
-                                            <a href='site-config?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -4398,13 +4427,14 @@ function _getSocialMedia($startfrom = '', $limit = '')
 
 // Products
 
-function _createProduct($name, $sku, $price, $discountPrice, $desc, $status)
+function _createProduct($name, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId)
 {
 
     require('_config.php');
 
 
-    $sql = "INSERT INTO  `tblproducts` (`_name`,`_sku`,`_price`,`_discountprice`,`_desc`,`_status`) VALUES ('$name','$sku','$price','$discountPrice','$desc','$status') ";
+    $sql = "INSERT INTO  `tblproducts` (`_name`,`_sku`,`_price`,`_discountprice`,`_desc`,`_status` ,`_productcategory`,
+    `_productsubcategory` ) VALUES ('$name','$sku','$price','$discountPrice','$desc','$status','$categoryId','$subcategoryId') ";
 
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -4453,11 +4483,11 @@ function _deleteProduct($id)
     }
 }
 
-function _updateProduct($id, $name, $sku, $price, $discountPrice, $desc, $status)
+function _updateProduct($id, $name, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId)
 {
     require('_config.php');
 
-    $sql = "UPDATE `tblproducts` SET `_name`='$name',`_sku`='$sku',`_price`='$price',`_discountprice`='$discountPrice',`_desc`='$desc',`_status`='$status' where `_id`='$id'  ";
+    $sql = "UPDATE `tblproducts` SET `_name`='$name',`_sku`='$sku',`_price`='$price',`_discountprice`='$discountPrice',`_desc`='$desc',`_status`='$status',`_productcategory`='$categoryId',`_productsubcategory`='$subcategoryId' where `_id`='$id'  ";
 
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -4484,46 +4514,42 @@ function _getAllProducts($startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
 
-                                        <td><?php echo $data['_name']; ?></td>
-                                        <td><?php echo $data['_sku']; ?></td>
-                                        <td><?php echo $data['_price']; ?></td>
+                                                    <td><?php echo $data['_name']; ?></td>
+                                                    <td><?php echo $data['_sku']; ?></td>
+                                                    <td><?php echo $data['_price']; ?></td>
 
-                                        <td>
-                                            <label class="checkbox-inline form-switch">
-                                                <?php
-                                                if ($data['_status'] == true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" checked type="checkbox"><?php }
-                                                if ($data['_status'] != true) { ?><input disabled role="switch"
-                                                                name="isactive" value="true" type="checkbox"><?php }
-                                                ?>
-                                            </label>
-                                        </td>
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
+                                                    </td>
 
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-product?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+
+                                                        <a href='manage-products?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-product?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-
-                                            <a href='manage-products?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
-                                <?php
         }
     }
 }
@@ -4547,61 +4573,57 @@ function _getAllReviews($startfrom = '', $limit = '')
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
 
-                                        <td><?php echo $data['_itemid']; ?></td>
-                                        <td><?php echo $data['_itemcategory']; ?></td>
-                                        <td><?php echo $data['_comment']; ?></td>
+                                                    <td><?php echo $data['_itemid']; ?></td>
+                                                    <td><?php echo $data['_itemcategory']; ?></td>
+                                                    <td><?php echo $data['_comment']; ?></td>
 
-                                        <td>
-                                            <div class="custom-control custom-switch">
-                                                <?php
-
-                                                $status = $data['_status'];
-                                                if ($status == true) {
-                                                    ?>
-                                                            <input onclick="callUpdateStatus(<?php echo $data['_id']; ?> , '') " type="checkbox" class="custom-control-input" name="isactive<?php echo $data['_id']; ?>" id="isactive<?php echo $data['_id']; ?>" checked>
-                                                            <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                    <td>
+                                                        <div class="custom-control custom-switch">
                                                             <?php
-                                                } else {
-                                                    ?>
-                                                            <input onclick="callUpdateStatus(<?php echo $data['_id']; ?> , 'true') " type="checkbox" class="custom-control-input" name="isactive<?php echo $data['_id']; ?>" id="isactive<?php echo $data['_id']; ?>">
-                                                            <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
-                                                            <?php
-                                                }
-                                                ?>
-                                            </div>
-                                        </td>
 
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                            $status = $data['_status'];
+                                                            if ($status == true) {
+                                                                ?>
+                                                                            <input onclick="callUpdateStatus(<?php echo $data['_id']; ?> , '') " type="checkbox" class="custom-control-input" name="isactive<?php echo $data['_id']; ?>" id="isactive<?php echo $data['_id']; ?>" checked>
+                                                                            <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                        <?php
+                                                            } else {
+                                                                ?>
+                                                                            <input onclick="callUpdateStatus(<?php echo $data['_id']; ?> , 'true') " type="checkbox" class="custom-control-input" name="isactive<?php echo $data['_id']; ?>" id="isactive<?php echo $data['_id']; ?>">
+                                                                            <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                        <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="edit-product?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></a>
+
+                                                        <a href='manage-products?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+
+
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="edit-product?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></a>
-
-                                            <a href='manage-products?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-
-
-                                    </tr>
-                                <?php
         }
     }
-
-
 }
 
 
@@ -4646,12 +4668,12 @@ function _getSingleImgFromGallery($id, $param)
 
 // FRONT END FUNCTION STARTS HERE 
 
-function _getmenu(){
+function _getmenu()
+{
     require('_config.php');
     $sql = "SELECT * FROM `tblmenusettings` WHERE `_status` = 'on' ORDER BY _indexing DESC";
-    $query = mysqli_query($conn,$sql);
-    foreach($query as $data){
-        
+    $query = mysqli_query($conn, $sql);
+    foreach ($query as $data) {
     }
 }
 
@@ -4671,7 +4693,7 @@ function _updateImgInGallery($id, $imgurl)
     }
 }
 
-function _deleteImgInGallery($id,$itemid)
+function _deleteImgInGallery($id, $itemid)
 {
 
     require('_config.php');
@@ -4693,11 +4715,8 @@ function _getAllImgInGallery($itemcategory, $productid, $startfrom = '', $limit 
     if ($itemcategory !== '') {
 
         $sql = "SELECT * FROM `tblgallery` where `_itemcategory`='$itemcategory' AND `_itemid`='$productid'  ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
-
-
     } else {
         $sql = "SELECT * FROM `tblgallery` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
-
     }
 
 
@@ -4706,41 +4725,425 @@ function _getAllImgInGallery($itemcategory, $productid, $startfrom = '', $limit 
     if ($query) {
         foreach ($query as $data) {
             ?>
-                                    <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
 
 
-                                        <td><?php echo $data['_itemid']; ?></td>
-                                        <td><?php echo $data['_itemcategory']; ?></td>
-                                        <td>
-                                        <a href="../uploads/productimages/<?php echo $data['_imgurl']; ?>" target="_blank" class="mdi mdi-eye"></a>
-                                        </td>
+                                                    <td><?php echo $data['_itemid']; ?></td>
+                                                    <td><?php echo $data['_itemcategory']; ?></td>
+                                                    <td>
+                                                        <a href="../uploads/productimages/<?php echo $data['_imgurl']; ?>" target="_blank" class="mdi mdi-eye"></a>
+                                                    </td>
 
-                                        <td>
-                                            <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                                        </td>
-                                        <td>
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span onclick="callUpdateImgInGallery(<?php echo $data['_id']; ?>)" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></span>
+
+                                                        <a href='edit-product?id=<?php echo $data['_itemid']; ?>&imgId=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                             <?php
-                                            if (strtotime($data['UpdationDate']) == '') {
-                                                echo "Not Updated Yet";
-                                            } else {
-                                                echo date("M j, Y", strtotime($data['UpdationDate']));
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <span onclick="callUpdateImgInGallery(<?php echo $data['_id']; ?>)" style="font-size: 20px;cursor:pointer;color:green"
-                                                class="mdi mdi-pencil-box"></span>
+        }
+    }
+}
 
-                                            <a href='edit-product?id=<?php echo $data['_itemid']; ?>&imgId=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                                                style="font-size: 20px;cursor:pointer; color:red"><a>
-                                        </td>
-                                    </tr>
+// Country
+
+function _addCountryMarkup($_countryname, $_countrycode, $_flag, $_status)
+{
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "INSERT INTO  `tblcountry` (`_countryname`,`_countrycode`,`_flag`,`_status`) VALUES ('$_countryname','$_countrycode','$_flag','$_status') ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Markup Created");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Markup Failed");
+    }
+}
+
+function _getSingleCountryMarkup($id, $param)
+{
+
+    require('_config.php');
+
+    $sql = "SELECT  * FROM `tblcountry` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+
+function _updateCountryMarkup($id, $_countryname, $_countrycode, $_flag, $_status)
+{
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "UPDATE `tblcountry` SET `_countryname`='$_countryname',`_countrycode`='$_countrycode',`_flag`='$_flag',`_status`='$_status' where `_id`='$id'   ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Markup Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Markup Updation Failed");
+    }
+}
+
+
+function _deleteCountryMarkup($id)
+{
+
+    require('_config.php');
+    $sql = "DELETE FROM  `tblcountry` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        header("location:manage-country");
+    }
+}
+
+
+function _getAllCountryMarkup($countryName = "", $startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+    if ($countryName != '') {
+        $sql = "SELECT * FROM `tblcountry` where `_countrtname` like %$countryName% ";
+    } else {
+        $sql = "SELECT * FROM `tblcountry` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+    }
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+            ?>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+
+
+                                                    <td><?php echo $data['_countryname']; ?></td>
+                                                    <td><?php echo $data['_countrycode']; ?></td>
+                                                    <td>
+                                                        <img src="../uploads/country/<?php echo $data['_flag']; ?>" style="width: 50px; height: 50px;" alt="">
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
+                                                    </td>
+
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span onclick="callEditCountryMarkup(<?php echo $data['_id']; ?>)" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></span>
+
+                                                        <a href='manage-country?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
+                                            <?php
+        }
+    }
+}
+
+
+
+// State
+
+function _addStateMarkup($_statename, $_statecode, $_countryid, $_status)
+{
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "INSERT INTO  `tblstates` (`_statename`,`_statecode`,`_countryid`,`_status`) VALUES ('$_statename','$_statecode','$_countryid','$_status') ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Markup Created");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Markup Failed");
+    }
+}
+
+function _getSingleStateMarkup($id, $param)
+{
+
+    require('_config.php');
+
+    $sql = "SELECT  * FROM `tblstates` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+
+function _updateStateMarkup($id, $_statename, $_statecode, $_countryid, $_status)
+{
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "UPDATE `tblstates` SET `_statename`='$_statename',`_statecode`='$_statecode',`_countryid`='$_countryid',`_status`='$_status' where `_id`='$id'   ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Markup Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Markup Updation Failed");
+    }
+}
+
+
+function _deleteStateMarkup($id)
+{
+
+    require('_config.php');
+    $sql = "DELETE FROM  `tblstates` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        header("location:manage-state");
+    }
+}
+
+
+function _getAllStateMarkup($startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+
+    $sql = "SELECT * FROM `tblstates` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+
+            $countryId = $data['_countryid'];
+            $countryName = _getSingleCountryMarkup($countryId, '_countryname')
+
+                ?>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+
+
+                                                    <td><?php echo $data['_statename']; ?></td>
+                                                    <td><?php echo $data['_statecode']; ?></td>
+                                                    <td>
+
+                                                        <?php echo $countryName ?>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
+                                                    </td>
+
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span onclick="callEditStateMarkup(<?php echo $data['_id']; ?>)" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></span>
+
+                                                        <a href='manage-state?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
                                 <?php
         }
     }
 }
 
+
+
+// Shippin Markup
+
+
+function _addShippingMarkup($_country, $_state, $_feetype, $_price, $_status)
+{
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "INSERT INTO  `tblshipping` (`_country`,`_state`,`_feetype`,`_price`,`_status`) VALUES ('$_country','$_state','$_feetype','$_price','$_status') ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Markup Created");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Markup Failed");
+    }
+}
+
+function _getSingleShippingMarkup($id, $param)
+{
+
+    require('_config.php');
+
+    $sql = "SELECT  * FROM `tblshipping` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+
+function _updateShippingMarkup($id, $_country, $_state, $_feetype, $_price, $_status)
+{
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "UPDATE `tblshipping` SET `_country`='$_country',`_state`='$_state',`_feetype`='$_feetype',`_price`='$_price',`_status`='$_status' where `_id`='$id'   ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Markup Updated");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Markup Updation Failed");
+    }
+}
+
+
+function _deleteShippingMarkup($id)
+{
+
+    require('_config.php');
+    $sql = "DELETE FROM  `tblshipping` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        header("location:manage-shipping");
+    }
+}
+
+
+function _getAllShippingMarkup($startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+
+    $sql = "SELECT * FROM `tblshipping` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+
+            $countryId = $data['_country'];
+            $stateId = $data['_state'];
+
+            $countryName = _getSingleCountryMarkup($countryId, '_countryname');
+            $stateName = _getSingleStateMarkup($stateId, '_statename');
+
+            ?>
+                                                <tr>
+                                                    <td><?php echo $data['_id']; ?></td>
+
+                                                    <td><?php echo $countryName ?>
+                                                    <td><?php echo $stateName ?>
+
+                                                    <td><?php echo $data['_feetype']; ?></td>
+                                                    <td><?php echo $data['_price']; ?></td>
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="checkbox-inline form-switch">
+                                                            <?php
+                                                            if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
+                                                            if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+                                                            ?>
+                                                        </label>
+                                                    </td>
+
+                                                    <td>
+                                                        <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if (strtotime($data['UpdationDate']) == '') {
+                                                            echo "Not Updated Yet";
+                                                        } else {
+                                                            echo date("M j, Y", strtotime($data['UpdationDate']));
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <span onclick="callEditShippingMarkup(<?php echo $data['_id']; ?>)" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"></span>
+
+                                                        <a href='manage-shipping?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                                                    </td>
+                                                </tr>
+                                <?php
+        }
+    }
+}
 
 
 ?>

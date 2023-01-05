@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
                                             <div class="invalid-feedback">Please type correct Number</div>
                                         </div>
                                     </div>
-                                    <div class="row g-3" style="margin-top: 20px;">
+                                    <!-- <div class="row g-3" style="margin-top: 20px;"> -->
 
 
                                         <!-- <div class="col">
@@ -140,29 +140,29 @@ if (isset($_POST['submit'])) {
                                             <input type="text" class="form-control" placeholder="IP Location" aria-label="user location" id="userlocation" name="userlocation">
                                         </div> -->
 
-                                    </div>
+                                    <!-- </div> -->
 
-                                    <div class="row g-3" style="margin-top: 30px;">
+                                    <div class="row g-3" style="margin-top: 10px;">
 
                                         <div class="col" style="margin-top: 10px;">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
                                                     id="isactive">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                <label class="custom-control-label"
                                                     for="isactive">Is
                                                     Active</label>
                                             </div>
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isverified"
                                                     id="isverified">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                <label class="custom-control-label"
                                                     for="isverified">Is
                                                     Verified</label>
                                             </div>
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="notify"
                                                     id="notify">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                <label class="custom-control-label"
                                                     for="notify"> Notify User
                                                 (SMS/Email)</label>
                                             </div>

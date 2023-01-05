@@ -77,12 +77,12 @@ if (isset($_POST['submit'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: '#mytextarea',
-            statusbar: false,
-            branding: false,
-            promotion: false,
-        });
+    tinymce.init({
+        selector: '#mytextarea',
+        statusbar: false,
+        branding: false,
+        promotion: false,
+    });
     </script>
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
 
                                             <?php
                                             $categoryId = _getSingleBlog($_id, '_blogcategory');
-                                            _showCategoryOptions($categoryId)
+                                            _showCategoryOptions($categoryId,"blog")
                                                 ?>
 
                                         </div>
@@ -193,28 +193,28 @@ if (isset($_POST['submit'])) {
                                         <div class="col" style="margin: 15px 0  15px 10px;">
                                             <div class="custom-control custom-switch">
 
-                                        <?php
+                                                <?php
 
                                             $status = _getSingleBlog($_id, '_status');
                                             if ($status == true) {
                                             ?>
-                                                
-                                                    <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive" checked>
-                                                    <label class="custom-control-label" style="margin-left: 20px;"
-                                                        for="isactive">Is
-                                                        Active</label>
-                                                    <?php
+
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive" checked>
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    Active</label>
+                                                <?php
                                             } else {
                                                     ?>
-                                                    <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive">
-                                                    <label class="custom-control-label" style="margin-left: 20px;"
-                                                        for="isactive">Is
-                                                        <?php
+                                                <input type="checkbox" class="custom-control-input" name="isactive"
+                                                    id="isactive">
+                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                    for="isactive">Is
+                                                    <?php
                                             }
                                         ?>
-                                                
+
                                             </div>
 
 
@@ -266,29 +266,28 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="container"></div>
         <script>
-            const getSubCategory = (val) => {
-                $.ajax({
-                    type: "POST",
-                    url: "getSubCategory.php",
-                    data: 'catid=' + val,
-                    success: function (data) {
-                        $(`#subcategoryId`).html(data);
-                    }
-                });
-            }
-
-            let blogtitle = document.getElementById('blogtitle');
-            blogtitle.addEventListener('input', (ele) => {
-                let value = ele.target.value;
-                if (value.length > 0) {
-
-                    let wordCountDisplay = document.getElementById('wordCountDisplay');
-                    let wordCount = document.getElementById('wordCount');
-                    wordCountDisplay.style.display = 'block'
-                    wordCount.innerText = value.length;
+        const getSubCategory = (val) => {
+            $.ajax({
+                type: "POST",
+                url: "getSubCategory.php",
+                data: 'catid=' + val,
+                success: function(data) {
+                    $(`#subcategoryId`).html(data);
                 }
-            })
+            });
+        }
 
+        let blogtitle = document.getElementById('blogtitle');
+        blogtitle.addEventListener('input', (ele) => {
+            let value = ele.target.value;
+            if (value.length > 0) {
+
+                let wordCountDisplay = document.getElementById('wordCountDisplay');
+                let wordCount = document.getElementById('wordCount');
+                wordCountDisplay.style.display = 'block'
+                wordCount.innerText = value.length;
+            }
+        })
         </script>
         <script src="../includes/_validation.js"></script>
 

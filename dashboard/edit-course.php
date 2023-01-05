@@ -220,64 +220,64 @@ if (isset($_POST['editSlide'])) {
                     <?php
 
                     if ($_SESSION['course_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Course Updated!</strong> New course created successfully.
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Course Updated!</strong> New course created successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['course_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Course Updation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Course Updation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['slide_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Slide Added!</strong> New Slide Added successfully.
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Slide Added!</strong> New Slide Added successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['slide_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Slide Creation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Slide Creation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
 
                     }
 
                     if ($_SESSION['slide_update_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Slide Updated!</strong> Slide Updated successfully.
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Slide Updated!</strong> Slide Updated successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['slide_update_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Slide Updation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Slide Updation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
 
                     }
 
@@ -299,7 +299,7 @@ if (isset($_POST['editSlide'])) {
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
                                             <?php
                                             $categoryid = _getSingleCourse($id, '_categoryid');
-                                            _showCategoryOptions($categoryid)
+                                            _showCategoryOptions($categoryid, "courses")
                                                 ?>
 
                                         </div>
@@ -333,16 +333,16 @@ if (isset($_POST['editSlide'])) {
 
                                                 if ($type == 'Live') {
 
-                                                ?>
-                                                <option value="Recorded">Recorded</option>
-                                                <option selected value="Live">Live</option>
-                                                <?php
+                                                    ?>
+                                                    <option value="Recorded">Recorded</option>
+                                                    <option selected value="Live">Live</option>
+                                                    <?php
 
                                                 } else {
-                                                ?>
-                                                <option selected value="Recorded">Recorded</option>
-                                                <option value="Live">Live</option>
-                                                <?php
+                                                    ?>
+                                                    <option selected value="Recorded">Recorded</option>
+                                                    <option value="Live">Live</option>
+                                                    <?php
                                                 }
 
                                                 ?>
@@ -379,25 +379,25 @@ if (isset($_POST['editSlide'])) {
                                                 $level = _getSingleCourse($id, '_courselevel');
 
                                                 if ($level == 'Beginner') {
-                                                ?>
-                                                <option selected value="Beginner">Beginner</option>
-                                                <option value="Intermediate">Intermediate</option>
-                                                <option value="Advanced">Advanced</option>
-                                                <?php
+                                                    ?>
+                                                    <option selected value="Beginner">Beginner</option>
+                                                    <option value="Intermediate">Intermediate</option>
+                                                    <option value="Advanced">Advanced</option>
+                                                    <?php
                                                 }
                                                 if ($level == 'Intermediate') {
-                                                ?>
-                                                <option value="Beginner">Beginner</option>
-                                                <option selected value="Intermediate">Intermediate</option>
-                                                <option value="Advanced">Advanced</option>
-                                                <?php
+                                                    ?>
+                                                    <option value="Beginner">Beginner</option>
+                                                    <option selected value="Intermediate">Intermediate</option>
+                                                    <option value="Advanced">Advanced</option>
+                                                    <?php
                                                 }
                                                 if ($level == 'Advanced') {
-                                                ?>
-                                                <option value="Beginner">Beginner</option>
-                                                <option value="Intermediate">Intermediate</option>
-                                                <option selected value="Advanced">Advanced</option>
-                                                <?php
+                                                    ?>
+                                                    <option value="Beginner">Beginner</option>
+                                                    <option value="Intermediate">Intermediate</option>
+                                                    <option selected value="Advanced">Advanced</option>
+                                                    <?php
                                                 }
 
                                                 ?>
@@ -457,25 +457,25 @@ if (isset($_POST['editSlide'])) {
 
                                                 <?php
 
-                                                $status = _getSingleCourse($_id, '_enrollstatus');
+                                                $status = _getSingleCourse($id, '_enrollstatus');
                                                 if ($status == true) {
-                                                ?>
-                                                <input type="checkbox" class="custom-control-input" name="enrollstatus"
-                                                    id="enrollstatus" checked>
-                                                <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="enrollstatus">Enroll
-                                                    Status</label>
-                                                <?php
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                        id="enrollstatus" checked>
+                                                    <label class="custom-control-label" style="margin-left: 20px;"
+                                                        for="enrollstatus">Enroll
+                                                        Status</label>
+                                                    <?php
                                                 } else {
-                                                        ?>
-                                                <input type="checkbox" class="custom-control-input" name="enrollstatus"
-                                                    id="enrollstatus">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="enrollstatus">Enroll
-                                                    Status</label>
-                                                <?php
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="enrollstatus"
+                                                        id="enrollstatus">
+                                                    <label class="custom-control-label" style="margin-left: 20px;"
+                                                        for="enrollstatus">Enroll
+                                                        Status</label>
+                                                    <?php
                                                 }
-                                                        ?>
+                                                ?>
 
 
                                             </div>
@@ -487,25 +487,25 @@ if (isset($_POST['editSlide'])) {
 
                                                 <?php
 
-                                                $status = _getSingleCourse($_id, '_status');
+                                                $status = _getSingleCourse($id, '_status');
                                                 if ($status == true) {
-                                                ?>
-                                                <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive" checked>
-                                                <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="isactive">Is
-                                                    Active</label>
-                                                <?php
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive"
+                                                        id="isactive" checked>
+                                                    <label class="custom-control-label" style="margin-left: 20px;"
+                                                        for="isactive">Is
+                                                        Active</label>
+                                                    <?php
                                                 } else {
-                                                        ?>
-                                                <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="isactive">Is
-                                                    Active</label>
-                                                <?php
+                                                    ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive"
+                                                        id="isactive">
+                                                    <label class="custom-control-label" style="margin-left: 20px;"
+                                                        for="isactive">Is
+                                                        Active</label>
+                                                    <?php
                                                 }
-                                                        ?>
+                                                ?>
 
 
                                             </div>
@@ -725,7 +725,8 @@ if (isset($_POST['editSlide'])) {
                         </div>
                         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="addSlide" class="btn btn-primary"><i class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
+                            <button type="submit" name="addSlide" class="btn btn-primary"><i
+                                    class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
                         </div>
                     </div>
                 </form>

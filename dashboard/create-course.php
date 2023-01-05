@@ -140,23 +140,23 @@ if (isset($_POST['submit'])) {
                     <?php
 
                     if ($_SESSION['course_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Course Created!</strong> New course created successfully.
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Course Created!</strong> New course created successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['course_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Course Creatation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Course Creatation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     ?>
@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3">
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
-                                            <?php _showCategoryOptions() ?>
+                                            <?php _showCategoryOptions("","courses") ?>
 
                                         </div>
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
@@ -279,13 +279,12 @@ if (isset($_POST['submit'])) {
 
 
                                         <div class="col" style="margin-top: 40px;">
-                                           
+
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="enrollstatus"
                                                     id="enrollstatus">
                                                 <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="enrollstatus">Is
-                                                    Active</label>
+                                                    for="enrollstatus">Enroll Status</label>
                                             </div>
                                         </div>
 

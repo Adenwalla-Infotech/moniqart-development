@@ -55,6 +55,9 @@
                     <li class="nav-item"> <a class="nav-link" href="manage-currency">Curreny Markup</a></li>
                     <li class="nav-item"> <a class="nav-link" href="manage-tax">Fee Markup</a></li>
                     <li class="nav-item"> <a class="nav-link" href="manage-coupon">Offer Markup</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="manage-country">Country Markup</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="manage-state">State Markup</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="manage-shipping">Shipping Markup</a></li>
                 </ul>
             </div>
         </li>
@@ -259,7 +262,7 @@
         <li class="nav-item">
             <a class="nav-link" href="manage-reviews">
                 <i class="mdi mdi-wallet-membership menu-icon"></i>
-                <span class="menu-title">Manage Alll Reviews</span>
+                <span class="menu-title">Manage All Reviews</span>
             </a>
         </li>
 
