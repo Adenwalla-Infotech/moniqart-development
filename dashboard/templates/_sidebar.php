@@ -262,7 +262,7 @@
         <li class="nav-item">
             <a class="nav-link" href="manage-reviews">
                 <i class="mdi mdi-wallet-membership menu-icon"></i>
-                <span class="menu-title">Manage All Reviews</span>
+                <span class="menu-title">Manage Reviews</span>
             </a>
         </li>
 
