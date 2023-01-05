@@ -31,6 +31,8 @@ if (isset($_POST['submit'])) {
     $discountprice = $_POST['discountprice'];
     $productDesc = $_POST['productDesc'];
 
+    $categoryId = $_POST['categoryId'];
+    $subcategoryId = $_POST['subcategoryId'];
 
 
     if (isset($_POST['isactive'])) {
@@ -39,7 +41,7 @@ if (isset($_POST['submit'])) {
         $isactive = false;
     }
 
-    _createProduct($name, $sku, $price, $discountprice, $productDesc, $isactive);
+    _createProduct($name, $sku, $price, $discountprice, $productDesc, $isactive,$categoryId,  $subcategoryId);
 }
 
 ?>
@@ -133,6 +135,20 @@ if (isset($_POST['submit'])) {
                                 <form method="POST" action="" enctype="multipart/form-data" class="needs-validation"
                                     novalidate>
 
+                                    <div class="row g-3">
+
+
+                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                            <?php _showCategoryOptions("", "product") ?>
+
+                                        </div>
+
+                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                            <?php _showSubCategoryOptions() ?>
+                                        </div>
+
+                                    </div>
+
 
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
@@ -216,6 +232,20 @@ if (isset($_POST['submit'])) {
 
 
         <script src="../includes/_validation.js"></script>
+
+        <script>
+            const getSubCategory = (val) => {
+                $.ajax({
+                    type: "POST",
+                    url: "getSubCategory.php",
+                    data: 'catid=' + val,
+                    success: function (data) {
+                        $(`#subcategoryId`).html(data);
+                    }
+                });
+            }
+        </script>
+
 
 </body>
 <script src="../assets/vendors/js/vendor.bundle.base.js"></script>

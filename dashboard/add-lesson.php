@@ -23,7 +23,7 @@ if (isset($_SESSION['course_error']) || !isset($_SESSION['course_error'])) {
 
 require('../includes/_functions.php');
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['lessonname'])) {
 
     $_lessonname = $_POST['lessonname'];
     $_courseid = $_POST['courseid'];
@@ -31,9 +31,6 @@ if (isset($_POST['submit'])) {
     $_availablity = $_POST['availablity'];
 
     $lessontype = $_POST['lessontype'];
-
-
-
 
     if (isset($_POST['isactive'])) {
         $isactive = $_POST['isactive'];
@@ -48,14 +45,14 @@ if (isset($_POST['submit'])) {
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only mp4 / mkv/ webm /avi format allowed');</script>";
         } else {
-            $lessonurl = '';
-            $lessondate = '';
-            $lessontime = '';
+            $lessonurl = null;
+            $lessondate = null;
+            $lessontime = null;
             $recorderfile = md5($lessonfile) . $extension;
             move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
         }
     } else {
-        $recorderfile = '';
+        $recorderfile = null;
         $lessonurl = $_POST['lessonurl'];
         $lessondate = $_POST['lessondate'];
         $lessontime = $_POST['lessontime'];
@@ -86,14 +83,20 @@ if (isset($_POST['submit'])) {
     <!-- Plugin css for this page -->
     <script src="../assets/plugins/tinymce/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-      tinymce.init({
-        selector: '#mytextarea',
-        statusbar: false,
-        branding: false,
-        promotion: false,
-    });
+        tinymce.init({
+            selector: '#mytextarea',
+            statusbar: false,
+            branding: false,
+            promotion: false,
+            plugins: 'wordcount',
+            toolbar: 'wordcount'
+        });
     </script>
     <!-- End plugin css for this page -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+    <script src="https://malsup.github.io/jquery.form.js"></script>
+
     <!-- inject:css -->
     <link rel="stylesheet" href="../assets/css/vertical-layout-light/style.css">
     <!-- endinject -->
@@ -112,23 +115,23 @@ if (isset($_POST['submit'])) {
                     <?php
 
                     if ($_SESSION['course_success']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Lesson Added!</strong> New lesson added successfully.
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Lesson Added!</strong> New lesson added successfully.
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     if ($_SESSION['course_error']) {
-                    ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Lesson Creatation Failed</strong>
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Lesson Creatation Failed</strong>
+                            </div>
                         </div>
-                    </div>
-                    <?php
+                        <?php
                     }
 
                     ?>
@@ -142,8 +145,8 @@ if (isset($_POST['submit'])) {
                                     to write about the topic, and it will also make it more likely that people will be
                                     interested in reading what you have to say.
                                 </p>
-                                <form method="POST" action="" enctype="multipart/form-data" class="needs-validation"
-                                    novalidate>
+                                <form method="POST" action="" id="submitForm" enctype="multipart/form-data"
+                                    class="needs-validation" novalidate>
 
                                     <div class="row g-3">
                                         <div class="col-lg-6" style="margin-bottom: 20px;">
@@ -162,9 +165,8 @@ if (isset($_POST['submit'])) {
                                         <div class="col-6">
                                             <label for="lessontype" class="form-label">Lesson Type</label>
                                             <select style="height: 46px;" id="lessontype" name="lessontype"
-                                                class="form-control form-control-lg"
-                                                onchange="setInputForLessonType(this.options[this.selectedIndex])"
-                                                required>
+                                                class="form-control form-control-lg" required
+                                                onchange="setInputForLessonType(this.options[this.selectedIndex])">
                                                 <option selected disabled value="">Type</option>
                                                 <option value="Live">Live</option>
                                                 <option value="Recorded">Recorded</option>
@@ -175,29 +177,30 @@ if (isset($_POST['submit'])) {
                                         <div class="col-lg-6" style="display: none;" id="lessonurl">
                                             <label for="lessonurl" class="form-label">Lesson URl</label>
                                             <input type="text" class="form-control" name="lessonurl"
-                                                placeholder="Lesson URl">
+                                                placeholder="Lesson URl" required>
                                             <div class="invalid-feedback">Please type correct url</div>
                                         </div>
 
                                         <div class="col-lg-6" style="display: none;" id="lessonfile">
                                             <label for="lessonfile" class="form-label">Video Lecture</label>
-                                            <input type="file" class="form-control" name="lessonfile">
+                                            <input type="file" class="form-control" name="lessonfile" required>
                                             <div class="invalid-feedback">Please upload correct file</div>
                                         </div>
 
                                     </div>
 
+
                                     <div class="row g-3" style="margin-top: 20px;">
 
                                         <div class="col-lg-6" style="display: none;" id="lessondate">
                                             <label for="lessondate" class="form-label">Date</label>
-                                            <input type="date" class="form-control" name="lessondate">
+                                            <input type="date" class="form-control" name="lessondate" required>
                                             <div class="invalid-feedback">Please select correct date</div>
                                         </div>
 
                                         <div class="col-lg-6" style="display: none;" id="lessontime">
                                             <label for="lessontime" class="form-label">Time</label>
-                                            <input type="time" class="form-control" name="lessontime">
+                                            <input type="time" class="form-control" name="lessontime" required>
                                             <div class="invalid-feedback">Please select correct time</div>
                                         </div>
 
@@ -209,7 +212,7 @@ if (isset($_POST['submit'])) {
                                         <div class="col">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive">
+                                                    id="isactive" required>
                                                 <label class="custom-control-label" style="margin-left: 20px;"
                                                     for="isactive">Is
                                                     Active</label>
@@ -226,7 +229,7 @@ if (isset($_POST['submit'])) {
                                                 placeholder="Lesson Name" required>
                                             <div class="invalid-feedback">Please type correct Description</div>
                                             <div id="wordCountDisplay" style="margin: 10px 5px; display: none;">
-                                                <p style="color: red;">Word Count <strong style="color: red;"
+                                                <p style="color: green;">Word Count <strong style="color: green;"
                                                         id="wordCount"></strong> </p>
                                             </div>
                                         </div>
@@ -237,15 +240,26 @@ if (isset($_POST['submit'])) {
                                         <div class="col">
                                             <label for="lessonDescription" class="form-label">Lesson Description</label>
                                             <textarea name="lessonDescription" id="mytextarea" style="width:100%"
-                                                rows="10"></textarea>
+                                                rows="10" required></textarea>
                                             <div class="invalid-feedback">Please type correct Description</div>
                                         </div>
                                     </div>
 
-                                    <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
-                                            class="btn btn-primary">Add Lesson</button>
+                                    <div class="row">
+                                        <div class="col-6" style="margin-top: 30px;">
+                                            <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
+                                                class="btn btn-primary">Add Lesson</button>
 
+                                        </div>
+
+                                        <div class="col-6" style="margin-top: 40px; display: none; "
+                                            id="progressBarDiv">
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar" role="progressbar" id="progressbar"
+                                                    style="width: 0%;" aria-valuenow="50" aria-valuemin="0"
+                                                    aria-valuemax="100">0%</div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </form>
@@ -265,7 +279,6 @@ if (isset($_POST['submit'])) {
 
 
         <script>
-
             let lessontype = document.getElementById('lessontype');
 
             let lessonurl = document.getElementById('lessonurl');
@@ -290,9 +303,8 @@ if (isset($_POST['submit'])) {
                     lessontime.children[1].setAttribute('required', true);
 
                     lessonfile.style.display = 'none'
-                    lessonfile.children[1].removeAttribute('required');
-                }
-                else if (input == 'Recorded') {
+                    lessonfile.children[1].removeAttribute('required', true);
+                } else if (input == 'Recorded') {
                     lessonfile.style.display = 'block'
                     lessonfile.children[1].setAttribute('required', true);
 
@@ -320,6 +332,68 @@ if (isset($_POST['submit'])) {
                 }
             })
 
+            const form = document.getElementById("submitForm");
+
+            const progressBarDiv = document.getElementById("progressBarDiv");
+            const progressbar = document.getElementById("progressbar");
+
+
+            form.onsubmit = function (e) {
+
+
+                e.preventDefault();
+
+                let lessonname = e.target.lessonname.value
+                let availablity = e.target.availablity.value;
+                let courseid = e.target.courseid.value
+                let lessonDescription = e.target.lessonDescription.value
+                let lessontype = e.target.lessontype.value
+
+
+
+                if (lessonname != "" && availablity != "" && courseid != "" && lessonDescription != "" && lessontype != "") {
+
+                    progressBarDiv.style.display = "block"
+
+                    let uploadFormData = new FormData(form);
+
+
+                    // Initiate the AJAX request
+                    let request = new XMLHttpRequest();
+
+                    // Ensure the request method is POST
+                    request.open('POST', form.action);
+
+                    // Attach the progress event handler to the AJAX request
+                    request.upload.addEventListener('progress', event => {
+                        // Add the current progress to the button
+
+                        let progress = ((event.loaded / event.total) * 100).toFixed(0);
+
+                        progressbar.style.width = `${progress}%`
+                        progressbar.innerHTML = `${progress}%`
+
+                    });
+
+
+                    request.onreadystatechange = () => {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    };
+
+                    // Execute request
+                    const res = request.send(uploadFormData);
+
+
+                }
+                else {
+                    // alert("All Fields Are Required")
+                    // Bootstrap Alert
+                }
+            }
+
+
         </script>
 
 
@@ -327,13 +401,14 @@ if (isset($_POST['submit'])) {
 
         <script src="../includes/_validation.js"></script>
 
+
 </body>
 <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-    crossorigin="anonymous"></script>
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

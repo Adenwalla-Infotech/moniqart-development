@@ -99,10 +99,7 @@ $start_from = ($page - 1) * $record_per_page;
                                                 </thead>
                                                 <tbody style="text-align: left;margin-left: 30px">
                                                     <?php
-                                              
-                                                    if (!isset($_POST['search'])) {
                                                         _getAllProducts($start_from, $record_per_page);
-                                                    }
                                                     ?>
                                                 </tbody>
                                             </table>
