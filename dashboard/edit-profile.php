@@ -609,7 +609,7 @@ if (isset($_POST['update'])) {
                                                                 if($query){
                                                                     foreach ($query as $data) {
                                                                         ?>
-                                                                        <option value="<?php echo $data['_id'] ?>"><?php echo $data['_basecurrency'] ?></option>
+                                                                        <option value="<?php echo $data['_basecurrency'] ?>"><?php echo $data['_basecurrency'] ?></option>
                                                                         <?php
                                                                     }
                                                                 }

@@ -17,14 +17,21 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || $_SESSION['is
 require('../includes/_functions.php');
 
 $_id = $_SESSION['userId'];
-$getprice = $_GET['amount'];
-$currency = $_GET['currency'];
-if (isset($_GET['prod']) && isset($_GET['id'])) {
-    $product = $_GET['prod'];
+// $getprice = $_GET['amount'];
+$currency = _getsingleuser($_id,'_usercurrency');
+if (isset($_GET['product']) && isset($_GET['id'])) {
+    $product = $_GET['product'];
     $productid = $_GET['id'];
+    $getprice = _getSingleMembership($productid,'_price');
+    if(!$getprice || !$productid || !$product){
+        echo "<script>";
+        echo "window.location.href = 'memberships'";
+        echo "</script>";
+    }
 } else {
-    $product = null;
-    $productid = null;
+    echo "<script>";
+    echo "window.location.href = 'memberships'";
+    echo "</script>";
 }
 $getamount = _conversion($getprice, $currency);
 

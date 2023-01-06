@@ -10,6 +10,11 @@ function _getdashtotal($param, $active, $status)
     return $count;
 }
 
+function base_url($url){
+    require('_config.php');
+    return "$base_url".$url;
+}
+
 /* Auth Functions */
 function _login($userpassword, $useremail)
 {
@@ -522,7 +527,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
             $invoice = "CREATE TABLE IF NOT EXISTS `tblinvoice` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_clientname` varchar(255) NOT NULL,
@@ -537,7 +541,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
             $invoiceitems = "CREATE TABLE IF NOT EXISTS `tblinvoiceitems` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_invoiceno` varchar(55) NOT NULL,
@@ -548,10 +551,10 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
             $course = "CREATE TABLE IF NOT EXISTS `tblcourse` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_coursename` text NOT NULL,
+                `_parmalink` varchar(255) NOT NULL,
                 `_coursedescription` text NOT NULL,
                 `_whatlearn` text NOT NULL,
                 `_requirements` text NOT NULL,
@@ -603,8 +606,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
-
             $attachmentsDB = "CREATE TABLE IF NOT EXISTS `tblattachements` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_lessonid` varchar(55) NOT NULL,
@@ -612,8 +613,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
-
 
             $faqs = "CREATE TABLE IF NOT EXISTS `tblfaqs` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -643,7 +642,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
             $productDB = "CREATE TABLE IF NOT EXISTS `tblproducts` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_name` varchar(55) NOT NULL,
@@ -659,6 +657,15 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
+            $mycourseDB = "CREATE TABLE IF NOT EXISTS `tblmycourses` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_courseid` varchar(55) NOT NULL, 
+                `_userid` varchar(55) NOT NULL, 
+                `_coursestatus` varchar(100) NOT NULL,
+                `_status` varchar(100) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
             $galleryDB = "CREATE TABLE IF NOT EXISTS `tblgallery` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -704,7 +711,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-
             $shippingDB = "CREATE TABLE IF NOT EXISTS `tblshipping` (
                 `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_country` varchar(255) NOT NULL,
@@ -725,11 +731,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
-
-
-
-
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB];
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB,$mycourseDB];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -2051,8 +2053,8 @@ function _showSubCategoryOptions($_subcategoryID = '')
 function _createBlog($_blogtitle, $_blogdesc, $_blogcategory, $_blogsubcategory, $_blogmetadesc, $_blogimg, $_userid, $_status)
 {
     require('_config.php');
-
-    $sql = "INSERT INTO `tblblog`(`_blogtitle`, `_parmalink`, `_blogdesc`, `_blogcategory`, `_blogsubcategory`, `_blogmetadesc`,`_blogimg`, `_userid`, `_status`) VALUES ('$_blogtitle', '$_blogtitle','$_blogdesc', '$_blogcategory', '$_blogsubcategory', '$_blogmetadesc','$_blogimg', '$_userid', '$_status')";
+    $bloglink = strtolower(str_replace(' ', '-', $_blogtitle));
+    $sql = "INSERT INTO `tblblog`(`_blogtitle`, `_parmalink`, `_blogdesc`, `_blogcategory`, `_blogsubcategory`, `_blogmetadesc`,`_blogimg`, `_userid`, `_status`) VALUES ('$_blogtitle', '$bloglink','$_blogdesc', '$_blogcategory', '$_blogsubcategory', '$_blogmetadesc','$_blogimg', '$_userid', '$_status')";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $_SESSION['blog_success'] = true;
@@ -2148,12 +2150,9 @@ function _getBlogs($blogtitle = '', $blogcategory = '', $blogsubcategory = '', $
 
 function updateBlog($_blogtitle, $_blogdesc, $_blogcategory, $_blogsubcategory, $_blogmetadesc, $_blogimg, $_status, $_id)
 {
-
     require('_config.php');
-
-
-    $sql = "UPDATE `tblblog` SET `_blogtitle`='$_blogtitle' , `_blogdesc`='$_blogdesc'  , `_blogcategory`='$_blogcategory'  , `_blogsubcategory`='$_blogsubcategory' , `_blogmetadesc`='$_blogmetadesc' , `_blogimg`='$_blogimg' , `_status`='$_status' WHERE `_id` = $_id";
-
+    $bloglink = strtolower(str_replace(' ', '-', $_blogtitle));
+    $sql = "UPDATE `tblblog` SET `_blogtitle`='$_blogtitle', `_parmalink`='$bloglink', `_blogdesc`='$_blogdesc'  , `_blogcategory`='$_blogcategory'  , `_blogsubcategory`='$_blogsubcategory' , `_blogmetadesc`='$_blogmetadesc' , `_blogimg`='$_blogimg' , `_status`='$_status' WHERE `_id` = $_id";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $_SESSION['blog_success'] = true;
@@ -2740,22 +2739,22 @@ function _allmemberships()
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) { ?>
-                                                <div class="col-lg-4">
-                                                    <div class="price-box">
-                                                        <div class="">
-                                                            <div class="price-label basic"><?php echo $data['_membershipname']; ?></div>
-                                                            <div class="price">INR&nbsp;<?php echo $data['_price']; ?></div>
-                                                            <div class="price-info">Per Month, For <?php echo $data['_duration']; ?> Month.</div>
-                                                        </div>
-                                                        <div class="info">
-                                                            <ul>
-                                                                <?php echo $data['_membershipdesc']; ?>
-                                                            </ul>
-                                                            <a href="payment?amount=<?php echo $data['_price']; ?>&currency=INR&prod=membership&id=<?php echo $data['_id']; ?>" style="margin-top:-20px" class="plan-btn">Join Plan</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        <?php }
+            <div class="col-lg-4">
+                    <div class="price-box">
+                        <div class="">
+                            <div class="price-label basic"><?php echo $data['_membershipname']; ?></div>
+                            <div class="price">INR&nbsp;<?php echo $data['_price']; ?></div>
+                            <div class="price-info">Per Month, For <?php echo $data['_duration']; ?> Month.</div>
+                        </div>
+                        <div class="info">
+                            <ul>
+                                <?php echo $data['_membershipdesc']; ?>
+                            </ul>
+                            <a href="payment?product=membership&id=<?php echo $data['_id']; ?>" style="margin-top:-20px" class="plan-btn">Join Plan</a>
+                        </div>
+                    </div>
+            </div>
+    <?php }
     }
 }
 
@@ -3422,8 +3421,8 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
 
 
     require('_config.php');
-
-    $sql = "INSERT INTO `tblcourse`(`_coursename`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES ('$coursename','$courseDesc','$whatlearn','$requirements','$eligibitycriteria','$capacity','$enrollstatus','$thumbnail','$banner','$pricing','$status','$teacheremailid','$categoryid','$subcategoryid','$coursetype','$coursechannel','$courselevel','$evuluationlink','$startdate','$enddate','$discountprice')";
+    $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
+    $sql = "INSERT INTO `tblcourse`(`_coursename`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES ('$coursename','$courselink','$courseDesc','$whatlearn','$requirements','$eligibitycriteria','$capacity','$enrollstatus','$thumbnail','$banner','$pricing','$status','$teacheremailid','$categoryid','$subcategoryid','$coursetype','$coursechannel','$courselevel','$evuluationlink','$startdate','$enddate','$discountprice')";
 
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -3575,9 +3574,8 @@ function _updateCourse($_id, $coursename, $courseDesc, $whatlearn, $requirements
 {
 
     require('_config.php');
-
-
-    $sql = "UPDATE `tblcourse` SET `_coursename`='$coursename' ,`_coursedescription`='$courseDesc' , `_whatlearn`='$whatlearn',`_requirements`='$requirements' ,`_eligibilitycriteria`='$eligibitycriteria',`_capacity`='$capacity' , `_enrollstatus`='$enrollstatus',`_thumbnail`='$thumbnail' ,`_banner`='$banner' , `_pricing`='$pricing',`_status`='$status' ,`_teacheremailid`='$teacheremailid' , `_categoryid`='$categoryid',`_subcategoryid`='$subcategoryid' , `_coursetype`='$coursetype' , `_coursechannel`='$coursechannel' , `_courselevel`='$courselevel' , `_evuluationlink`='$evuluationlink' , `_startdate`='$startdate' , `_enddate`='$enddate' , `_discountprice`='$discountprice' WHERE `_id` = '$_id' ";
+    $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
+    $sql = "UPDATE `tblcourse` SET `_coursename`='$coursename', `_parmalink` = '$courselink',`_coursedescription`='$courseDesc' , `_whatlearn`='$whatlearn',`_requirements`='$requirements' ,`_eligibilitycriteria`='$eligibitycriteria',`_capacity`='$capacity' , `_enrollstatus`='$enrollstatus',`_thumbnail`='$thumbnail' ,`_banner`='$banner' , `_pricing`='$pricing',`_status`='$status' ,`_teacheremailid`='$teacheremailid' , `_categoryid`='$categoryid',`_subcategoryid`='$subcategoryid' , `_coursetype`='$coursetype' , `_coursechannel`='$coursechannel' , `_courselevel`='$courselevel' , `_evuluationlink`='$evuluationlink' , `_startdate`='$startdate' , `_enddate`='$enddate' , `_discountprice`='$discountprice' WHERE `_id` = '$_id' ";
 
 
     $query = mysqli_query($conn, $sql);
@@ -3589,8 +3587,6 @@ function _updateCourse($_id, $coursename, $courseDesc, $whatlearn, $requirements
         header("location:");
     }
 }
-
-
 
 function _deleteCourse($id)
 {
@@ -3609,7 +3605,60 @@ function _deleteCourse($id)
     }
 }
 
+function _purchasecourse($userid, $courseid)
+{
+    require('_config.php');
+    $sql = "INSERT INTO `tblmycourses`(`_courseid`, `_userid`, `_status`) VALUES ('$courseid','$userid','true')";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $sql = "SELECT * FROM `tblemailtemplates`";
+        $query = mysqli_query($conn, $sql);
+        foreach ($query as $data) {
+            $template = $data['_purchasetemplate'];
+        }
+        $variables = array();
+        $variables['name'] = _getsingleuser($userid, '_username');
+        $variables['price'] = _getSingleCourse($memberid, '_discountprice');
+        $variables['product'] = _getSingleCourse($memberid, '_coursename');
+        $variables['date'] = date('M j, Y');
+        $variables['companyname'] = _siteconfig('_sitetitle');
+        $variables['paymentid'] = $_SESSION['transid'];
+        $sendmail = _usetemplate($template, $variables);
+        $message = 'Thank you for your purchase with ' . _siteconfig('_sitetitle') . '. We have mailed your order details on ' . _getsingleuser($userid, '_useremail') . '';
+        _notifyuser(_getsingleuser($userid, '_useremail'), _getsingleuser($userid, '_userphone'), $sendmail, $message, 'Purchase Completed');
+    }
+}
 
+function _allcourses()
+{
+    $userid = $_SESSION['userId'];
+    require('_config.php');
+    $sql = "SELECT * FROM `tblmycourses` WHERE `_userid` = '$userid' AND `_status` = 'true'";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+        $text = _getSingleCourse($data['_courseid'],'_coursename'); ?>
+        <div class="col-lg-4">
+            <div class="card">
+                <a class="img-card" href="course/<?php echo _getSingleCourse($data['_courseid'],'_parmalink'); ?>">
+                    <img src="../uploads/coursethumbnail/<?php echo _getSingleCourse($data['_courseid'],'_thumbnail'); ?>" />
+                </a>
+            <div class="card-content">
+                <h4 class="card-title">
+                    <a href="course/<?php echo _getSingleCourse($data['_courseid'],'_parmalink'); ?>"> <?php echo strlen($text) > 58 ? substr($text,0,58)."..." : $text ?>
+                    </a>
+                </h4>
+                <p class="">
+                    <strong><i class="mdi mdi-calendar-clock"></i>&nbsp;&nbsp;</strong><?php echo date("F j, Y",strtotime($data['CreationDate'])); ?>
+                    <span style="float:right" class="badge bg-<?php if($data['_coursestatus'] == 'Active'){echo 'success';} if($data['_coursestatus'] == 'Completed'){echo 'info';} if($data['_coursestatus'] == 'Paused'){echo 'warning';} ?>"><?php echo $data['_coursestatus']; ?></span>
+                    <span style="float:right;margin-right:10px" class="badge bg-light"><?php echo _getSingleCourse($data['_courseid'],'_coursetype'); ?></span>
+                </p>
+            </div> 
+        </div>   
+    </div>
+    <?php }
+    }
+}
 
 
 // Lessons //
@@ -4668,14 +4717,14 @@ function _getSingleImgFromGallery($id, $param)
 
 // FRONT END FUNCTION STARTS HERE 
 
-function _getmenu()
-{
-    require('_config.php');
-    $sql = "SELECT * FROM `tblmenusettings` WHERE `_status` = 'on' ORDER BY _indexing DESC";
-    $query = mysqli_query($conn, $sql);
-    foreach ($query as $data) {
-    }
-}
+// function _getmenu()
+// {
+//     require('_config.php');
+//     $sql = "SELECT * FROM `tblmenusettings` WHERE `_status` = 'on' ORDER BY _indexing DESC";
+//     $query = mysqli_query($conn, $sql);
+//     foreach ($query as $data) {
+//     }
+// }
 
 function _updateImgInGallery($id, $imgurl)
 {
@@ -5015,7 +5064,7 @@ function _getAllStateMarkup($startfrom = '', $limit = '')
 
 
 
-// Shippin Markup
+// Shipping Markup
 
 
 function _addShippingMarkup($_country, $_state, $_feetype, $_price, $_status)
@@ -5144,6 +5193,7 @@ function _getAllShippingMarkup($startfrom = '', $limit = '')
         }
     }
 }
+
 
 
 ?>
