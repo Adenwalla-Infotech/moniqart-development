@@ -83,6 +83,8 @@ if (isset($_POST['submit'])) {
         $enrollstatus = 'false';
     }
 
+    echo 'going';
+
     _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
 }
 
@@ -130,7 +132,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <div class="container-scroller">
-        <?php include('templates/_header.php'); ?>
+        <!-- <?php include('templates/_header.php'); ?> -->
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <?php include('templates/_sidebar.php'); ?>
