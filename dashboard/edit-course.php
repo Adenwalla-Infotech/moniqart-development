@@ -210,7 +210,7 @@ if (isset($_POST['editSlide'])) {
 
 <body>
     <div class="container-scroller">
-        <?php include('templates/_header.php'); ?>
+        <!-- <?php include('templates/_header.php'); ?> -->
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <?php include('templates/_sidebar.php'); ?>
