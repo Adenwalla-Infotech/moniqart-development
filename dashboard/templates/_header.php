@@ -81,7 +81,7 @@ $_userid =  $_SESSION['userId'];
             <i class="ti-settings text-primary"></i>
             Settings
           </a>
-          <a class="dropdown-item" href="logout">
+          <a class="dropdown-item" href="<?php echo base_url('dashboard/logout'); ?>">
             <i class="ti-power-off text-primary"></i>
             Logout
           </a>

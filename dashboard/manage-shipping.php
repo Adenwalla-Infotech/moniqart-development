@@ -249,11 +249,11 @@ if (isset($_POST['updateShipping'])) {
 
 
 
-                            <div class="row" style="margin-top: 20px;">
+                            <div class="row">
 
-                                <div class="col-lg-6" style="margin-bottom: 20px;">
+                                <div class="col-lg-6">
                                     <label for="countryId" class="form-label">Select Country</label>
-                                    <select style="height: 46px;" onchange="getStates(this.options[this.selectedIndex].value),'add'" name="countryId" class="form-control form-control-lg"
+                                    <select style="height: 46px;" onchange="getStates(this.options[this.selectedIndex].value,'add')" name="countryId" class="form-control form-control-lg"
                                         id="countryId" required>
                                         <option selected disabled value="">Select</option>
 
@@ -282,7 +282,7 @@ if (isset($_POST['updateShipping'])) {
                                     <div class="invalid-feedback">Please select proper country</div>
                                 </div>
 
-                                <div class="col-lg-6" style="margin-bottom: 20px;">
+                                <div class="col-lg-6">
                                     <label for="stateId" class="form-label">Select State</label>
                                     <select style="height: 46px;" name="stateId" class="form-control form-control-lg"
                                         id="stateIdAdd" required>
@@ -296,7 +296,7 @@ if (isset($_POST['updateShipping'])) {
 
                             <div class="row" style="margin-top: 20px;">
 
-                                <div class="col-lg-6" style="margin-bottom: 20px;">
+                                <div class="col-lg-6">
                                     <label for="feeType" class="form-label">Fee Type</label>
                                     <select style="height: 46px;" name="feeType" class="form-control form-control-lg"
                                         id="feeType" required>
@@ -316,7 +316,7 @@ if (isset($_POST['updateShipping'])) {
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-6" style="margin-top:40px;">
+                                <div class="col-lg-6" style="margin-top:20px;">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" name="status" id="status">
                                         <label class="custom-control-label" for="status">Is

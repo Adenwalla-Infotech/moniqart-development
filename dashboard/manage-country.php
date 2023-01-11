@@ -268,7 +268,7 @@ if (isset($_POST['updateCountry'])) {
             </div>
             <div class="modal-body" style="padding: 0px;">
 
-              <div class="row" style="margin-top: 20px;">
+              <div class="row" >
                 <div class="col-lg-6">
                   <label for="countryName" class="form-label">Country Name</label>
                   <input type="text" class="form-control" name="countryName" placeholder="Country Name">

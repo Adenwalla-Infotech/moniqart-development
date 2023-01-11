@@ -236,7 +236,7 @@ if (isset($_POST['updateState'])) {
             </div>
             <div class="modal-body" style="padding: 0px;">
 
-              <div class="row" style="margin-top: 20px;">
+              <div class="row">
                 <div class="col-lg-6">
                   <label for="stateName" class="form-label">State Name</label>
                   <input type="text" class="form-control" name="stateName" placeholder="State Name">
@@ -251,7 +251,7 @@ if (isset($_POST['updateState'])) {
 
               <div class="row" style="margin-top: 20px;">
 
-                <div class="col-lg-6" style="margin-bottom: 20px;">
+                <div class="col-lg-6">
                   <label for="countryId" class="form-label">Select Country</label>
                   <select style="height: 46px;" name="countryId" class="form-control form-control-lg" id="countryId"
                     required>

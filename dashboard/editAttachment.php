@@ -30,7 +30,7 @@ if (isset($_POST['edit'])) {
 
         <div class="modal-body" style="padding: 0px;">
 
-            <div class="row" style="margin-top: 30px;">
+            <div class="row">
 
 
                 <div class="col-lg-12">
