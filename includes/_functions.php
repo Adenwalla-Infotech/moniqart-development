@@ -3424,7 +3424,7 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
     $sql = "INSERT INTO `tblcourse`(`_coursename`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES ('$coursename','$courselink','$courseDesc','$whatlearn','$requirements','$eligibitycriteria','$capacity','$enrollstatus','$thumbnail','$banner','$pricing','$status','$teacheremailid','$categoryid','$subcategoryid','$coursetype','$coursechannel','$courselevel','$evuluationlink','$startdate','$enddate','$discountprice')";
-
+    echo $sql;
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $_SESSION['course_success'] = true;
