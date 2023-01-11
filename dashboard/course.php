@@ -50,7 +50,7 @@ if (!isset($_GET['lesson'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    <!-- endinject -->
+    <!-- endinject --> 
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
