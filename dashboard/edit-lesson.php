@@ -69,7 +69,7 @@ if (isset($_POST['lessonname'])) {
             $lessondate = null;
             $lessontime = null;
             $recorderfile = md5($lessonfile) . $extension;
-            move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
+            move_uploaded_file($_FILES["lessonfile"]["tmp_name"], base_url('uploads/recordedlesson/'. $recorderfile));
         }
     } else {
         $recorderfile = _getSingleLesson($id, '_recordedfilename');
