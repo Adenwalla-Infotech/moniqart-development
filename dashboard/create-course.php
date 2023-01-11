@@ -72,15 +72,15 @@ if (isset($_POST['submit'])) {
 
 
     if (isset($_POST['isactive'])) {
-        $isactive = $_POST['isactive'];
+        $isactive = 'true';
     } else {
-        $isactive = false;
+        $isactive = 'false';
     }
 
     if (isset($_POST['enrollstatus'])) {
-        $enrollstatus = $_POST['enrollstatus'];
+        $enrollstatus = 'true';
     } else {
-        $enrollstatus = false;
+        $enrollstatus = 'false';
     }
 
     _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
