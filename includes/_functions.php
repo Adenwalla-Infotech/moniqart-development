@@ -3892,7 +3892,7 @@ function _getLessonForAccordion($courseId)
                                                     <?php  
                                                         
                                                         if(strlen($lessonname) > 20){
-                                                           echo substr($lessonname, 0, 30) . "...";
+                                                           echo substr($lessonname, 0, 25) . "...";
                                                         } else {
                                                             echo $lessonname;
                                                         }
