@@ -731,8 +731,17 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
+            $pendingCetificatedDB = "CREATE TABLE IF NOT EXISTS `tblpendingcertificate` (
+                `_id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_userid` varchar(255) NOT NULL,
+                `_courseid` varchar(255) NULL,
+                `_emailid` varchar(255) NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB, $mycourseDB];
+
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB, $mycourseDB ,$pendingCetificatedDB];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -3884,6 +3893,22 @@ function _getLessonForAccordion($courseId)
                                     ?>
                                     >
 
+                                    <span  style="display: none; "   class="badge bg-success"  id="lessonAccordionId"  >
+                                        <?php echo $lessonnId; ?>
+                                    </span>
+
+                                    <span  style="display: none; "   class="badge bg-success"  id="lessonAccordionNameComplete"  >
+                                        <?php echo $lessonname; ?>
+                                    </span>
+
+                                    <span  style="display: none; "   class="badge bg-success"  id="lessonAccordionDesc"  >
+                                        <?php echo $lessondescription; ?>
+                                    </span>
+
+                                    <span  style="display: none; "   class="badge bg-success"  id="lessonAccordionDate"  >
+                                        <?php echo $lessonDate; ?>-<?php echo $lessonTime; ?>
+                                    </span>
+
                                         <h2 class="accordion-header line-clamp" id="headingOne">
                 
                                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#lesson<?php echo $lessonnId; ?>" aria-expanded="true" aria-controls="<?php echo $lessonnId; ?>" id="lessonAccordionName" style="color: #4B49AC; font-weight: 900;font-size:15px ;"   >
@@ -3937,7 +3962,7 @@ function _getLessonForAccordion($courseId)
 
                                              if ($lessonType == 'Live') {
                                                  ?>
-                                                                                                                    <button style="margin-left: -4px; margin-bottom: 10px; " onclick="callSetLessonUrl('<?php echo $lessonDate ?>-<?php echo $lessonTime ?>','<?php echo $lessonUrl; ?>')" class=" btn btn-primary">
+                                                                                                                    <button style="margin-left: -4px; margin-bottom: 10px; " onclick="callSetLessonUrl('<?php echo $lessonDate ?>-<?php echo $lessonTime ?>','<?php echo $lessonUrl; ?>','<?php echo $lessonname ?>','<?php echo $lessondescription ?>', '<?php echo $lessonnId?>' )"  class=" btn btn-primary">
                                                                                                                         <i class="fa-regular fa-eye"></i>&nbsp;&nbsp;View Lesson
                                                                                                                     </button>
                                                                                                                     <span  style="float:right;color:black;margin-top: 10px; " class="badge bg-success text-light "  id="lessonAccordionType"  >
@@ -3946,7 +3971,7 @@ function _getLessonForAccordion($courseId)
                                                                                                                 <?php
                                              } else {
                                                  ?>
-                                                                                                                     <button style="margin-left: -4px; margin-bottom: 10px; " onclick="callSetLessonVideo('<?php echo $fileName ?>','<?php echo $lessonname ?>','<?php echo $lessondescription ?>')" class=" btn btn-primary">
+                                                                                                                     <button style="margin-left: -4px; margin-bottom: 10px; " onclick="callSetLessonVideo('<?php echo $fileName ?>','<?php echo $lessonname ?>','<?php echo $lessondescription ?>', '<?php echo $lessonnId?>' )" class=" btn btn-primary">
                                                                                                                      <i class="fa-regular fa-eye"></i>&nbsp;&nbsp;View Lesson
                                                                                                                     </button>
                                                                                                                     <span  style="float:right;color:black;margin-top: 10px; " class="badge bg-success text-light "  id="lessonAccordionType"  >
@@ -3972,6 +3997,10 @@ function _getLessonForAccordion($courseId)
 
 }
 
+
+// 
+
+// 
 
 
 // Slides //
@@ -5368,5 +5397,22 @@ function _getAllShippingMarkup($startfrom = '', $limit = '')
 }
 
 
+function _addToCertificates($userid , $courseId , $emailId){
+
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "INSERT INTO  `tblpendingcertificate` (`_userid`,`_courseid`,`_emailid`) VALUES ('$userid','$courseId','$emailId') ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Certificate will be delivered soon");
+    } else {
+        $alert = new PHPAlert();
+        $alert->warn("Failed");
+    }
+
+}
 
 ?>
