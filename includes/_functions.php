@@ -736,6 +736,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_userid` varchar(255) NOT NULL,
                 `_courseid` varchar(255) NULL,
                 `_emailid` varchar(255) NULL,
+                `_status` varchar(255) NOT NULL DEFAULT 'onprogress' ,
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
@@ -5409,8 +5410,118 @@ function _addToCertificates($userid , $courseId , $emailId){
         $alert = new PHPAlert();
         $alert->success("Certificate will be delivered soon");
     } else {
-        $alert = new PHPAlert();
+        $alert = new PHPAlert(); 
         $alert->warn("Failed");
+    }
+
+}
+
+
+function _getSingleCertificate($id, $param){
+     require('_config.php');
+
+    $sql = "SELECT  * FROM `tblpendingcertificate` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+function _getParamFromMyCourse($colname,$id, $param){
+
+    require('_config.php');
+
+    $sql = "SELECT  * FROM `tblmycourses` where `$colname`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+function _updateCertificateStatus($id,$status){
+
+    require('_config.php');
+    require('_alert.php');
+
+    $sql = "UPDATE `tblpendingcertificate` SET `_status`='$status' where `_id`='$id'   ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        $alert = new PHPAlert();
+        $alert->success("Status Updated");
+    } 
+
+}
+
+function _getCertificates($status='', $startfrom = '', $limit = ''){
+
+    require('_config.php');
+
+    $currentUserId = $_SESSION['userId'];
+
+    if ($status != '') {
+        $sql = "SELECT * FROM `tblpendingcertificate` WHERE `_status` = '$status'";
+    } 
+    else{
+        if ($_SESSION['userType'] == 2){
+            $sql = "SELECT * FROM `tblpendingcertificate` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+        }
+        else{
+            $sql = "SELECT * FROM `tblpendingcertificate` where `_userid`='$currentUserId' ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+        }
+    }
+
+    
+
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+
+            $_courseid = $data['_courseid'];
+
+            $CourseName = _getSingleCourse($_courseid, '_coursename');
+
+            ?>
+                           <tr>
+                            <?php if ($_SESSION['userType'] == 2) { ?>
+                                <td><?php echo $data['_id']; ?></td>
+                            <?php } ?>
+
+                               <td><?php echo $CourseName ?>
+                               <td><?php echo $data['_emailid']; ?>
+                               <td><?php echo $data['_status']; ?>
+                               
+                               <?php if ($_SESSION['userType'] == 2) { ?>
+                                <td>
+                                   <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                               </td>
+                               <td>
+                                   <?php
+                                   if (strtotime($data['UpdationDate']) == '') {
+                                       echo "Not Updated Yet";
+                                   } else {
+                                       echo date("M j, Y", strtotime($data['UpdationDate']));
+                                   }
+                                   ?>
+                               </td>
+                               <td>
+                                   <a href="view-certificate?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-eye"></a>
+                               </td>
+                                <?php } ?>
+
+                               
+
+                           </tr>
+                                                                    <?php
+        }
     }
 
 }

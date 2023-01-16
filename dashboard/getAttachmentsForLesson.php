@@ -12,7 +12,7 @@ if (isset($_POST['get'])) {
     
     while ($row = mysqli_fetch_array($query)) {
         ?>
-            <li class="list-group-item"> Attachment <?php echo $row['_id'] ?> <a href="<?php echo $row['_attachementurl'] ?>" download class="btn btn-primary" style="float: right;" ><i class="fa-solid fa-download"></i></a> </li>
+            <li class="list-group-item"> Attachment <?php echo $row['_id'] ?> <a href="<?php echo $row['_attachementurl'] ?>" download class="btn btn-primary" style="float: right;" ><i  class="mdi mdi-eye"></i></a> </li>
     <?php
     }
 

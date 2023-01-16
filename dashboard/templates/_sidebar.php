@@ -279,5 +279,13 @@
                 <span class="menu-title">My Courses</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url('dashboard/manage-certificates'); ?>">
+                <img src="<?php echo base_url('assets/icons/courses.png'); ?>" class="menu-icon" style="margin-right: 17px;margin-top:-0px;width:25px">
+                <!-- <i class="mdi mdi-wallet-membership menu-icon"></i> -->
+                <span class="menu-title">Certificates</span>
+            </a>
+        </li>
     </ul>
 </nav>

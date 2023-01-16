@@ -60,7 +60,12 @@ if(isset($_POST['submitEmail'])){
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    <!-- endinject --> 
+    <!-- Animation Library -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+
+
+    <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -68,7 +73,7 @@ if(isset($_POST['submitEmail'])){
     <!-- endinject -->
     <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.png'); ?>" />
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 
     <style>
@@ -141,6 +146,10 @@ if(isset($_POST['submitEmail'])){
 
                                         <div class="card-body">
                                             <a href="#" class="btn btn-primary mt-2" id="lessonliveUrl"> Link </a>
+                                            <lottie-player
+                                                src="https://assets1.lottiefiles.com/private_files/lf30_aw8vk8lt.json"
+                                                background="transparent" speed="1" style="height: 200px;"
+                                                loop  autoplay></lottie-player>
                                             <h5 class="card-title text-center">Class Starts at</h5>
                                             <p class="card-text text-center" id="lessonLiveDate">Time and Date</p>
                                         </div>
@@ -182,6 +191,7 @@ if(isset($_POST['submitEmail'])){
                                     <div class="card">
                                         <button class="btn btn-success" data-bs-toggle="modal"
                                             data-bs-target="#marksAsCompletedModal">
+                                            <i class="fa-solid fa-check" style="margin-right:5px;font-size:13px;"></i>
                                             Mark as Completed
                                         </button>
                                     </div>
@@ -224,9 +234,10 @@ if(isset($_POST['submitEmail'])){
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <input type="text" class="form-control" name="certificateEmail" placeholder="Email" required>
+                                    <input type="text" class="form-control" name="certificateEmail" placeholder="Email"
+                                        required>
                                 </div>
-                                <div class="col-lg-12" style="margin-top:10px; margin-left:5px; " >
+                                <div class="col-lg-12" style="margin-top:10px; margin-left:5px; ">
                                     <div class="form-check">
                                         <label class="form-check-label text-muted">
                                             <input type="checkbox" class="form-check-input" required>
@@ -240,7 +251,8 @@ if(isset($_POST['submitEmail'])){
                         </div>
                         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="submitEmail" class="btn btn-primary"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Submit</button>
+                            <button type="submit" name="submitEmail" class="btn btn-primary"><i
+                                    class="fa-solid fa-check"></i>&nbsp;&nbsp;Submit</button>
                         </div>
                     </div>
                 </form>
@@ -356,7 +368,7 @@ if(isset($_POST['submitEmail'])){
 
             lessonIsRecorded.style.display = 'none';
             lessonIsLive.style.display = 'flex';
-  
+
             lessonLiveDate.textContent = lessonAccordion1Date.textContent;
             lessonliveUrl.href = lessonAccordion1Url.textContent.trim();
 
