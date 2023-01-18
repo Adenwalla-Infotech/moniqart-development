@@ -136,18 +136,24 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
 
                     <div class="d-flex align-items-center mt-4 mb-4 ">
                         <img class="img-fluid" src="./uploads/coursebanner/<?php echo $courseImg ?>"
-                            style="border-radius:5px; width: 100px;" />
-                        <h5 class="mt-2 ml-2" style="font-size: 21px;font-weight: 700;">
-                            <?php echo $courseName ?>
-                        </h5>
+                            style="border-radius:5px; width: 200px;" />
+
+
+                        <div class="d-flex flex-column align-items-start">
+                            <h5 class="mt-2 ml-3" style="font-size: 21px;font-weight: 700;">
+                                <?php echo $courseName ?>
+                            </h5>
+                            <p class="ml-3">
+                                <span class="green d-block">₹ <?php echo $coursePrice ?></span>
+                                <s style="color:red;font-size: 20px;font-weight: 700;"> ₹<?php echo $discountPrice ?></s>
+                            </p>
+                        </div>
+
                     </div>
 
 
 
-                    <p>
-                        <span class="green d-block">₹ <?php echo $coursePrice ?></span>
-                        <s style="color:red;font-size: 20px;font-weight: 700;"> ₹<?php echo $discountPrice ?></s>
-                    </p>
+
 
                     <p>
                         <?php echo $courseDesc ?>
