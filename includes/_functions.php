@@ -3705,6 +3705,9 @@ function _allcourses()
 }
 
 
+
+
+
 // Lessons //
 function _createLesson($_courseid, $_lessonname, $_lessontype, $_lessonurl, $lessondate, $lessontime, $_recordedfilename, $_lessondescription, $_status, $_availablity)
 {

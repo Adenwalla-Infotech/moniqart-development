@@ -221,7 +221,7 @@ if(isset($_POST['submitEmail'])){
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="modal-content" style="padding: 10px;">
                         <div class="modal-header" style="padding: 0px;margin-bottom: 20px;padding-bottom:10px">
-                            <h4 class="modal-title fs-5" id="exampleModalLabel">Update Course Status</h4>
+                            <h4 class="modal-title fs-5" id="exampleModalLabel">Mark as Completed</h4>
                             <button type="button" class="btn-close" style="border: none;;background-color:white"
                                 data-bs-dismiss="modal" aria-label="Close"><svg style="width: 15px;"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
