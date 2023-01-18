@@ -6,12 +6,13 @@ function _allCoursesForAllCoursesPage()
 {
     require('_config.php');
 
-    $sql = "SELECT * FROM `tblmycourses` WHERE  `_status` = 'true'";
+    $sql = "SELECT * FROM `tblcourse` ";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) {
-            $courseName = _getSingleCourse($data['_courseid'], '_coursename');
-            $description = _getSingleCourse($data['_courseid'], '_coursedescription');
+            
+            $courseName = strip_tags($data['_coursename']);
+            $description = strip_tags($data['_coursedescription']);
 
             ?>
 
@@ -81,10 +82,10 @@ function _getAllMarkupsForCheckout()
             ?>
             <div class="d-flex">
                 <div class="col-8">
-                    <?php echo $data['_taxname'] ?>
+                    <?php echo $data['_taxname'] ?> :
                 </div>
-                <div class="ml-auto green price">
-                    <?php echo $data['_taxamount'] ?>
+                <div class="ml-auto price " style="color: #1c1d1f;font-weight: 400;"  >
+                    + ₹<?php echo $data['_taxamount'] ?>
                 </div>
             </div>
         <?php }
