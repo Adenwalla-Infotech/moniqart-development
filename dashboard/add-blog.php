@@ -176,9 +176,9 @@ if (isset($_POST['submit'])) {
 
                                         <div class="col" style="margin: 15px 0  15px 10px;">
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" name="_status"
+                                                <input type="checkbox" class="custom-control-input" value="true" name="_status"
                                                     id="_status">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
+                                                <label class="custom-control-label"
                                                     for="_status">Is
                                                     Active</label>
                                             </div>

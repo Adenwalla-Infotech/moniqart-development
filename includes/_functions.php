@@ -759,7 +759,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
                 $sms_data = "INSERT INTO `tblsmsconfig`(`_suppliername`, `_apikey`, `_baseurl`, `_supplierstatus`) VALUES ('Fast2SMS','maeS4bc5gM17qo0FwszOEAx62JND3IiHdfQBtl8XWLZ9rCjVTYOJlgtFLzNqZ7uYj830XWm6sQbM2KIR', 'https://www.fast2sms.com/dev/bulkV2', 'true')";
 
-                $email_data = "INSERT INTO `tblemailconfig`(`_hostname`, `_hostport`, `_smtpauth`, `_emailaddress`, `_emailpassword`, `_sendername`, `_supplierstatus`) VALUES ('mail.adenwalla.in', '465', 'true', 'info@adenwalla.in', 'Juned@786juned', 'Adenwalla Infotech', 'true')";
+                $email_data = "INSERT INTO `tblemailconfig`(`_hostname`, `_hostport`, `_smtpauth`, `_emailaddress`, `_emailpassword`, `_sendername`, `_supplierstatus`) VALUES ('mail.adenwalla.in', '465', 'true', 'no-reply@adenwalla.in', 'Juned@786juned', 'Adenwalla Infotech', 'true')";
 
                 $site_data = "INSERT INTO `tblsiteconfig`(`_sitetitle`, `_siteemail`, `_timezone`, `_sitelogo`, `_sitereslogo`, `_favicon`) VALUES ('Site Title', 'info@yoursite.com', 'Asia/Calcutta', 'uploadimage.png', 'uploadimage.png', 'uploadimage.png')";
 
@@ -989,22 +989,52 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
                                                                                                                                                     <span>Site Admin</span>
                                                                                                                                 <?php } ?>
                                                                                                                     </td>
+                                                                                                                    
+                                                                                                                    
+
                                                                                                                     <td>
-                                                                                                                        <label class="checkbox-inline form-switch">
+                                                                                                                        <div class="custom-control custom-switch">
                                                                                                                             <?php
-                                                                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                                            $status = $data['_userstatus'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
                                                                                                                             ?>
-                                                                                                                        </label>
+                                                                                                                        </div>
                                                                                                                     </td>
+
                                                                                                                     <td>
-                                                                                                                        <label class="checkbox-inline">
+                                                                                                                        <div class="custom-control custom-switch">
                                                                                                                             <?php
-                                                                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                                            $status = $data['_userverify'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
                                                                                                                             ?>
-                                                                                                                        </label>
+                                                                                                                        </div>
                                                                                                                     </td>
+
+
+
+
                                                                                                                     <td>
                                                                                                                         <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
                                                                                                                     </td>
@@ -1044,22 +1074,48 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
                                                                                                                                                     <span>Site Admin</span>
                                                                                                                                 <?php } ?>
                                                                                                                     </td>
+                                                                                                                    
                                                                                                                     <td>
-                                                                                                                        <label class="checkbox-inline form-switch">
+                                                                                                                        <div class="custom-control custom-switch">
                                                                                                                             <?php
-                                                                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                                            $status = $data['_userstatus'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
                                                                                                                             ?>
-                                                                                                                        </label>
+                                                                                                                        </div>
                                                                                                                     </td>
+
                                                                                                                     <td>
-                                                                                                                        <label class="checkbox-inline">
+                                                                                                                        <div class="custom-control custom-switch">
                                                                                                                             <?php
-                                                                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                                            $status = $data['_userverify'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
                                                                                                                             ?>
-                                                                                                                        </label>
+                                                                                                                        </div>
                                                                                                                     </td>
+
+
                                                                                                                     <td>
                                                                                                                         <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
                                                                                                                     </td>
@@ -1104,22 +1160,47 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
                                                                                                                                                     <span>Site Admin</span>
                                                                                                                                 <?php } ?>
                                                                                                                     </td>
+                                                                                                                   
                                                                                                                     <td>
-                                                                                                                        <label class="checkbox-inline form-switch">
+                                                                                                                        <div class="custom-control custom-switch">
                                                                                                                             <?php
-                                                                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                                            $status = $data['_userstatus'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
                                                                                                                             ?>
-                                                                                                                        </label>
+                                                                                                                        </div>
                                                                                                                     </td>
+
                                                                                                                     <td>
-                                                                                                                        <label class="checkbox-inline">
+                                                                                                                        <div class="custom-control custom-switch">
                                                                                                                             <?php
-                                                                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                                            $status = $data['_userverify'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
                                                                                                                             ?>
-                                                                                                                        </label>
+                                                                                                                        </div>
                                                                                                                     </td>
+
                                                                                                                     <td>
                                                                                                                         <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
                                                                                                                     </td>
@@ -1158,22 +1239,47 @@ function _getuser($username = '', $usertype = '', $createdat = '', $limit = '', 
                                                                                                                                                                     <span>Site Admin</span>
                                                                                                                                 <?php } ?>
                                                                                                                                     </td>
+                                                                                                                                   
                                                                                                                                     <td>
-                                                                                                                                        <label class="checkbox-inline form-switch">
-                                                                                                                                            <?php
-                                                                                                                                            if ($data['_userstatus'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                                            if ($data['_userstatus'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                                                                                                            ?>
-                                                                                                                                        </label>
-                                                                                                                                    </td>
-                                                                                                                                    <td>
-                                                                                                                                        <label class="checkbox-inline">
-                                                                                                                                            <?php
-                                                                                                                                            if ($data['_userverify'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                                                            if ($data['_userverify'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
-                                                                                                                                            ?>
-                                                                                                                                        </label>
-                                                                                                                                    </td>
+                                                                                                                        <div class="custom-control custom-switch">
+                                                                                                                            <?php
+
+                                                                                                                            $status = $data['_userstatus'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
+                                                                                                                            ?>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+                                                                                                                    <td>
+                                                                                                                        <div class="custom-control custom-switch">
+                                                                                                                            <?php
+
+                                                                                                                            $status = $data['_userverify'];
+                                                                                                                            if ($status == true) {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            } else {
+                                                                                                                                ?>
+                                                                                                                                    <input  type="checkbox" class="custom-control-input" >
+                                                                                                                                    <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                                                <?php
+                                                                                                                            }
+                                                                                                                            ?>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
                                                                                                                                     <td>
                                                                                                                         <?php echo date("F j, Y", strtotime($data['CreationDate'])); ?>
                                                                                                                                     </td>
@@ -1465,18 +1571,26 @@ function _saveticket($subject, $category, $status, $image, $user, $message)
 {
     require('_config.php');
     if ($image) {
-        $sql = "INSERT INTO `tbltickets`(`_title`, `_message`, `_image`, `_category`, `_subcategory`, `_useremail`, `_status`) VALUES ('$subject','$message','$image','$category','null','$user','$status')";
+        $imgToSend = $image;
     } else {
-        $sql = "INSERT INTO `tbltickets`(`_title`, `_message`, `_category`, `_subcategory`, `_useremail`, `_status`) VALUES ('$subject','$message','$category','null','$user','$status')";
+        $imgToSend = '';
     }
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+
+    $subCategory = 'sub';
+  
+    $stmt = $conn->prepare("INSERT INTO `tbltickets` (`_title`, `_message`, `_image`, `_category`, `_subcategory`, `_useremail`, `_status`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $subject,$message,$imgToSend,$category,$subCategory,$user,$status);
+
+    $stmt->execute();
+
+    if($stmt){
         $_SESSION['ticket_success'] = true;
         header("location:");
-    } else {
-        $_SESSION['ticket_error'] = true;
-        header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
 }
 
 function _gettickets($ticketid = '', $status = '', $createdAt = '', $limit = '', $startfrom = '')
@@ -1585,16 +1699,29 @@ function _saveticketres($id, $message, $image = '', $email)
 {
     require('_config.php');
     require('_alert.php');
+
+
     if ($image) {
-        $sql = "INSERT INTO `tblticketres`(`_ticket_id`, `_message`, `_image`, `_useremail`) VALUES ('$id','$message','$image','$email')";
+        $imgToSend = $image;
     } else {
-        $sql = "INSERT INTO `tblticketres`(`_ticket_id`, `_message`, `_useremail`) VALUES ('$id','$message','$email')";
+        $imgToSend = '';
     }
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+
+  
+    $stmt = $conn->prepare("INSERT INTO `tblticketres` (`_ticket_id`,`_message`,`_image`,`_useremail`) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $id,$message,$imgToSend,$email);
+
+    $stmt->execute();
+
+    if($stmt){
         $alert = new PHPAlert();
         $alert->success("Responded Successfully");
     }
+
+    $stmt->close();
+    $conn->close();
+
+
 }
 
 function _getticketres($id)
@@ -1671,13 +1798,23 @@ function _getCategory($_categoryname = '', $status = '', $limit = '', $startfrom
                                                                                     <tr>
                                                                                         <td><?php echo $data['_categoryname']; ?></td>
                                                                                         <td>
-
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
                                                                                         <td>
                                                                                             <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
@@ -1796,15 +1933,23 @@ function _getSubCategory($_subcategoryname = '', $limit = '', $startfrom = '')
                                                                                         <td><?php echo $data['_subcategoryname']; ?></td>
 
                                                                                         <td>
-
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
-
-
+                                                                                            </div>
                                                                                         </td>
                                                                                         <td><?php
                                                                                         $catid = $data['_categoryid'];
@@ -2064,16 +2209,24 @@ function _showSubCategoryOptions($_subcategoryID = '')
 function _createBlog($_blogtitle, $_blogdesc, $_blogcategory, $_blogsubcategory, $_blogmetadesc, $_blogimg, $_userid, $_status)
 {
     require('_config.php');
+    
     $bloglink = strtolower(str_replace(' ', '-', $_blogtitle));
-    $sql = "INSERT INTO `tblblog`(`_blogtitle`, `_parmalink`, `_blogdesc`, `_blogcategory`, `_blogsubcategory`, `_blogmetadesc`,`_blogimg`, `_userid`, `_status`) VALUES ('$_blogtitle', '$bloglink','$_blogdesc', '$_blogcategory', '$_blogsubcategory', '$_blogmetadesc','$_blogimg', '$_userid', '$_status')";
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    
+    $stmt = $conn->prepare("INSERT INTO `tblblog` (`_blogtitle`, `_parmalink`, `_blogdesc`, `_blogcategory`, `_blogsubcategory`, `_blogmetadesc`,`_blogimg`, `_userid`, `_status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $stmt->bind_param("sssssssss", $_blogtitle,$bloglink,$_blogdesc,$_blogcategory,$_blogsubcategory,$_blogmetadesc,$_blogimg,$_userid,$_status);
+
+    $stmt->execute();
+
+    if($stmt){
         $_SESSION['blog_success'] = true;
         header("location:");
-    } else {
-        $_SESSION['blog_error'] = true;
-        header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
+
 }
 
 function _getBlogs($blogtitle = '', $blogcategory = '', $blogsubcategory = '', $startfrom = '', $limit = '')
@@ -2103,20 +2256,23 @@ function _getBlogs($blogtitle = '', $blogcategory = '', $blogsubcategory = '', $
                                                                                     <tr>
                                                                                         <td><?php echo $data['_blogtitle']; ?></td>
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == 'true') {
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
-                                                                                                                        <?php
-                                                                                                }
-                                                                                                if ($data['_status'] != 'true') {
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                                                                                        <?php
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
                                                                                                 }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
                                                                                         <td>
                                                                                             <?php
@@ -2162,16 +2318,27 @@ function _getBlogs($blogtitle = '', $blogcategory = '', $blogsubcategory = '', $
 function updateBlog($_blogtitle, $_blogdesc, $_blogcategory, $_blogsubcategory, $_blogmetadesc, $_blogimg, $_status, $_id)
 {
     require('_config.php');
+    
     $bloglink = strtolower(str_replace(' ', '-', $_blogtitle));
+    
     $sql = "UPDATE `tblblog` SET `_blogtitle`='$_blogtitle', `_parmalink`='$bloglink', `_blogdesc`='$_blogdesc'  , `_blogcategory`='$_blogcategory'  , `_blogsubcategory`='$_blogsubcategory' , `_blogmetadesc`='$_blogmetadesc' , `_blogimg`='$_blogimg' , `_status`='$_status' WHERE `_id` = $_id";
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+
+
+    $stmt = $conn->prepare("UPDATE `tblblog` SET `_blogtitle`= ? , `_parmalink`= ? , `_blogdesc`= ? , `_blogcategory`= ? , `_blogsubcategory`= ? , `_blogmetadesc`= ? , `_blogimg`= ? , `_status`= ? WHERE `_id`=? ");
+
+    $stmt->bind_param("sssssssss", $_blogtitle,$bloglink,$_blogdesc,$_blogcategory,$_blogsubcategory,$_blogmetadesc,$_blogimg,$_status,$_id);
+    $stmt->execute();
+
+    if($stmt){
         $_SESSION['blog_success'] = true;
         header("location:");
-    } else {
-        $_SESSION['blog_error'] = true;
-        header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
+
+
 }
 
 
@@ -2238,20 +2405,23 @@ function _getmarkup($conversion = '', $status = '', $limit = '', $startfrom = ''
                                                                                         <td><?php echo $data['_conversioncurrency']; ?></td>
                                                                                         <td><?php echo $data['_price']; ?></td>
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == 'true') {
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
-                                                                                                                        <?php
-                                                                                                }
-                                                                                                if (!$data['_status']) {
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                                                                                        <?php
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
                                                                                                 }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
                                                                                         <td>
                                                                                             <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
@@ -2348,20 +2518,23 @@ function _gettaxmarkup($name = '', $status = '', $limit = '', $startfrom = '')
                                                                                         <td><?php echo $data['_taxtype']; ?></td>
                                                                                         <td><?php echo $data['_taxamount']; ?></td>
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == 'true') {
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
-                                                                                                                        <?php
-                                                                                                }
-                                                                                                if (!$data['_status']) {
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                                                                                        <?php
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
                                                                                                 }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
                                                                                         <td>
                                                                                             <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
@@ -2603,17 +2776,19 @@ function _createMembership($membershipname, $membershipdesc, $duration, $discoun
 {
     require('_config.php');
 
+    $stmt = $conn->prepare("INSERT INTO `tblmembership` (`_membershipname`, `_membershipdesc`, `_price`, `_benefit`, `_benefittype`, `_duration`, `_status`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $membershipname,$membershipdesc,$price,$discount,$discounttype,$duration,$isactive);
 
-    $sql = "INSERT INTO `tblmembership`(`_membershipname`, `_membershipdesc`, `_price`, `_benefit`, `_benefittype`, `_duration`, `_status`) VALUES ('$membershipname','$membershipdesc','$price','$discount','$discounttype','$duration','$isactive')";
+    $stmt->execute();
 
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    if($stmt){
         $_SESSION['membership_success'] = true;
         header("location:");
-    } else {
-        $_SESSION['membership_error'] = true;
-        header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
 }
 
 
@@ -2632,20 +2807,23 @@ function _getMembership($membershipname = '', $limit = '', $startfrom = '')
                                                                                         <td><?php echo $data['_id']; ?></td>
                                                                                         <td><?php echo $data['_membershipname']; ?></td>
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == 'true') {
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="true" checked type="checkbox">
-                                                                                                                        <?php
-                                                                                                }
-                                                                                                if (!$data['_status']) {
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
                                                                                                     ?>
-                                                                                                                            <input disabled role="switch" name="isactive" value="false" type="checkbox">
-                                                                                                                        <?php
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
                                                                                                 }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
                                                                                         <td>
                                                                                             <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
@@ -2688,17 +2866,19 @@ function _updateMembership($_id, $membershipname, $membershipdesc, $duration, $d
 
     require('_config.php');
 
-    $sql = "UPDATE `tblmembership` SET `_membershipname`='$membershipname' , `_membershipdesc`='$membershipdesc' , `_duration`='$duration' , `_benefit`='$discount' , `_benefittype`='$discounttype' , `_price`='$price' , `_status`='$isactive' WHERE `_id` = $_id";
+    $stmt = $conn->prepare("UPDATE `tblmembership` SET `_membershipname`= ? , `_membershipdesc`= ? , `_duration`= ? , `_benefit`= ? , `_benefittype`= ? , `_price`= ? , `_status`= ? WHERE `_id`=? ");
 
+    $stmt->bind_param("ssssssss",$membershipname,$membershipdesc,$duration,$discount,$discounttype,$price,$isactive,$_id );
+    $stmt->execute();
 
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    if($stmt){
         $_SESSION['membership_success'] = true;
         header("location:");
-    } else {
-        $_SESSION['membership_error'] = true;
-        header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
 }
 
 function _deleteMembership($id)
@@ -2839,9 +3019,27 @@ function _getTranscations($useremail = '', $amount = '', $status = '', $startfro
                                                                                         <td><?php echo $data['_useremail']; ?></td>
                                                                                         <td><?php echo $data['_amount']; ?></td>
                                                                                         <td><?php echo $data['_currency']; ?></td>
+                                                                                        
                                                                                         <td>
-                                                                                            <?php echo $data['_status']; ?>
+                                                                                            <div class="custom-control custom-switch">
+                                                                                                <?php
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
+                                                                                                ?>
+                                                                                            </div>
                                                                                         </td>
+
                                                                                         <td><?php echo $data['_couponcode']; ?></td>
                                                                                         <td>
                                                                                             <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
@@ -3433,16 +3631,25 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
 
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
-    $sql = "INSERT INTO `tblcourse`(`_coursename`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES ('$coursename','$courselink','$courseDesc','$whatlearn','$requirements','$eligibitycriteria','$capacity','$enrollstatus','$thumbnail','$banner','$pricing','$status','$teacheremailid','$categoryid','$subcategoryid','$coursetype','$coursechannel','$courselevel','$evuluationlink','$startdate','$enddate','$discountprice')";
-    // echo $sql;
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    
+
+    $stmt = $conn->prepare("INSERT INTO `tblcourse` (`_coursename`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES (?, ?, ?, ?, ?, ?, ?, ? , ? , ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssssssssssssss",  $coursename,$courselink,$courseDesc,$whatlearn,$requirements,$eligibitycriteria,$capacity,$enrollstatus,$thumbnail,$banner,$pricing,$status,$teacheremailid,$categoryid,$subcategoryid,$coursetype,$coursechannel,$courselevel,$evuluationlink,$startdate,$enddate,$discountprice );
+
+    $stmt->execute();
+
+    if ($stmt) {
         $_SESSION['course_success'] = true;
-        // header("location:");
+        header("location:");
     } else {
         $_SESSION['course_error'] = false;
-        // header("location:");
+        header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
+
 }
 
 
@@ -3513,12 +3720,23 @@ function _getCourse($coursename = '', $teacheremailid = '', $createdat = '', $st
                                                                                         <td><?php echo $data['_coursetype']; ?></td>
                                                                                         
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
 
                                                                                         <td>
@@ -3611,17 +3829,23 @@ function _updateCourse($_id, $coursename, $courseDesc, $whatlearn, $requirements
 
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
-    $sql = "UPDATE `tblcourse` SET `_coursename`='$coursename', `_parmalink` = '$courselink',`_coursedescription`='$courseDesc' , `_whatlearn`='$whatlearn',`_requirements`='$requirements' ,`_eligibilitycriteria`='$eligibitycriteria',`_capacity`='$capacity' , `_enrollstatus`='$enrollstatus',`_thumbnail`='$thumbnail' ,`_banner`='$banner' , `_pricing`='$pricing',`_status`='$status' ,`_teacheremailid`='$teacheremailid' , `_categoryid`='$categoryid',`_subcategoryid`='$subcategoryid' , `_coursetype`='$coursetype' , `_coursechannel`='$coursechannel' , `_courselevel`='$courselevel' , `_evuluationlink`='$evuluationlink' , `_startdate`='$startdate' , `_enddate`='$enddate' , `_discountprice`='$discountprice' WHERE `_id` = '$_id' ";
 
+    $stmt = $conn->prepare("UPDATE `tblcourse` SET `_coursename`=?, `_parmalink`=? ,`_coursedescription`=?  , `_whatlearn`=? ,`_requirements`=?  ,`_eligibilitycriteria`=? ,`_capacity`=?  , `_enrollstatus`=? ,`_thumbnail`=?  ,`_banner`=?  , `_pricing`=? ,`_status`=?  ,`_teacheremailid`=?  , `_categoryid`=? ,`_subcategoryid`=?  , `_coursetype`=?  , `_coursechannel`=?  , `_courselevel`=?  , `_evuluationlink`=?  , `_startdate`=?  , `_enddate`=?  , `_discountprice`=?  WHERE `_id`=?  ");
 
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    $stmt->bind_param("sssssssssssssssssssssss",  $coursename,$courselink,$courseDesc,$whatlearn,$requirements,$eligibitycriteria,$capacity,$enrollstatus,$thumbnail,$banner,$pricing,$status,$teacheremailid,$categoryid,$subcategoryid,$coursetype,$coursechannel,$courselevel,$evuluationlink,$startdate,$enddate,$discountprice,$_id);
+    $stmt->execute();
+
+    if ($stmt) {
         $_SESSION['course_success'] = true;
-        header("location:");
+        header("location:"); 
     } else {
         $_SESSION['course_error'] = false;
         header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
 }
 
 function _deleteCourse($id)
@@ -3715,16 +3939,23 @@ function _createLesson($_courseid, $_lessonname, $_lessontype, $_lessonurl, $les
 
     require('_config.php');
 
-    $sql = "INSERT INTO `tbllessons`(`_courseid`,`_lessonname`,`_lessontype`,`_lessonurl`,`_lessondate`,`_lessontime`,`_recordedfilename`,`_lessondescription`,`_status`,`_availablity`) VALUES ('$_courseid','$_lessonname','$_lessontype','$_lessonurl','$lessondate','$lessontime','$_recordedfilename','$_lessondescription','$_status','$_availablity')";
+    $stmt = $conn->prepare("INSERT INTO `tbllessons` (`_courseid`,`_lessonname`,`_lessontype`,`_lessonurl`,`_lessondate`,`_lessontime`,`_recordedfilename`,`_lessondescription`,`_status`,`_availablity`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssss", $_courseid,$_lessonname,$_lessontype,$_lessonurl,$lessondate,$lessontime,$_recordedfilename,$_lessondescription,$_status,$_availablity);
 
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    $stmt->execute();
+
+    if ($stmt) {
         $_SESSION['course_success'] = true;
         header("location:");
     } else {
         $_SESSION['course_error'] = false;
         header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
+    
 }
 
 
@@ -3784,12 +4015,23 @@ function _getLessons($coursename = '', $lessonname = '', $createdAt = '', $start
                                                                                         <td><?php echo $data['_lessonname']; ?></td>
                                                                                         
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
                                                                                         
                                                                                         <td><?php echo $data['_lessontype']; ?></td>
@@ -3821,18 +4063,14 @@ function _updateLesson($_id, $_courseid, $_lessonname, $_lessontype, $_lessonurl
 
     require('_config.php');
 
+    $stmt = $conn->prepare("UPDATE `tbllessons` SET `_courseid`= ? ,`_lessonname`= ? ,`_lessondescription`= ? , `_status`= ?,`_availablity`= ?,`_lessontype`= ?,`_lessonurl`= ?,`_lessondate`= ?,`_lessontime`= ?,`_recordedfilename`= ?  WHERE `_id` =  ? ");
 
-    $sql = "UPDATE `tbllessons` SET `_courseid`='$_courseid' ,`_lessonname`='$_lessonname' ,`_lessondescription`='$_lessondescription' , `_status`='$_status',`_availablity`='$_availablity',`_lessontype`='$_lessontype',`_lessonurl`='$_lessonurl',`_lessondate`='$_lessondate',`_lessontime`='$_lessontime',`_recordedfilename`='$_recordedfilename'  WHERE `_id` = '$_id' ";
+    $stmt->bind_param("sssssssssss", $_courseid,$_lessonname,$_lessondescription,$_status,$_availablity,$_lessontype,$_lessonurl,$_lessondate,$_lessontime,$_recordedfilename,$_id);
+    $stmt->execute();
 
+    $stmt->close();
+    $conn->close();
 
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
-        $_SESSION['course_success'] = true;
-        header("location:");
-    } else {
-        $_SESSION['course_error'] = false;
-        header("location:");
-    }
 }
 
 
@@ -4535,12 +4773,23 @@ function _getMenuSettings($startfrom = '', $limit = '')
                                                                                         <td><?php echo $data['_indexing']; ?></td>
 
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
 
                                                                                         <td>
@@ -4686,19 +4935,25 @@ function _createProduct($name, $sku, $price, $discountPrice, $desc, $status, $ca
 {
 
     require('_config.php');
+    
+    $stmt = $conn->prepare("INSERT INTO `tblproducts` (`_name`, `_sku`, `_price`, `_discountprice`, `_desc`, `_status`, `_productcategory`, `_productsubcategory`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $name,$sku,$price,$discountPrice,$desc,$status,$categoryId,$subcategoryId);
 
+    $stmt->execute();
 
-    $sql = "INSERT INTO  `tblproducts` (`_name`,`_sku`,`_price`,`_discountprice`,`_desc`,`_status` ,`_productcategory`,
-    `_productsubcategory` ) VALUES ('$name','$sku','$price','$discountPrice','$desc','$status','$categoryId','$subcategoryId') ";
-
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    if($stmt){
         $_SESSION['product_success'] = true;
         header("location:");
-    } else {
+    }
+    else{
         $_SESSION['product_error'] = true;
         header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
+
 }
 
 function _getSingleProduct($id, $param)
@@ -4742,16 +4997,23 @@ function _updateProduct($id, $name, $sku, $price, $discountPrice, $desc, $status
 {
     require('_config.php');
 
-    $sql = "UPDATE `tblproducts` SET `_name`='$name',`_sku`='$sku',`_price`='$price',`_discountprice`='$discountPrice',`_desc`='$desc',`_status`='$status',`_productcategory`='$categoryId',`_productsubcategory`='$subcategoryId' where `_id`='$id'  ";
 
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
+    $stmt = $conn->prepare("UPDATE `tblproducts` SET `_name`= ? , `_sku`= ? , `_price`= ? , `_discountprice`= ? , `_desc`= ? , `_status`= ? , `_productcategory`= ? , `_productsubcategory`= ? WHERE `_id`=? ");
+
+    $stmt->bind_param("sssssssss",$name,$sku,$price,$discountPrice,$desc,$status,$categoryId,$subcategoryId,$id );
+    $stmt->execute();
+
+    if ($stmt) {
         $_SESSION['product_success'] = true;
         header("location:");
     } else {
         $_SESSION['product_error'] = true;
         header("location:");
     }
+
+    $stmt->close();
+    $conn->close();
+
 }
 
 
@@ -4778,12 +5040,23 @@ function _getAllProducts($startfrom = '', $limit = '')
                                                                                         <td><?php echo $data['_price']; ?></td>
 
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
 
                                                                                         <td>
@@ -5107,12 +5380,23 @@ function _getAllCountryMarkup($countryName = "", $startfrom = '', $limit = '')
                                                                                         </td>
 
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
 
                                                                                         <td>
@@ -5237,12 +5521,23 @@ function _getAllStateMarkup($startfrom = '', $limit = '')
                                                                                         </td>
 
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
 
                                                                                         <td>
@@ -5369,12 +5664,23 @@ function _getAllShippingMarkup($startfrom = '', $limit = '')
                                                                                         </td>
 
                                                                                         <td>
-                                                                                            <label class="checkbox-inline form-switch">
+                                                                                            <div class="custom-control custom-switch">
                                                                                                 <?php
-                                                                                                if ($data['_status'] == true) { ?><input disabled role="switch" name="isactive" value="true" checked type="checkbox"><?php }
-                                                                                                if ($data['_status'] != true) { ?><input disabled role="switch" name="isactive" value="true" type="checkbox"><?php }
+
+                                                                                                $status = $data['_status'];
+                                                                                                if ($status == true) {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input"  checked>
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                        <input  type="checkbox" class="custom-control-input" >
+                                                                                                        <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                                                                                    <?php
+                                                                                                }
                                                                                                 ?>
-                                                                                            </label>
+                                                                                            </div>
                                                                                         </td>
 
                                                                                         <td>
@@ -5500,8 +5806,27 @@ function _getCertificates($status='', $startfrom = '', $limit = ''){
 
                                <td><?php echo $CourseName ?>
                                <td><?php echo $data['_emailid']; ?>
-                               <td><?php echo $data['_status']; ?>
                                
+                               <td>
+                                    <div class="custom-control custom-switch">
+                                        <?php
+
+                                        $status = $data['_status'];
+                                        if ($status == true) {
+                                            ?>
+                                                <input  type="checkbox" class="custom-control-input"  checked>
+                                                <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                            <?php
+                                        } else {
+                                            ?>
+                                                <input  type="checkbox" class="custom-control-input" >
+                                                <label class="custom-control-label" for="isactive<?php echo $data['_id']; ?>"></label>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </td>
+
                                <?php if ($_SESSION['userType'] == 2) { ?>
                                 <td>
                                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>

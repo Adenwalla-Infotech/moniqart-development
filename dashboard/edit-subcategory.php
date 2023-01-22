@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
                                                     if($status==true){
                                                         ?>
                                                         <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive" checked>
+                                                            id="isactive" value="true" checked>
                                                         <label class="custom-control-label" style="margin-left: 20px;"
                                                             for="isactive">Is
                                                             Active</label>
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
                                                     else{
                                                         ?>
                                                         <input type="checkbox" class="custom-control-input" name="isactive"
-                                                            id="isactive">
+                                                            id="isactive" value="true" >
                                                         <label class="custom-control-label" style="margin-left: 20px;"
                                                             for="isactive">Is
                                                             Active</label>

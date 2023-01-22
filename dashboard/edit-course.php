@@ -210,7 +210,7 @@ if (isset($_POST['editSlide'])) {
 
 <body>
     <div class="container-scroller">
-        <!-- <?php include('templates/_header.php'); ?> -->
+        <?php include('templates/_header.php'); ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <?php include('templates/_sidebar.php'); ?>
@@ -296,23 +296,22 @@ if (isset($_POST['editSlide'])) {
                                     novalidate>
 
                                     <div class="row g-3">
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-4" style="margin-bottom: 20px;">
                                             <?php
                                             $categoryid = _getSingleCourse($id, '_categoryid');
                                             _showCategoryOptions($categoryid, "courses")
                                                 ?>
 
                                         </div>
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-4" style="margin-bottom: 20px;">
                                             <?php
                                             $subcategoryid = _getSingleCourse($id, '_subcategoryid');
                                             _showSubCategoryOptions($subcategoryid)
                                                 ?>
 
                                         </div>
-                                    </div>
-                                    <div class="row g-3">
-                                        <div class="col-lg-6">
+
+                                        <div class="col-lg-4">
                                             <label for="teacheremailid" class="form-label">Teacher Email</label>
                                             <select id="teacheremailid" name="teacheremailid"
                                                 class="form-control select2" required>
@@ -323,9 +322,15 @@ if (isset($_POST['editSlide'])) {
                                             </select>
                                         </div>
 
+                                    </div>
+                                    <div class="row g-3">
+
+
                                         <div class="col-lg-6">
                                             <label for="coursetype" class="form-label">Course Type</label>
-                                            <select name="coursetype" id="coursetype" class="form-control" required>
+                                            <select name="coursetype" id="coursetype" class="form-control"
+                                                onchange="getCourseType(this.options[this.selectedIndex].value)"
+                                                required>
 
                                                 <?php
 
@@ -349,28 +354,7 @@ if (isset($_POST['editSlide'])) {
 
                                             </select>
                                         </div>
-                                    </div>
 
-                                    <div class="row g-3" style="margin-top: 10px;">
-                                        <div class="col-lg-6">
-                                            <label for="pricing" class="form-label">Course Price</label>
-                                            <input type="number" class="form-control" name="pricing" id="pricing"
-                                                value="<?php echo _getSingleCourse($id, '_pricing') ?>"
-                                                placeholder="Price" required>
-                                            <div class="invalid-feedback">Please type correct pricing</div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label for="capacity" class="form-label">Capacity</label>
-                                            <input type="number" class="form-control" name="capacity" id="capacity"
-                                                value="<?php echo _getSingleCourse($id, '_capacity') ?>"
-                                                placeholder="Capacity" required>
-                                            <div class="invalid-feedback">Please type correct capacity</div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
                                             <label for="courselevel" class="form-label">Course Level</label>
                                             <select name="courselevel" id="courselevel" class="form-control  " required>
@@ -404,16 +388,82 @@ if (isset($_POST['editSlide'])) {
 
                                             </select>
                                         </div>
+
+                                    </div>
+
+                                    <div class="row g-3" style="margin-top: 10px;">
                                         <div class="col-lg-6">
+                                            <label for="pricing" class="form-label">Course Price</label>
+                                            <input type="number" class="form-control" name="pricing" id="pricing"
+                                                value="<?php echo _getSingleCourse($id, '_pricing') ?>"
+                                                placeholder="Price" required>
+                                            <div class="invalid-feedback">Please type correct pricing</div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <label for="discountprice" class="form-label">Discount Price</label>
+                                            <input type="text" class="form-control" name="discountprice"
+                                                id="discountprice" placeholder="Discount Price"
+                                                value="<?php echo _getSingleCourse($id, '_discountprice') ?>" required>
+                                            <div class="invalid-feedback">Please type correct course discount price
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row g-3" style="margin-top: 20px;">
+
+                                        <div class="col-lg-4">
                                             <label for="evaluationlink" class="form-label">Evaluation Link</label>
                                             <input type="text" class="form-control" name="evaluationlink"
                                                 id="evaluationlink"
                                                 value="<?php echo _getSingleCourse($id, '_evuluationlink') ?>" required>
                                             <div class="invalid-feedback">Please type correct link</div>
                                         </div>
+
+                                        <div class="col-lg-4">
+                                            <label for="capacity" class="form-label">Capacity</label>
+                                            <input type="number" class="form-control" name="capacity" id="capacity"
+                                                value="<?php echo _getSingleCourse($id, '_capacity') ?>"
+                                                placeholder="Capacity" required>
+                                            <div class="invalid-feedback">Please type correct capacity</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label htmlFor="coursechannel" class="form-label">Course Channel</label>
+                                            <select name="coursechannel"
+                                                onchange="getCourseChannel(this.options[this.selectedIndex].value)"
+                                                id="coursechannel" class="form-control  form-control-md" required>
+
+                                                <?php
+
+                                                $coursechannel = _getSingleCourse($id, '_coursechannel');
+
+                                                if ($coursechannel == "Online") {
+                                                    ?>
+                                                    <option selected value="Online">Online</option>
+                                                    <option value="Offline">Offline</option>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <option value="Online">Online</option>
+                                                    <option selected value="Offline">Offline</option>
+                                                    <?php
+                                                }
+
+                                                ?>
+
+
+                                            </select>
+
+                                        </div>
+
+
                                     </div>
 
-                                    <div class="row g-3" style="margin-top: 20px;">
+                                    <div class="row g-3" style="margin-top: 20px; display: none; " id="courseDates">
                                         <div class="col-lg-6">
                                             <label for="startdate" class="form-label">Start Date</label>
                                             <input type="date" class="form-control" name="startdate" id="startdate"
@@ -428,25 +478,6 @@ if (isset($_POST['editSlide'])) {
                                         </div>
                                     </div>
 
-                                    <div class="row g-3" style="margin-top: 20px;">
-
-                                        <div class="col-lg-6">
-                                            <label for="coursechannel" class="form-label">Course Channel</label>
-                                            <input type="text" class="form-control" name="coursechannel"
-                                                id="coursechannel"
-                                                value="<?php echo _getSingleCourse($id, '_coursechannel') ?>" required>
-                                            <div class="invalid-feedback">Please type correct course channel</div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <label for="discountprice" class="form-label">Discount Price</label>
-                                            <input type="text" class="form-control" name="discountprice"
-                                                id="discountprice" placeholder="Discount Price"
-                                                value="<?php echo _getSingleCourse($id, '_discountprice') ?>" required>
-                                            <div class="invalid-feedback">Please type correct course discount price
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="row g-3" style="margin-top: 10px;">
 
@@ -491,7 +522,7 @@ if (isset($_POST['editSlide'])) {
                                                 if ($status == true) {
                                                     ?>
                                                     <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive" checked>
+                                                        id="isactive" value="true" checked>
                                                     <label class="custom-control-label" style="margin-left: 20px;"
                                                         for="isactive">Is
                                                         Active</label>
@@ -499,7 +530,7 @@ if (isset($_POST['editSlide'])) {
                                                 } else {
                                                     ?>
                                                     <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive">
+                                                        id="isactive" value="true">
                                                     <label class="custom-control-label" style="margin-left: 20px;"
                                                         for="isactive">Is
                                                         Active</label>
@@ -550,9 +581,10 @@ if (isset($_POST['editSlide'])) {
                                             <input class="form-control" name="coursename" type="text" id="coursename"
                                                 value="<?php echo _getSingleCourse($id, '_coursename') ?>" required>
                                             <div class="invalid-feedback">Please type correct course name</div>
-                                           
+
                                         </div>
                                     </div>
+
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label for="courseDesc" class="form-label">Course Description</label>
@@ -560,8 +592,6 @@ if (isset($_POST['editSlide'])) {
                                                 rows="10"><?php echo _getSingleCourse($id, '_coursedescription') ?></textarea>
                                             <div class="invalid-feedback">Please type correct course desc</div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label for="eligibitycriteria" class="form-label">Course Eligibility
                                                 Criteria</label>
@@ -570,6 +600,7 @@ if (isset($_POST['editSlide'])) {
                                             <div class="invalid-feedback">Please type correct criteria</div>
                                         </div>
                                     </div>
+
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label for="whatlearn" class="form-label">What will you Learn</label>
@@ -577,8 +608,6 @@ if (isset($_POST['editSlide'])) {
                                                 rows="10"><?php echo _getSingleCourse($id, '_whatlearn') ?></textarea>
                                             <div class="invalid-feedback">Please type correct course learning</div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label for="requirements" class="form-label">Requirements</label>
                                             <textarea name="requirements" id="mytextarea" style="width:100%"
@@ -586,6 +615,8 @@ if (isset($_POST['editSlide'])) {
                                             <div class="invalid-feedback">Please type correct course requirements</div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-12" style="margin-top: 30px;">
                                         <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
                                             class="btn btn-primary">Update Course</button>
@@ -772,7 +803,43 @@ if (isset($_POST['editSlide'])) {
 
             }
 
-           
+            const dateDiv = document.getElementById("courseDates");
+
+            let courseType = document.getElementById("coursetype");
+
+            let courseTypeValue = courseType.options[courseType.selectedIndex].value;
+
+            if (courseTypeValue == "Live") {
+                dateDiv.style.display = 'flex'
+            } else {
+                dateDiv.style.display = 'none'
+            }
+
+            const getCourseType = (value) => {
+
+                if (value == "Live") {
+                    dateDiv.style.display = 'flex'
+                } else {
+                    dateDiv.style.display = 'none'
+                }
+
+            }
+
+            const getCourseChannel = (value) => {
+
+                let courseType = document.getElementById("coursetype");
+
+                let courseTypeValue = courseType.options[courseType.selectedIndex].value;
+
+
+                if (value == "Offline") {
+                    dateDiv.style.display = 'flex'
+                } else if (value == "Online" && courseTypeValue == "Recorded") {
+                    console.log("Sati");
+                    dateDiv.style.display = 'none'
+                }
+
+            }
         </script>
 
 

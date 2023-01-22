@@ -45,14 +45,14 @@ if (isset($_POST['lessonname'])) {
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only mp4 / mkv/ webm /avi format allowed');</script>";
         } else {
-            $lessonurl = null;
-            $lessondate = null;
-            $lessontime = null;
+            $lessonurl = "No Url";
+            $lessondate = "No Date";
+            $lessontime = "No Time";
             $recorderfile = md5($lessonfile) . $extension;
             move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
         }
     } else {
-        $recorderfile = null;
+        $recorderfile = "No File";
         $lessonurl = $_POST['lessonurl'];
         $lessondate = $_POST['lessondate'];
         $lessontime = $_POST['lessontime'];
@@ -212,7 +212,7 @@ if (isset($_POST['lessonname'])) {
                                         <div class="col">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive" required>
+                                                    id="isactive" value="true" required>
                                                 <label class="custom-control-label" style="margin-left: 20px;"
                                                     for="isactive">Is
                                                     Active</label>

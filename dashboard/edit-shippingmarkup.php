@@ -156,13 +156,13 @@ if (isset($_POST['edit'])) {
                             if ($status == true) {
                                 ?>
 
-                                <input type="checkbox" class="custom-control-input" name="isactive" id="isactive" checked>
+                                <input type="checkbox" class="custom-control-input" name="isactive" value="true" id="isactive" checked>
                                 <label class="custom-control-label" for="isactive">Is
                                     Active</label>
                                 <?php
                             } else {
                                 ?>
-                                <input type="checkbox" class="custom-control-input" name="isactive" id="isactive">
+                                <input type="checkbox" class="custom-control-input" name="isactive" value="true" id="isactive">
                                 <label class="custom-control-label" for="isactive">Is
                                     <?php
                             }

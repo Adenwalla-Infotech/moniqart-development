@@ -175,17 +175,15 @@ if (isset($_POST['submit'])) {
                                     novalidate>
 
                                     <div class="row g-3">
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
-                                            <?php _showCategoryOptions("","courses") ?>
+                                        <div class="col-lg-4" style="margin-bottom: 20px;">
+                                            <?php _showCategoryOptions("", "courses") ?>
 
                                         </div>
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-4" style="margin-bottom: 20px;">
                                             <?php _showSubCategoryOptions() ?>
 
                                         </div>
-                                    </div>
-                                    <div class="row g-3">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <label htmlFor="teacheremailid" class="form-label">Teacher Email</label>
                                             <select id="teacheremailid" name="teacheremailid"
                                                 class="form-control select2" required>
@@ -193,35 +191,20 @@ if (isset($_POST['submit'])) {
                                                 <?php _getTeachers() ?>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="row g-3">
+
                                         <div class="col-lg-6">
                                             <label htmlFor="coursetype" class="form-label">Course Type</label>
-                                            <select name="coursetype" id="coursetype"
-                                                class="form-control  form-control-lg" required>
-                                                <option selected value="">Type</option>
-
+                                            <select name="coursetype"
+                                                onchange="getCourseType(this.options[this.selectedIndex].value)"
+                                                id="coursetype" class="form-control  form-control-lg" required>
                                                 <option value="Recorded">Recorded</option>
                                                 <option value="Live">Live</option>
 
                                             </select>
                                         </div>
-                                    </div>
 
-                                    <div class="row g-3" style="margin-top: 20px;">
-                                        <div class="col-lg-6">
-                                            <label htmlFor="pricing" class="form-label">Course Price</label>
-                                            <input type="number" class="form-control" name="pricing" id="pricing"
-                                                placeholder="Price" required>
-                                            <div class="invalid-feedback">Please type correct pricing</div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label htmlFor="capacity" class="form-label">Capacity</label>
-                                            <input type="number" class="form-control" name="capacity" id="capacity"
-                                                placeholder="Capacity" required>
-                                            <div class="invalid-feedback">Please type correct capacity</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
                                             <label htmlFor="courselevel" class="form-label">Course Level</label>
                                             <select name="courselevel" id="courselevel"
@@ -233,36 +216,15 @@ if (isset($_POST['submit'])) {
 
                                             </select>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <label htmlFor="evaluationlink" class="form-label">Evaluation Link</label>
-                                            <input type="text" class="form-control" name="evaluationlink"
-                                                id="evaluationlink" required>
-                                            <div class="invalid-feedback">Please type correct link</div>
-                                        </div>
+
                                     </div>
 
                                     <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
-                                            <label htmlFor="startdate" class="form-label">Start Date</label>
-                                            <input type="date" class="form-control" name="startdate" id="startdate"
-                                                required>
-                                            <div class="invalid-feedback">Please type correct date</div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label htmlFor="enddate" class="form-label">End Date</label>
-                                            <input type="date" class="form-control" name="enddate" id="enddate"
-                                                required>
-                                            <div class="invalid-feedback">Please type correct date</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row g-3" style="margin-top: 20px;">
-
-                                        <div class="col-lg-6">
-                                            <label htmlFor="coursechannel" class="form-label">Course Channel</label>
-                                            <input type="text" class="form-control" name="coursechannel"
-                                                id="coursechannel" required>
-                                            <div class="invalid-feedback">Please type correct course channel</div>
+                                            <label htmlFor="pricing" class="form-label">Course Price</label>
+                                            <input type="number" class="form-control" name="pricing" id="pricing"
+                                                placeholder="Price" required>
+                                            <div class="invalid-feedback">Please type correct pricing</div>
                                         </div>
 
                                         <div class="col-lg-6">
@@ -271,6 +233,56 @@ if (isset($_POST['submit'])) {
                                                 id="discountprice" placeholder="Discount Price" required>
                                             <div class="invalid-feedback">Please type correct course discount price
                                             </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row g-3" style="margin-top: 20px;">
+
+                                        <div class="col-lg-4">
+                                            <label htmlFor="evaluationlink" class="form-label">Evaluation Link</label>
+                                            <input type="text" class="form-control" name="evaluationlink"
+                                                id="evaluationlink" required>
+                                            <div class="invalid-feedback">Please type correct link</div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <label htmlFor="capacity" class="form-label">Capacity</label>
+                                            <input type="number" class="form-control" name="capacity" id="capacity"
+                                                placeholder="Capacity" required>
+                                            <div class="invalid-feedback">Please type correct capacity</div>
+                                        </div>
+
+
+                                        <div class="col-lg-4">
+
+                                            <label htmlFor="coursechannel" class="form-label">Course Channel</label>
+                                            <select name="coursechannel"
+                                                onchange="getCourseChannel(this.options[this.selectedIndex].value)"
+                                                id="coursechannel" class="form-control  form-control-lg" required>
+                                                <option selected value="">Channel</option>
+                                                <option value="Online">Online</option>
+                                                <option value="Offline">Offline</option>
+
+                                            </select>
+
+                                            <div class="invalid-feedback">Please type correct course channel</div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row g-3" style="margin-top: 20px;display: none;" id="courseDates">
+                                        <div class="col-lg-6">
+                                            <label htmlFor="startdate" class="form-label">Start Date</label>
+                                            <input type="date" class="form-control" name="startdate" id="startdate">
+                                            <div class="invalid-feedback">Please type correct date</div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label htmlFor="enddate" class="form-label">End Date</label>
+                                            <input type="date" class="form-control" name="enddate" id="enddate">
+                                            <div class="invalid-feedback">Please type correct date</div>
                                         </div>
                                     </div>
 
@@ -290,8 +302,8 @@ if (isset($_POST['submit'])) {
 
                                         <div class="col" style="margin-top: 40px;">
                                             <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive">
+                                                <input type="checkbox" class="custom-control-input" value="true"
+                                                    name="isactive" id="isactive">
                                                 <label class="custom-control-label" style="margin-left: 20px;"
                                                     for="isactive">Is
                                                     Active</label>
@@ -326,7 +338,7 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" name="coursename" type="text" id="coursename"
                                                 required>
                                             <div class="invalid-feedback">Please type correct course name</div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
@@ -336,8 +348,6 @@ if (isset($_POST['submit'])) {
                                                 rows="10"></textarea>
                                             <div class="invalid-feedback">Please type correct course desc</div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label htmlFor="eligibitycriteria" class="form-label">Course Eligibility
                                                 Criteria</label>
@@ -346,6 +356,7 @@ if (isset($_POST['submit'])) {
                                             <div class="invalid-feedback">Please type correct criteria</div>
                                         </div>
                                     </div>
+
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label htmlFor="whatlearn" class="form-label">What will you Learn</label>
@@ -353,8 +364,6 @@ if (isset($_POST['submit'])) {
                                                 rows="10"></textarea>
                                             <div class="invalid-feedback">Please type correct course learning</div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label htmlFor="requirements" class="form-label">Requirements</label>
                                             <textarea name="requirements" id="mytextarea" style="width:100%"
@@ -396,7 +405,39 @@ if (isset($_POST['submit'])) {
             }
             $('.select2').select2();
 
-            
+            const dateDiv = document.getElementById("courseDates");
+
+
+
+
+            const getCourseType = (value) => {
+
+                if (value == "Live") {
+                    dateDiv.style.display = 'flex'
+                }
+                else {
+                    dateDiv.style.display = 'none'
+                }
+
+            }
+
+            const getCourseChannel = (value) => {
+
+                const courseType = document.getElementById("coursetype");
+
+                let courseTypeValue = courseType.options[courseType.selectedIndex].value;
+
+
+                if (value == "Offline") {
+                    dateDiv.style.display = 'flex'
+                }
+                else if (value == "Online" && courseTypeValue == "Recorded") {
+                    console.log("Sati");
+                    dateDiv.style.display = 'none'
+                }
+
+            }
+
 
         </script>
 
@@ -408,8 +449,8 @@ if (isset($_POST['submit'])) {
 <!-- endinject -->
 <!-- Plugin js htmlFor this page -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-    crossorigin="anonymous"></script>
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
 <!-- End plugin js htmlFor this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

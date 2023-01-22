@@ -44,8 +44,8 @@ require('../includes/_functions.php');
 if (isset($_POST['lessonname'])) {
 
     $_lessonname = $_POST['lessonname'];
+    $_lessondescription = $_POST['_lessondescription'];
     $_courseid = $_POST['courseid'];
-    $_lessondescription = $_POST['lessonDescription'];
     $_availablity = $_POST['availablity'];
 
     $lessontype = $_POST['lessontype'];
@@ -160,7 +160,7 @@ if (isset($_POST['editAttachment'])) {
 
 <body>
     <div class="container-scroller">
-        <?php include('templates/_header.php'); ?>
+    <?php include('templates/_header.php'); ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <?php include('templates/_sidebar.php'); ?>
@@ -346,7 +346,7 @@ if (isset($_POST['editAttachment'])) {
                                                 if ($status == true) {
                                                     ?>
                                                     <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive" checked>
+                                                        id="isactive" value="true" checked>
                                                     <label class="custom-control-label" style="margin-left: 20px;"
                                                         for="isactive">Is
                                                         Active</label>
@@ -354,7 +354,7 @@ if (isset($_POST['editAttachment'])) {
                                                 } else {
                                                     ?>
                                                     <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive">
+                                                        id="isactive" value="true" >
                                                     <label class="custom-control-label" style="margin-left: 20px;"
                                                         for="isactive">Is
                                                         Active</label>
@@ -388,13 +388,13 @@ if (isset($_POST['editAttachment'])) {
 
                                         <div class="col-lg-6" style="display: none;" id="lessondate">
                                             <label for="lessondate" class="form-label">Date</label>
-                                            <input type="date" class="form-control" name="lessondate">
+                                            <input type="date" class="form-control" value="<?php echo _getSingleLesson($id, '_lessondate'); ?>" name="lessondate">
                                             <div class="invalid-feedback">Please select correct date</div>
                                         </div>
 
                                         <div class="col-lg-6" style="display: none;" id="lessontime">
                                             <label for="lessontime" class="form-label">Time</label>
-                                            <input type="time" class="form-control" name="lessontime">
+                                            <input type="time" class="form-control" value="<?php echo _getSingleLesson($id, '_lessontime'); ?>" name="lessontime">
                                             <div class="invalid-feedback">Please select correct time</div>
                                         </div>
 
@@ -405,9 +405,9 @@ if (isset($_POST['editAttachment'])) {
 
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="lessonDescription" class="form-label">Lesson Description</label>
-                                            <textarea name="lessonDescription" id="mytextarea" style="width:100%"
-                                                rows="10"><?php echo _getSingleLesson($id, '_lessondescription'); ?></textarea>
+                                            <label for="_lessondescription" class="form-label">Lesson Description</label>
+                                            <textarea name="_lessondescription" id="mytextarea" style="width:100%"
+                                                rows="10" placeholder="<?php echo strip_tags(_getSingleLesson($id, '_lessondescription')) ?>" ></textarea>
                                             <div class="invalid-feedback">Please type correct Description</div>
                                         </div>
                                     </div>
@@ -614,29 +614,21 @@ if (isset($_POST['editAttachment'])) {
 
             if (value == 'Live') {
                 lessonurl.style.display = 'block'
-                lessonurl.children[1].setAttribute('required', true);
 
                 lessondate.style.display = 'block'
-                lessondate.children[1].setAttribute('required', true);
 
                 lessontime.style.display = 'block'
-                lessontime.children[1].setAttribute('required', true);
-
 
                 lessonfile.style.display = 'none'
-                lessonfile.children[1].removeAttribute('required');
+                
             } else if (value == 'Recorded') {
                 lessonfile.style.display = 'block'
-                lessonfile.children[1].setAttribute('required', true);
 
                 lessonurl.style.display = 'none'
-                lessonurl.children[1].removeAttribute('required', true);
 
                 lessondate.style.display = 'none'
-                lessondate.children[1].removeAttribute('required', true);
 
                 lessontime.style.display = 'none'
-                lessontime.children[1].removeAttribute('required', true);
             }
 
             const setInputForLessonType = (value) => {
@@ -699,13 +691,11 @@ if (isset($_POST['editAttachment'])) {
                 let lessonname = e.target.lessonname.value
                 let availablity = e.target.availablity.value;
                 let courseid = e.target.courseid.value
-                let lessonDescription = e.target.lessonDescription.value
                 let lessontype = e.target.lessontype.value
 
-
-
-                if (lessonname != "" && availablity != "" && courseid != "" && lessonDescription != "" && lessontype !=
-                    "") {
+                
+                if (lessonname != "" && availablity != "" && courseid != "" && lessontype !=
+                "") {
 
                     progressBarDiv.style.display = "block"
 

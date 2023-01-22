@@ -147,21 +147,21 @@ if (isset($_POST['submit'])) {
                                         <div class="col" style="margin-top: 10px;">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive">
+                                                    id="isactive" value="true" >
                                                 <label class="custom-control-label"
                                                     for="isactive">Is
                                                     Active</label>
                                             </div>
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isverified"
-                                                    id="isverified">
+                                                    id="isverified" value="true" >
                                                 <label class="custom-control-label"
                                                     for="isverified">Is
                                                     Verified</label>
                                             </div>
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="notify"
-                                                    id="notify">
+                                                    id="notify" value="true" >
                                                 <label class="custom-control-label"
                                                     for="notify"> Notify User
                                                 (SMS/Email)</label>
