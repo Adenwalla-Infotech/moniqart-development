@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3">
                                         <div class="col">
                                             <label for="mytextarea" class="form-label">Blog Description</label>
-                                            <textarea name="_blogdesc" id="mytextarea" required></textarea>
+                                            <textarea name="_blogdesc" id="mytextarea"></textarea>
                                             <div class="invalid-feedback">Blog Description Required </div>
                                         </div>
                                     </div>

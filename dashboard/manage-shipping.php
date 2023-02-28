@@ -124,12 +124,7 @@ if (isset($_POST['updateShipping'])) {
 
 
 
-                                        <div class="col-lg-2" style="margin-bottom: 20px;">
-                                            <button name="search"
-                                                class="btn btn-block btn-primary btn-sm font-weight-medium auth-form-btn"
-                                                style="height:40px" name="submit"><i
-                                                    class="mdi mdi-account-search"></i>&nbsp;SEARCH</button>
-                                        </div>
+                                        
                                         <div class="col-lg-2" style="margin-bottom: 20px;">
                                             <button type="button"
                                                 class="btn btn-primary btn-sm font-weight-medium auth-form-btn"

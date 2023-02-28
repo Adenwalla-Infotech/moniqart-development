@@ -44,7 +44,9 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Add Sub-Category | <?php echo _siteconfig('_sitetitle'); ?></title>
+    <title>Add Sub-Category |
+        <?php echo _siteconfig('_sitetitle'); ?>
+    </title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../assets/vendors/feather/feather.css">
@@ -70,11 +72,11 @@ if (isset($_POST['submit'])) {
             <div class="main-panel">
                 <div class="content-wrapper">
                     <?php if ($_SESSION['forgot_success']) { ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Sub-Category Created!</strong> New Sub-Category created successfully.
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Sub-Category Created!</strong> New Sub-Category created successfully.
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
@@ -119,7 +121,7 @@ if (isset($_POST['submit'])) {
                                         <div class="col" style="margin-top: 30px;">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive" value="true" >
+                                                    id="isactive" value="true">
                                                 <label class="custom-control-label" style="margin-left: 20px;"
                                                     for="isactive">Is
                                                     Active</label>
@@ -149,6 +151,18 @@ if (isset($_POST['submit'])) {
         <div class="container"></div>
         <script src="../includes/_validation.js"></script>
 
+        <script>
+            const getSubCategory = (val) => {
+                $.ajax({
+                    type: "POST",
+                    url: "getSubCategory.php",
+                    data: 'catid=' + val,
+                    success: function (data) {
+                        $(`#subcategoryId`).html(data);
+                    }
+                });
+            }
+        </script>
 </body>
 <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->

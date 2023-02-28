@@ -167,8 +167,6 @@ if (isset($_POST['submit'])) {
                                                 (SMS/Email)</label>
                                             </div>
                                         </div>
-
-
                                     </div>
 
                                     <div class="col-12" style="margin-top: 30px;">

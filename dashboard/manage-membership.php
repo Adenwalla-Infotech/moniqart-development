@@ -40,7 +40,7 @@ $start_from = ($page - 1) * $record_per_page;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Manage Membership |
+    <title>Manage Subscription |
         <?php echo _siteconfig('_sitetitle'); ?>
     </title>
     <!-- plugins:css -->
@@ -70,7 +70,7 @@ $start_from = ($page - 1) * $record_per_page;
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Manage Membership</h4>
+                                <h4 class="card-title">Manage Subscription</h4>
                                 <p class="card-description">
                                     From here, you'll see a list of all the categories on your site. You can edit or
                                     delete them from here. You can also change the order of your categories by dragging
@@ -80,7 +80,7 @@ $start_from = ($page - 1) * $record_per_page;
                                     <div class="row">
                                         <div class="col-lg-3" style="margin-bottom: 20px;">
                                             <input type="text" class="form-control form-control-sm"
-                                                name="membershipname" placeholder="Membership Name">
+                                                name="membershipname" placeholder="Subscription Name">
                                         </div>
                                         <div class="col-lg-2" style="margin-bottom: 20px;">
                                             <button name="search"
@@ -97,8 +97,8 @@ $start_from = ($page - 1) * $record_per_page;
                                                 style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Membership Id</th>
-                                                        <th>Membership Name</th>
+                                                        <th>Subscription Id</th>
+                                                        <th>Subscription Name</th>
                                                         <th>Status</th>
                                                         <th>Created at</th>
                                                         <th>Updated at</th>

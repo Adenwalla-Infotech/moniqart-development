@@ -8,14 +8,14 @@ if (isset($_POST['edit'])) {
 
     $id = $_POST['countryId'];
 
-    $query = mysqli_query($conn, "SELECT * FROM tblstates WHERE _countryid=$id ");
+    $query = mysqli_query($conn, "SELECT * FROM `tblstates` WHERE `_countryid`='$id' ");
     ?>
     <option value="">Select State</option>
     <?php
     while ($row = mysqli_fetch_array($query)) {
         ?>
-        <option value="<?php echo htmlentities($row['_id']); ?>">
-            <?php echo htmlentities($row['_statename']); ?>
+        <option value="<?php echo $row['_id']; ?>">
+            <?php echo $row['_statename']; ?>
         </option>
     <?php
     }

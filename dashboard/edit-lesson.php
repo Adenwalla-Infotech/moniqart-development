@@ -147,8 +147,6 @@ if (isset($_POST['editAttachment'])) {
             statusbar: false,
             branding: false,
             promotion: false,
-            plugins: 'wordcount',
-            toolbar: 'wordcount'
         });
     </script>
     <!-- End plugin css for this page -->
@@ -406,8 +404,12 @@ if (isset($_POST['editAttachment'])) {
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
                                             <label for="_lessondescription" class="form-label">Lesson Description</label>
-                                            <textarea name="_lessondescription" id="mytextarea" style="width:100%"
-                                                rows="10" placeholder="<?php echo strip_tags(_getSingleLesson($id, '_lessondescription')) ?>" ></textarea>
+                                            <textarea name="_lessondescription" id="mytextarea">
+                                                 <?php
+                                                  $desc  = _getSingleLesson($id, '_lessondescription');
+                                                echo $desc;
+                                                 ?>
+                                                </textarea>
                                             <div class="invalid-feedback">Please type correct Description</div>
                                         </div>
                                     </div>

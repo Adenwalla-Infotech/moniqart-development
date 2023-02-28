@@ -188,13 +188,10 @@ if (isset($_POST['updateCountry'])) {
                           <?php
                           if (isset($_POST['search'])) {
                             if (isset($_POST['country'])) {
-
                               $countryName = $_POST['country'];
-                            } else {
-                              $countryName = null;
-                            }
+                              _getAllCountryMarkup($countryName, "", "");
+                            } 
 
-                            _getAllCountryMarkup($countryName, "", "");
                           }
                           if (!isset($_POST['search'])) {
                             _getAllCountryMarkup("", $start_from, $record_per_page);

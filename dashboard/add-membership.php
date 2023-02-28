@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Add Membership |
+    <title>Add Subscription |
         <?php echo _siteconfig('_sitetitle'); ?>
     </title>
     <!-- plugins:css -->
@@ -69,19 +69,20 @@ if (isset($_POST['submit'])) {
             branding: false,
             promotion: false,
             plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
+            // toolbar: 'wordcount',
             setup: function (editor) {
-                var max = 500;
-                editor.on('submit', function (event) {
-                    var numChars = tinymce.activeEditor.plugins.wordcount.body.getCharacterCountWithoutSpaces();
-                    if (numChars > max) {
+                // var max = 500;
+                // editor.on('submit', function (event) {
+                    // var numChars = tinymce.activeEditor.plugins.wordcount.body.getCharacterCountWithoutSpaces();
+                    // if (numChars > max) {
 
-                        let box = document.querySelector('.descAlert')
-                        box.style.display = 'block';
+                    //     let box = document.querySelector('.descAlert')
+                    //     box.style.display = 'block';
 
-                        event.preventDefault();
-                        return false;
-                    }
-                });
+                    //     event.preventDefault();
+                    //     return false;
+                    // }
+                // });
 
             }
         });
@@ -112,7 +113,7 @@ if (isset($_POST['submit'])) {
                     ?>
                     <div id="liveAlertPlaceholder">
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Membership Created!</strong> New Membership created successfully.
+                            <strong>Subscription Created!</strong> New Subscription created successfully.
                         </div>
                     </div>
                     <?php
@@ -122,22 +123,22 @@ if (isset($_POST['submit'])) {
                     ?>
                     <div id="liveAlertPlaceholder">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Membership Creation Failed!</strong> Error while creating membership.
+                            <strong>Subscription Creation Failed!</strong> Error while creating membership.
                         </div>
                     </div>
                     <?php
                     }
                     ?>
-                    <div id="liveAlertPlaceholder" class="descAlert" style="display: none;">
+                    <!-- <div id="liveAlertPlaceholder" class="descAlert" style="display: none;">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Membership Creation Failed!</strong>
+                            <strong>Subscription Creation Failed!</strong>
                             <p>Max Character Count 500</p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Create Membership</h4>
+                                <h4 class="card-title">Add Subscription</h4>
                                 <p class="card-description">
                                     Before you start writing about your new topic, it's important to do some research.
                                     This will help you to understand the topic better, This will make it easier for you
@@ -148,9 +149,9 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3">
                                         <div class="col-lg-6">
-                                            <label for="membershipname" class="form-label">Membership Name</label>
-                                            <input type="text" class="form-control" placeholder="Membership name"
-                                                aria-label="Membership name" id="membershipname" name="membershipname"
+                                            <label for="membershipname" class="form-label">Subscription Name</label>
+                                            <input type="text" class="form-control" placeholder="Subscription name"
+                                                aria-label="Subscription name" id="membershipname" name="membershipname"
                                                 required>
                                             <div class="invalid-feedback">Please type correct membership name</div>
                                         </div>
@@ -177,7 +178,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row g-3" style="margin-top: 10px;">
                                         <div class="col-lg-6">
-                                            <label for="price" class="form-label">Membership Price</label>
+                                            <label for="price" class="form-label">Subscription Price</label>
                                             <input type="number" class="form-control" name="price" id="price"
                                                 placeholder="Price" required>
                                             <div class="invalid-feedback">Please type correct price</div>
@@ -212,15 +213,15 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="membershipdesc" class="form-label">Membership
+                                            <label for="membershipdesc" class="form-label">Subscription
                                                 Description</label>
                                             <textarea name="membershipdesc" id="mytextarea" style="width:100%"
-                                                required></textarea>
+                                                ></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12" style="margin-top: 30px;">
                                         <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
-                                            class="btn btn-primary">Create Membership</button>
+                                            class="btn btn-primary">Create Subscription</button>
 
                                     </div>
 

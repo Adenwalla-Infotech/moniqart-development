@@ -71,17 +71,17 @@ if (isset($_POST['submit'])) {
             branding: false,
             promotion: false,
             plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code visualchars wordcount',
-            setup: function (editor) {
-                var max = 500;
-                editor.on('submit', function (event) {
-                    var numChars = tinymce.activeEditor.plugins.wordcount.body
-                        .getCharacterCountWithoutSpaces();
-                    if (numChars > max) {
-                        alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
-                        event.preventDefault();
-                        return false;
-                    }
-                });
+            setup: function(editor) {
+                // var max = 500;
+                // editor.on('submit', function (event) {
+                //     var numChars = tinymce.activeEditor.plugins.wordcount.body
+                //         .getCharacterCountWithoutSpaces();
+                //     if (numChars > max) {
+                //         alert(`Maximum ${max} characters allowed. <br> Current Words : ${numChars} `);
+                //         event.preventDefault();
+                //         return false;
+                //     }
+                // });
 
             }
         });
@@ -106,21 +106,21 @@ if (isset($_POST['submit'])) {
 
                     if ($_SESSION['membership_success']) {
                     ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Membership Created!</strong> New Membership created successfully.
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Membership Created!</strong> New Membership created successfully.
+                            </div>
                         </div>
-                    </div>
                     <?php
                     }
 
                     if ($_SESSION['membership_error']) {
                     ?>
-                    <div id="liveAlertPlaceholder">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Membership Creation Failed!</strong> Error while creating membership.
-                        </div>
-                    </div>
+                        <!-- <div id="liveAlertPlaceholder">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Membership Creation Failed!</strong> Error while creating membership.
+                            </div>
+                        </div> -->
                     <?php
                     }
 
@@ -141,10 +141,7 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3">
                                         <div class="col-lg-6">
                                             <label for="membershipname" class="form-label">Membership Name</label>
-                                            <input type="text" class="form-control" placeholder="Membership name"
-                                                value="<?php echo _getSingleMembership($_id, '_membershipname'); ?>"
-                                                aria-label="Membership name" id="membershipname" name="membershipname"
-                                                required>
+                                            <input type="text" class="form-control" placeholder="Membership name" value="<?php echo _getSingleMembership($_id, '_membershipname'); ?>" aria-label="Membership name" id="membershipname" name="membershipname" required>
                                             <div class="invalid-feedback">Please type correct membership name</div>
                                         </div>
                                         <div class="col-lg-6">
@@ -157,15 +154,15 @@ if (isset($_POST['submit'])) {
 
                                                     if ($duration == $i) {
                                                 ?>
-                                                <option value="<?php echo $duration ?>" selected>
-                                                    <?php echo $duration ?> month
-                                                </option>
-                                                <?php
+                                                        <option value="<?php echo $duration ?>" selected>
+                                                            <?php echo $duration ?> month
+                                                        </option>
+                                                    <?php
                                                     } else {
-                                                ?>
-                                                <option value="<?php echo $i ?>">
-                                                    <?php echo $i ?> month
-                                                </option>
+                                                    ?>
+                                                        <option value="<?php echo $i ?>">
+                                                            <?php echo $i ?> month
+                                                        </option>
                                                 <?php
                                                     }
                                                 }
@@ -177,9 +174,7 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 10px;">
                                         <div class="col-lg-6">
                                             <label for="price" class="form-label">Membership Price</label>
-                                            <input type="number" class="form-control" name="price"
-                                                value="<?php echo _getSingleMembership($_id, '_price'); ?>" id="price"
-                                                placeholder="Price" required>
+                                            <input type="number" class="form-control" name="price" value="<?php echo _getSingleMembership($_id, '_price'); ?>" id="price" placeholder="Price" required>
                                             <div class="invalid-feedback">Please type correct price</div>
                                         </div>
                                         <div class="col-lg-6">
@@ -192,13 +187,13 @@ if (isset($_POST['submit'])) {
 
                                                 if ($benetype == 'Fixed') {
                                                 ?>
-                                                <option selected value="Fixed">Fixed</option>
-                                                <option value="Variable">Percentage</option>
+                                                    <option selected value="Fixed">Fixed</option>
+                                                    <option value="Variable">Percentage</option>
                                                 <?php
                                                 } else {
                                                 ?>
-                                                <option value="Fixed">Fixed</option>
-                                                <option selected value="Variable">Percentage</option>
+                                                    <option value="Fixed">Fixed</option>
+                                                    <option selected value="Variable">Percentage</option>
                                                 <?php
                                                 }
 
@@ -211,9 +206,7 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3" style="margin-top: 10px;">
                                         <div class="col-lg-6">
                                             <label for="discount" class="form-label">Discount</label>
-                                            <input type="text" class="form-control" id="discount" name="discount"
-                                                placeholder="Discount"
-                                                value="<?php echo _getSingleMembership($_id, '_benefit'); ?>" required>
+                                            <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" value="<?php echo _getSingleMembership($_id, '_benefit'); ?>" required>
                                             <div class="invalid-feedback">Please type correct discount</div>
                                         </div>
                                         <div class="col" style="margin-top: 40px;">
@@ -225,22 +218,18 @@ if (isset($_POST['submit'])) {
                                                 $status = _getSingleMembership($_id, '_status');
                                                 if ($status == 'true') {
                                                 ?>
-                                                <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive" value="true" checked>
-                                                <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="isactive">Is
-                                                    Active</label>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive" id="isactive" value="true" checked>
+                                                    <label class="custom-control-label" style="margin-left: 20px;" for="isactive">Is
+                                                        Active</label>
                                                 <?php
                                                 } else {
-                                                        ?>
-                                                <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive" value="true">
-                                                <label class="custom-control-label" style="margin-left: 20px;"
-                                                    for="isactive">Is
-                                                    Active</label>
+                                                ?>
+                                                    <input type="checkbox" class="custom-control-input" name="isactive" id="isactive" value="true">
+                                                    <label class="custom-control-label" style="margin-left: 20px;" for="isactive">Is
+                                                        Active</label>
                                                 <?php
                                                 }
-                                                        ?>
+                                                ?>
 
 
                                             </div>
@@ -250,16 +239,12 @@ if (isset($_POST['submit'])) {
                                         <div class="col">
                                             <label for="membershipdesc" class="form-label">Membership
                                                 Description</label>
-                                            <textarea name="membershipdesc" id="mytextarea" style="width:100%"
-                                                rows="10">
-                                            <?php echo _getSingleMembership($_id, '_membershipdesc'); ?>
-                                        </textarea>
+                                            <textarea name="membershipdesc" id="mytextarea" style="width:100%" rows="10"><?php echo _getSingleMembership($_id, '_membershipdesc'); ?></textarea>
                                             <div class="invalid-feedback">Please type correct membership desc</div>
                                         </div>
                                     </div>
                                     <div class="col-12" style="margin-top: 30px;">
-                                        <button type="submit" name="submit" style="width: 200px;margin-left: -10px"
-                                            class="btn btn-primary">Update Membership</button>
+                                        <button type="submit" name="submit" style="width: 200px;margin-left: -10px" class="btn btn-primary">Update Membership</button>
 
                                     </div>
 
@@ -295,9 +280,8 @@ if (isset($_POST['submit'])) {
 <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+</script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="../assets/js/off-canvas.js"></script>

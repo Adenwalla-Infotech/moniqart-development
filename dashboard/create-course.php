@@ -181,7 +181,6 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="col-lg-4" style="margin-bottom: 20px;">
                                             <?php _showSubCategoryOptions() ?>
-
                                         </div>
                                         <div class="col-lg-4">
                                             <label htmlFor="teacheremailid" class="form-label">Teacher Email</label>

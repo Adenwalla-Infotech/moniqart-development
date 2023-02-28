@@ -145,7 +145,7 @@ if (isset($_POST['lessonname'])) {
                                     to write about the topic, and it will also make it more likely that people will be
                                     interested in reading what you have to say.
                                 </p>
-                                <form method="POST" action="" id="submitForm" enctype="multipart/form-data"
+                                <form method="POST" action="" enctype="multipart/form-data"
                                     class="needs-validation" novalidate>
 
                                     <div class="row g-3">
@@ -240,7 +240,7 @@ if (isset($_POST['lessonname'])) {
                                         <div class="col">
                                             <label for="lessonDescription" class="form-label">Lesson Description</label>
                                             <textarea name="lessonDescription" id="mytextarea" style="width:100%"
-                                                rows="10" required></textarea>
+                                                rows="10"></textarea>
                                             <div class="invalid-feedback">Please type correct Description</div>
                                         </div>
                                     </div>
