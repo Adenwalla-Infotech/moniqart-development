@@ -3653,7 +3653,7 @@ function _viewTranscation($useremail, $startfrom = '', $limit = '')
 function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
 {
 
-
+    echo $coursename;
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
