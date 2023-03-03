@@ -3653,17 +3653,14 @@ function _viewTranscation($useremail, $startfrom = '', $limit = '')
 function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
 {
 
-    echo $coursename;
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
 
     $stmt = $conn->prepare("INSERT INTO `tblcourse` (`_coursename`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES (?, ?, ?, ?, ?, ?, ?, ? , ? , ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssssssssssssssssss", $coursename, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice);
-    print_r($stmt);
-    $stmt->execute();
 
-    if ($stmt) {
+    if ($stmt->execute()) {
         $_SESSION['course_success'] = true;
         header("location:");
     } else {
