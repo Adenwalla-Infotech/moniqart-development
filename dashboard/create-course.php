@@ -51,8 +51,8 @@ if (isset($_POST['submit'])) {
         $extension = substr($thumbnail, strlen($thumbnail) - 4, strlen($thumbnail));
         $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg");
         if (!in_array($extension, $allowed_extensions)) {
-            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed for Thumbnail');</script>";
-            echo "windows.reload()";
+            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif / Webp/ Svg format allowed for Thumbnail');</script>";
+            echo "<script>windows.reload()<script>";
         } else {
             $thumbnailimg = md5($thumbnail) . $extension;
             move_uploaded_file($_FILES["thumbnail"]["tmp_name"], "../uploads/coursethumbnail/" . $thumbnailimg);
@@ -64,8 +64,8 @@ if (isset($_POST['submit'])) {
         $extension = substr($banner, strlen($banner) - 4, strlen($banner));
         $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg");
         if (!in_array($extension, $allowed_extensions)) {
-            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed for Banner');</script>";
-            echo "windows.reload()";
+            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif / Webp/ Svg format allowed for Banner');</script>";
+            echo "<script>windows.reload()<script>";
         } else {
             $bannerimg = md5($banner) . $extension;
             move_uploaded_file($_FILES["banner"]["tmp_name"], "../uploads/coursebanner/" . $bannerimg);
