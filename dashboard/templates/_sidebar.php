@@ -8,14 +8,13 @@
                 <span class="menu-title">My Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('dashboard/memberships'); ?>">
-                <!-- <i class="mdi mdi-wallet-membership menu-icon"></i> -->
                 <img src="<?php echo base_url('assets/icons/Memberships.png'); ?>" class="menu-icon"
                     style="margin-right: 20px;margin-top:-0px;width:20px">
                 <span class="menu-title">Subscriptions</span>
             </a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item">
       <a class="nav-link" href="myinvoice">
         <i class="mdi mdi-cash-multiple menu-icon"></i>
@@ -143,9 +142,8 @@
                 </div>
             </li>
         <?php } ?>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-ticket" aria-expanded="false" aria-controls="ui-basic">
-                <!-- <i class="mdi mdi-ticket-account menu-icon"></i> -->
                 <img src="<?php echo base_url('assets/icons/support.png'); ?>" class="menu-icon"
                     style="margin-right: 17px;margin-top:-0px;width:23px">
                 <span class="menu-title">Support Ticket</span>
@@ -159,7 +157,7 @@
                             href="<?php echo base_url('dashboard/manage-tickets'); ?>">Manage Tickets</a></li>
                 </ul>
             </div>
-        </li>
+        </li> -->
         <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('dashboard/edit-profile'); ?>">
                 <!-- <i class="ti-settings menu-icon"></i> -->
@@ -168,15 +166,13 @@
                 <span class="menu-title">Profile Setting</span>
             </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('dashboard/mytranscations'); ?>">
-                <!-- <i class="mdi mdi-wallet-membership menu-icon"></i> -->
-                <!-- <i class="mdi mdi-cash-multiple menu-icon"></i> -->
                 <img src="<?php echo base_url('assets/icons/transaction.png'); ?>" class="menu-icon"
                     style="margin-right: 17px;margin-top:-0px;width:23px">
                 <span class="menu-title">My Transactions</span>
             </a>
-        </li>
+        </li> -->
         <hr style="width: 100%;height:0.1px;background-color:#E5E5E5">
 
         <?php if ($_SESSION['userType'] == 2) { ?>
@@ -250,6 +246,8 @@
                     </ul>
                 </div>
             </li>
+        <hr style="width: 100%;height:0.1px;background-color:#E5E5E5">
+
             <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-invoice" aria-expanded="false" aria-controls="ui-basic">
               <i class="mdi mdi-cash-multiple menu-icon"></i>
@@ -320,11 +318,10 @@
             </li>
 
         <?php } ?>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('dashboard/mycourses'); ?>">
                 <img src="<?php echo base_url('assets/icons/courses.png'); ?>" class="menu-icon"
                     style="margin-right: 17px;margin-top:-0px;width:25px">
-                <!-- <i class="mdi mdi-wallet-membership menu-icon"></i> -->
                 <span class="menu-title">My Courses</span>
             </a>
         </li>
@@ -333,9 +330,8 @@
             <a class="nav-link" href="<?php echo base_url('dashboard/manage-certificates'); ?>">
                 <img src="<?php echo base_url('assets/icons/courses.png'); ?>" class="menu-icon"
                     style="margin-right: 17px;margin-top:-0px;width:25px">
-                <!-- <i class="mdi mdi-wallet-membership menu-icon"></i> -->
                 <span class="menu-title">Certificates</span>
             </a>
-        </li>
+        </li> -->
     </ul>
 </nav>
