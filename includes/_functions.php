@@ -77,6 +77,7 @@ function _signup($userpassword, $useremail, $username, $userphone)
                 $alert = new PHPAlert();
                 $alert->warn("User Already Exists");
             } else {
+               
                 $sql = "INSERT INTO `tblusers`(`_username`, `_useremail`, `_userphone`, `_usertype`, `_userstatus`, `_userpassword`, `_userotp`, `_userverify`) VALUES ('$username','$useremail', '$userphone','0', 'true', '$enc_password', '$userotp', 'false')";
 
                 $query = mysqli_query($conn, $sql);
@@ -90,13 +91,13 @@ function _signup($userpassword, $useremail, $username, $userphone)
     }
 }
 
-function _forgetpass($useremail, $userphone)
+function _forgetpass($userphone)
 {
     require('_config.php');
     require('_alert.php');
     $userpass = rand(11111111, 99999999);
     $enc_pass = md5($userpass);
-    $sql = "SELECT * FROM `tblusers` WHERE `_useremail` = '$useremail' AND `_userphone` = '$userphone'";
+    $sql = "SELECT * FROM `tblusers` WHERE `_userphone` = '$userphone'";
     $query = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($query);
     if ($count > 0) {
@@ -105,8 +106,7 @@ function _forgetpass($useremail, $userphone)
         if ($query) {
             $subject = 'Password Changed';
             $message = "Password : $userpass (Your New Password)";
-            $sendmail = "Password : $userpass (Your New Password)";
-            _notifyuser($useremail, $userphone, $sendmail, $message, $subject);
+            _notifyuser('', $userphone, '', $message, '');
         }
     } else {
         $alert = new PHPAlert();
@@ -175,6 +175,8 @@ function _verifyotp($verifyotp)
 
 function _sendotp($otp, $userphone, $useremail)
 {
+    echo $userphone;
+
     require('_config.php');
     $sql = "SELECT * FROM `tblsmsconfig` WHERE `_supplierstatus` = 'true'";
     $query = mysqli_query($conn, $sql);
@@ -223,6 +225,7 @@ function _sendotp($otp, $userphone, $useremail)
         } else {
             $data = json_decode($response);
             $sts = $data->return;
+            echo $sts;
             if ($sts == false) {
                 $alert = new PHPAlert();
                 $alert->warn("OTP Failed");
