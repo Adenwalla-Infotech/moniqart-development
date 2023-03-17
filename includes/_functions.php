@@ -4028,6 +4028,7 @@ function _updateLesson($_id, $_courseid, $_lessonname, $_lessontype, $_lessonurl
     $stmt->bind_param("sssssssssss", $_courseid, $_lessonname, $_lessondescription, $_status, $_availablity, $_lessontype, $_lessonurl, $_lessondate, $_lessontime, $_recordedfilename, $_id);
     
     if($stmt->execute()){
+        echo 'done';
         $alert = new PHPAlert();
         $alert->success("Lesson Edited");
     }else{

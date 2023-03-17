@@ -406,8 +406,7 @@ if (isset($_POST['editAttachment'])) {
                                             <label for="_lessondescription" class="form-label">Lesson Description</label>
                                             <textarea name="_lessondescription" id="mytextarea">
                                                  <?php
-                                                  $desc  = _getSingleLesson($id, '_lessondescription');
-                                                echo $desc;
+                                                  echo _getSingleLesson($id, '_lessondescription');
                                                  ?>
                                                 </textarea>
                                             <div class="invalid-feedback">Please type correct Description</div>
