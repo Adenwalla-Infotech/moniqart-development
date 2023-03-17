@@ -69,7 +69,7 @@ if (isset($_POST['lessonname'])) {
             $lessondate = null;
             $lessontime = null;
             $recorderfile = md5($lessonfile) . $extension;
-            echo move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
+            move_uploaded_file($_FILES["lessonfile"]["tmp_name"], "../uploads/recordedlesson/" . $recorderfile);
 
         }
     } else {
@@ -78,6 +78,8 @@ if (isset($_POST['lessonname'])) {
         $lessondate = $_POST['lessondate'];
         $lessontime = $_POST['lessontime'];
     }
+
+    echo 'descrion';
 
     _updateLesson($id, $_courseid, $_lessonname, $lessontype, $lessonurl, $lessondate, $lessontime, $recorderfile, $_lessondescription, $isactive, $_availablity);
 
