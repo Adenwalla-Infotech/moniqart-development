@@ -4026,6 +4026,7 @@ function _updateLesson($_id, $_courseid, $_lessonname, $_lessontype, $_lessonurl
     $stmt = $conn->prepare("UPDATE `tbllessons` SET `_courseid`= ? ,`_lessonname`= ? ,`_lessondescription`= ? , `_status`= ?,`_availablity`= ?,`_lessontype`= ?,`_lessonurl`= ?,`_lessondate`= ?,`_lessontime`= ?,`_recordedfilename`= ?  WHERE `_id` =  ? ");
 
     $stmt->bind_param("sssssssssss", $_courseid, $_lessonname, $_lessondescription, $_status, $_availablity, $_lessontype, $_lessonurl, $_lessondate, $_lessontime, $_recordedfilename, $_id);
+    echo 'donecccc';
     
     if($stmt->execute()){
         echo 'done';
