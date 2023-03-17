@@ -392,8 +392,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `FullName` varchar(50) NOT NULL,
                 `EmailId` varchar(100) NOT NULL,
                 `PhoneNo` varchar(20) NOT NULL,
-                `Message` varchar(250) NOT NULL,
-                `PostedAt` datetime NOT NULL DEFAULT current_timestamp()
+                `Message` text NULL DEFAULT current_timestamp()
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
             $category_table = "CREATE TABLE IF NOT EXISTS `tblcategory` (
@@ -528,43 +527,19 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-            $invoice = "CREATE TABLE IF NOT EXISTS `tblinvoice` (
-                `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
-                `_clientname` varchar(255) NOT NULL,
-                `_clientemail` varchar(255) NOT NULL,
-                `_clientnumber` varchar(255) NOT NULL, 
-                `_clientaddress` varchar(255) NOT NULL, 
-                `_paymentstatus` varchar(255) NOT NULL,
-                `_refno` varchar(255) NOT NULL,
-                `_invoicenote` text NOT NULL,
-                `_duedate` varchar(255) NOT NULL,
-                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
-            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
-            $invoiceitems = "CREATE TABLE IF NOT EXISTS `tblinvoiceitems` (
-                `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
-                `_invoiceno` varchar(55) NOT NULL,
-                `_productname` varchar(55) NOT NULL,
-                `_productquantity` varchar(55) NOT NULL, 
-                `_productamount` varchar(55) NOT NULL, 
-                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
-            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
             $course = "CREATE TABLE IF NOT EXISTS `tblcourse` (
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_coursename` text NOT NULL,
-                `_parmalink` varchar(255) NOT NULL,
+                `_parmalink` text NOT NULL,
                 `_coursedescription` text NOT NULL,
                 `_whatlearn` text NOT NULL,
                 `_requirements` text NOT NULL,
                 `_eligibilitycriteria` text NOT NULL,
                 `_capacity` varchar(50) NOT NULL,
                 `_enrollstatus` varchar(50) NOT NULL,
-                `_thumbnail` varchar(100) NOT NULL,
-                `_banner` varchar(100) NOT NULL,
-                `_pricing` varchar(50) NOT NULL,
+                `_thumbnail` varchar(200) NOT NULL,
+                `_banner` varchar(200) NOT NULL,
+                `_pricing` varchar(100) NOT NULL,
                 `_status` varchar(50) NOT NULL,
                 `_teacheremailid` varchar(50) NOT NULL,
                 `_categoryid` varchar(50) NOT NULL,
@@ -572,7 +547,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_coursetype` varchar(50) NOT NULL,
                 `_coursechannel` varchar(50) NOT NULL,
                 `_courselevel` varchar(50) NOT NULL,
-                `_evuluationlink` varchar(50) NOT NULL,
+                `_evuluationlink` text NOT NULL,
                 `_startdate` varchar(255)  NOT NULL,
                 `_enddate` varchar(255)  NOT NULL,
                 `_discountprice` varchar(50)  NOT NULL,
@@ -586,10 +561,10 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_courseid` varchar(55) NOT NULL,
                 `_lessonname` text NOT NULL,
                 `_lessontype` varchar(55) NOT NULL,
-                `_lessonurl` varchar(55) NOT NULL,
+                `_lessonurl` text NOT NULL,
                 `_lessondate` varchar(55) NOT NULL,
                 `_lessontime` varchar(55) NOT NULL,
-                `_recordedfilename` varchar(55) NOT NULL,
+                `_recordedfilename` varchar(255) NOT NULL,
                 `_lessondescription` text NOT NULL,
                 `_status` varchar(55) NOT NULL,
                 `_availablity` varchar(55) NOT NULL,
@@ -3627,16 +3602,11 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
     $stmt->bind_param("ssssssssssssssssssssss", $coursename, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice);
 
     if ($stmt->execute()) {
-        // $_SESSION['course_success'] = true;
-        // header("location:");
-        $alert = new PHPAlert();
-        $alert->success("Course Created");
+        $_SESSION['course_success'] = true;
+        header("location:");
     } else {
-        // $_SESSION['course_error'] = false;
-        // header("location:");
-        // $alert = new PHPAlert();
-        // $alert->warn("Course Failed");
-        echo $stmt->error;
+        $alert = new PHPAlert();
+        $alert->warn("Course Failed");
     }
 
     $stmt->close();
@@ -4051,11 +4021,18 @@ function _updateLesson($_id, $_courseid, $_lessonname, $_lessontype, $_lessonurl
 {
 
     require('_config.php');
+    require('_alert.php');
 
     $stmt = $conn->prepare("UPDATE `tbllessons` SET `_courseid`= ? ,`_lessonname`= ? ,`_lessondescription`= ? , `_status`= ?,`_availablity`= ?,`_lessontype`= ?,`_lessonurl`= ?,`_lessondate`= ?,`_lessontime`= ?,`_recordedfilename`= ?  WHERE `_id` =  ? ");
 
     $stmt->bind_param("sssssssssss", $_courseid, $_lessonname, $_lessondescription, $_status, $_availablity, $_lessontype, $_lessonurl, $_lessondate, $_lessontime, $_recordedfilename, $_id);
-    $stmt->execute();
+    
+    if($stmt->execute()){
+        $alert = new PHPAlert();
+        $alert->success("Lesson Edited");
+    }else{
+        echo "Error inserting record: " . $stmt->error;
+    }
 
     $stmt->close();
     $conn->close();
