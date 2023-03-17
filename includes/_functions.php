@@ -3617,6 +3617,8 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
 {
 
     require('_config.php');
+    require('_alert.php');
+
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
 
@@ -3624,11 +3626,15 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
     $stmt->bind_param("ssssssssssssssssssssss", $coursename, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice);
 
     if ($stmt->execute()) {
-        $_SESSION['course_success'] = true;
-        header("location:");
+        // $_SESSION['course_success'] = true;
+        // header("location:");
+        $alert = new PHPAlert();
+        $alert->success("Course Created");
     } else {
-        $_SESSION['course_error'] = false;
-        header("location:");
+        // $_SESSION['course_error'] = false;
+        // header("location:");
+        $alert = new PHPAlert();
+        $alert->warn("Course Failed");
     }
 
     $stmt->close();
