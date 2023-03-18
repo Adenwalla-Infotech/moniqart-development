@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     if ($_FILES["logo"]["name"] != '') {
         $logofile = $_FILES["logo"]["name"];
         $extension = substr($logofile, strlen($logofile) - 4, strlen($logofile));
-        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif", ".webp");
+        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg");
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
         } else {
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     if ($_FILES["reslogo"]["name"] != '') {
         $reslogofile = $_FILES["reslogo"]["name"];
         $extension = substr($reslogofile, strlen($reslogofile) - 4, strlen($reslogofile));
-        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif", ".svg");
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
         } else {
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
     if ($_FILES["favicon"]["name"] != '') {
         $faviconfile = $_FILES["favicon"]["name"];
         $extension = substr($faviconfile, strlen($faviconfile) - 4, strlen($faviconfile));
-        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif", ".svg");
         if (!in_array($extension, $allowed_extensions)) {
             echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
         } else {

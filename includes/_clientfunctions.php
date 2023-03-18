@@ -1,5 +1,36 @@
 <?php
 
+//Navbar
+
+function _allcurrency(){
+    require('_config.php');
+    $sql = "SELECT * FROM `tblcurrency` WHERE `_status` = 'true'";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {?>
+            <option value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
+        <?php }
+    }
+}
+
+function _siteconfig($param)
+{
+    require('_config.php');
+    $sql = "SELECT * FROM `tblsiteconfig`";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+function base_url($url)
+{
+    require('_config.php');
+    return "$base_url" . $url;
+}
+
 
 // All Courses Page
 function _allCoursesForAllCoursesPage()
