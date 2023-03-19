@@ -345,6 +345,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_sitetitle` varchar(50) NULL,
                 `_siteemail` varchar(50) NULL,
+                `_sitephone` varchar(50) NULL,
                 `_timezone` varchar(50) NULL,
                 `_customheader` text NULL,
                 `_customfooter` text NULL,

@@ -1,9 +1,9 @@
 <?php include('includes/_clientfunctions.php'); ?>
-<div class="topbar">
+<div class="topBarContainer">
     <div class="container">
         <div class="row" style="padding-top: 8px">
             <div class="col-10">
-              <p><i class="fa-solid fa-phone"></i> <span><?php echo _siteconfig('_sitephone'); ?></span>&nbsp;&nbsp;&nbsp; <i class="fa-solid fa-envelope-open"></i><?php echo _siteconfig('_siteemail'); ?></p>
+              <p><i class="fa-solid fa-phone"></i> <span>&nbsp;<?php echo _siteconfig('_sitephone'); ?></span>&nbsp;&nbsp;&nbsp; <i class="fa-solid fa-envelope-open"></i>&nbsp;<?php echo _siteconfig('_siteemail'); ?></p>
             </div>
             <div class="col-2">
               <select name="currency" id="currency" style="float:right">
@@ -32,7 +32,7 @@
           <div class="mx-auto"></div>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Home</a>
+              <a class="nav-link text-white" href="#">Classes</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="#">About</a>
