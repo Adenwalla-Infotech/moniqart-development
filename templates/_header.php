@@ -32,19 +32,19 @@
           <div class="mx-auto"></div>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Classes</a>
+              <a class="nav-link text-white mx-2 " href="#">Classes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">About</a>
+              <a class="nav-link text-white mx-2 " href="#">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Blog</a>
+              <a class="nav-link text-white mx-2 " href="#">Blog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Pricing</a>
+              <a class="nav-link text-white mx-2 " href="#">Pricing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Contact</a>
+              <a class="nav-link text-white mx-2 " href="#">Contact</a>
             </li>
           </ul>
         </div>

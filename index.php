@@ -23,8 +23,8 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/frontend/css/style.css">
-  
+    <!-- <link rel="stylesheet" href="assets/frontend/css/style.css"> -->
+    <link rel="stylesheet" href="styles/main.css">
 
     <title>Moniqart</title>
 </head>

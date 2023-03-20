@@ -160,7 +160,7 @@ if (isset($_POST['editAttachment'])) {
 
 <body>
     <div class="container-scroller">
-    <!-- <?php include('templates/_header.php'); ?> -->
+        <!-- <?php include('templates/_header.php'); ?> -->
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <?php include('templates/_sidebar.php'); ?>
@@ -354,7 +354,7 @@ if (isset($_POST['editAttachment'])) {
                                                 } else {
                                                     ?>
                                                     <input type="checkbox" class="custom-control-input" name="isactive"
-                                                        id="isactive" value="true" >
+                                                        id="isactive" value="true">
                                                     <label class="custom-control-label" style="margin-left: 20px;"
                                                         for="isactive">Is
                                                         Active</label>
@@ -388,13 +388,17 @@ if (isset($_POST['editAttachment'])) {
 
                                         <div class="col-lg-6" style="display: none;" id="lessondate">
                                             <label for="lessondate" class="form-label">Date</label>
-                                            <input type="date" class="form-control" value="<?php echo _getSingleLesson($id, '_lessondate'); ?>" name="lessondate">
+                                            <input type="date" class="form-control"
+                                                value="<?php echo _getSingleLesson($id, '_lessondate'); ?>"
+                                                name="lessondate">
                                             <div class="invalid-feedback">Please select correct date</div>
                                         </div>
 
                                         <div class="col-lg-6" style="display: none;" id="lessontime">
                                             <label for="lessontime" class="form-label">Time</label>
-                                            <input type="time" class="form-control" value="<?php echo _getSingleLesson($id, '_lessontime'); ?>" name="lessontime">
+                                            <input type="time" class="form-control"
+                                                value="<?php echo _getSingleLesson($id, '_lessontime'); ?>"
+                                                name="lessontime">
                                             <div class="invalid-feedback">Please select correct time</div>
                                         </div>
 
@@ -405,10 +409,11 @@ if (isset($_POST['editAttachment'])) {
 
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
-                                            <label for="_lessondescription" class="form-label">Lesson Description</label>
+                                            <label for="_lessondescription" class="form-label">Lesson
+                                                Description</label>
                                             <textarea name="_lessondescription" id="mytextarea">
                                                  <?php
-                                                  echo _getSingleLesson($id, '_lessondescription');
+                                                 echo _getSingleLesson($id, '_lessondescription');
                                                  ?>
                                                 </textarea>
                                             <div class="invalid-feedback">Please type correct Description</div>
@@ -623,7 +628,7 @@ if (isset($_POST['editAttachment'])) {
                 lessontime.style.display = 'block'
 
                 lessonfile.style.display = 'none'
-                
+
             } else if (value == 'Recorded') {
                 lessonfile.style.display = 'block'
 
@@ -696,14 +701,17 @@ if (isset($_POST['editAttachment'])) {
                 let courseid = e.target.courseid.value
                 let lessontype = e.target.lessontype.value
 
-                
+
                 if (lessonname != "" && availablity != "" && courseid != "" && lessontype !=
-                "") {
+                    "") {
 
                     progressBarDiv.style.display = "block"
 
                     let uploadFormData = new FormData(form);
 
+
+
+                    // uploadFormData.append("_lessondescription",description);
 
                     // Initiate the AJAX request
                     let request = new XMLHttpRequest();
@@ -723,11 +731,11 @@ if (isset($_POST['editAttachment'])) {
                     });
 
 
-                    request.onreadystatechange = () => {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
-                    };
+                    // request.onreadystatechange = () => {
+                    //     setTimeout(() => {
+                    //         window.location.reload();
+                    //     }, 1000);
+                    // };
 
                     // Execute request
                     const res = request.send(uploadFormData);
