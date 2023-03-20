@@ -711,7 +711,10 @@ if (isset($_POST['editAttachment'])) {
 
 
 
-                    // uploadFormData.append("_lessondescription",description);
+
+                    let description = tinymce.activeEditor.getContent();
+
+                    uploadFormData.append("_lessondescription",description);
 
                     // Initiate the AJAX request
                     let request = new XMLHttpRequest();
@@ -731,11 +734,11 @@ if (isset($_POST['editAttachment'])) {
                     });
 
 
-                    // request.onreadystatechange = () => {
-                    //     setTimeout(() => {
-                    //         window.location.reload();
-                    //     }, 1000);
-                    // };
+                    request.onreadystatechange = () => {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    };
 
                     // Execute request
                     const res = request.send(uploadFormData);
