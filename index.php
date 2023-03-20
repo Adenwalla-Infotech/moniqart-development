@@ -23,8 +23,8 @@
 
 
     <!-- Custom Styles -->
-    <!-- <link rel="stylesheet" href="assets/frontend/css/style.css"> -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="assets/frontend/css/style.css">
+    <!-- <link rel="stylesheet" href="styles/main.css"> -->
 
     <title>Moniqart</title>
 </head>
@@ -567,6 +567,13 @@
             </div>
         </div>
     </section>
+
+
+    <!-- make an appoinment section -->
+<!-- 
+    <section class="makeAnAppinmentSection" > 
+
+    </section> -->
 
 
     <script src="js/bootstrap.bundle.min.js"></script>
