@@ -8,7 +8,7 @@ function _allcurrency(){
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) {?>
-            <option value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
+            <option <?php if($data['_conversioncurrency'] == $_SESSION['default_currency']) echo "selected" ?> value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
         <?php }
     }
 }
