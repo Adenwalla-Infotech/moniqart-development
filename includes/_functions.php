@@ -721,7 +721,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB, $mycourseDB, $pendingCetificatedDB];
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB, $mycourseDB, $pendingCetificatedDB];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -3267,109 +3267,7 @@ function _getSingleEmailTemplate($templateName)
 }
 
 
-// Invoice
 
-function _createInvoice($_clientname, $_clientemail, $_clientnumber, $_clientaddress, $_invoicenote, $_refno, $_duedate, $_paymentstatus)
-{
-
-    require('_config.php');
-    require('_alert.php');
-
-    $sql = "INSERT INTO `tblinvoice`(`_clientname`,`_clientemail`,`_clientnumber`,`_clientaddress`,`_paymentstatus`,`_refno`,`_invoicenote`,`_duedate`) VALUES ('$_clientname','$_clientemail','$_clientnumber','$_clientaddress','$_paymentstatus','$_refno','$_invoicenote','$_duedate')";
-
-    $query = mysqli_query($conn, $sql);
-    if ($query) {
-        $alert = new PHPAlert();
-        $alert->success("Invoice Created");
-    } else {
-        $alert = new PHPAlert();
-        $alert->warn("Creation Failed");
-    }
-}
-
-
-
-function _getInvoice($clientemail = '', $refno = '', $startfrom = '', $limit = '')
-{
-
-    require('_config.php');
-
-
-
-    if ($clientemail != '' && $refno == '') {
-
-        $sql = "SELECT * FROM `tblinvoice` where `_clientemail` LIKE '%$clientemail%' ";
-    }
-
-    if ($clientemail == '' && $refno != '') {
-
-        $sql = "SELECT * FROM `tblinvoice` where `_refno` LIKE '%$refno%' ";
-    }
-
-    if ($clientemail == '' && $refno == '') {
-
-        $sql = "SELECT * FROM `tblinvoice` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
-    }
-
-
-
-
-    $query = mysqli_query($conn, $sql);
-
-    if ($query) {
-        foreach ($query as $data) {
-            ?>
-            <tr>
-                <td><?php echo $data['_id']; ?></td>
-                <td><?php echo $data['_clientname']; ?></td>
-                <td><?php echo $data['_clientemail']; ?></td>
-
-                <?php
-                if ($data['_paymentstatus'] == 'UnPaid') {
-                    ?>
-                    <td>
-                        <span style="background-color:#dd4949; color:#fff; padding:3px 5px; border-radius:10px; ">
-                            <?php echo $data['_paymentstatus']; ?>
-                        </span>
-                    </td>
-                    <?php
-                } else {
-                    ?>
-                    <td>
-                        <span style="background-color:#86bd68; color:#fff; padding:3px 5px; border-radius:10px; ">
-                            <?php echo $data['_paymentstatus']; ?>
-                        </span>
-                    </td>
-                    <?php
-                }
-                ?>
-
-
-                <td><?php echo $data['_refno']; ?></td>
-                <td><?php echo date("M j, Y", strtotime($data['_duedate'])); ?></td>
-                <td>
-                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
-                </td>
-                <td>
-                    <?php
-                    if (strtotime($data['UpdationDate']) == '') {
-                        echo "Not Updated Yet";
-                    } else {
-                        echo date("M j, Y", strtotime($data['UpdationDate']));
-                    }
-                    ?>
-                </td>
-                <td>
-                    <a href="edit-invoice?id=<?php echo $data['_id']; ?>" style="font-size: 20px;cursor:pointer;color:green"
-                        class="mdi mdi-pencil-box"></a>
-                    <a href='manage-invoice?id=<?php echo $data['_id']; ?>&del=true' class="mdi mdi-delete-forever"
-                        style="font-size: 20px;cursor:pointer; color:red"><a>
-                </td>
-            </tr>
-            <?php
-        }
-    }
-}
 
 
 function _viewInvoice($startfrom = '', $limit = '')
