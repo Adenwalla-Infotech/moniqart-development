@@ -59,7 +59,10 @@
             <div class="form d-flex flex-column align-items-start justify-content-start">
                 <input type="text" placeholder="Your Name*">
                 <input type="text" placeholder="Your Email Address*">
-                <textarea name="comments" id="comments" cols="19" rows="4" placeholder="comments*"></textarea>
+                <textarea name="comments" id="comments" cols="30" rows="4" placeholder="comments*"></textarea>
+                <button>
+                    Submit
+                </button>
             </div>
 
         </div>

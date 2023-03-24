@@ -37,6 +37,14 @@
         overflow-x: hidden;
     }
 
+    :root {
+        --secondary-color: #B92929;
+        --primary-color: #ffffff;
+
+        --light-black: #9a9a9a;
+
+    }
+
     .banner-image {
         background-image: url('assets/images/banner/header.svg');
         background-size: cover;
@@ -96,16 +104,16 @@
         font-weight: 600;
         text-align: center;
         font-style: italic;
-        color: #ffffff;
+        color: var(--primary-color);
     }
 
     .makeAnAppinmentSection a {
         text-transform: uppercase;
         text-decoration: none;
-        background: #ffffff;
+        background: var(--primary-color);
         font-size: 19px;
         font-weight: 900;
-        color: #B92929;
+        color: var(--secondary-color);
         padding: 0.6rem 0.9rem;
         border-radius: 10px;
     }
@@ -118,7 +126,8 @@
 
     .ubiquityContainer {
         width: 100vw;
-        height: 90vh;
+        margin-top: 4rem;
+        margin-bottom: 3rem;
         background: url("./assets/images/banner/building\ bg.svg");
         background-size: cover;
         background-repeat: no-repeat;
@@ -127,28 +136,27 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-        display: none;
-
     }
 
     .ubiquityContainer h2 {
         font-size: 35px;
         font-weight: 800;
-        color: #B92929;
+        color: var(--secondary-color);
         text-transform: uppercase;
     }
 
     .ubiquityContainer img {
-        /* margin-bottom: -4rem; */
+        width: 80%;
     }
 
     .ubiquityContainer p {
+        padding: 0 4rem;
         font-size: 19px;
         color: #000000;
+        text-align: center;
     }
 
     .studioBackgroundContainer {
-        display: none;
         width: 100vw;
         margin-top: 3rem;
         margin-bottom: 3rem;
@@ -188,7 +196,7 @@
 
     .studioBackgroundContainer__image1 span {
         font-size: 31px;
-        color: #ffffff;
+        color: var(--primary-color);
         transition: 0.4s;
         transform: scale(0);
     }
@@ -217,7 +225,7 @@
 
     .studioBackgroundContainer__image2 span {
         font-size: 31px;
-        color: #ffffff;
+        color: var(--primary-color);
         transition: 0.4s;
         transform: scale(0);
     }
@@ -234,8 +242,9 @@
 
     h2.circleAndLine {
         font-size: 29px;
+        font-weight: 700;
         text-transform: uppercase;
-        color: #B92929;
+        color: var(--secondary-color);
         position: relative;
         text-align: center;
         margin-bottom: 3rem;
@@ -260,7 +269,7 @@
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: #ffffff;
+        background: var(--primary-color);
         transform: translateX(-50%);
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
@@ -327,7 +336,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #ffffff;
+        background-color: var(--primary-color);
     }
 
     .coursesContainer .headingDiv button {
@@ -335,7 +344,7 @@
         height: 50px;
         border: none;
         outline: none;
-        background-color: #ffffff;
+        background-color: var(--primary-color);
     }
 
     .coursesContainer .headingDiv button:nth-child(2) {
@@ -345,7 +354,7 @@
 
     .coursesContainer .headingDiv button i {
         font-size: 21px;
-        color: #9a9a9a;
+        color: var(--light-black);
     }
 
 
@@ -422,7 +431,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #ffffff;
+        background-color: var(--primary-color);
     }
 
     .storeContainer .headingDiv button {
@@ -430,7 +439,7 @@
         height: 50px;
         border: none;
         outline: none;
-        background-color: #ffffff;
+        background-color: var(--primary-color);
     }
 
     .storeContainer .headingDiv button:nth-child(2) {
@@ -440,7 +449,7 @@
 
     .storeContainer .headingDiv button i {
         font-size: 21px;
-        color: #9a9a9a;
+        color: var(--light-black);
     }
 
 
@@ -470,6 +479,13 @@
         margin-bottom: 3rem;
     }
 
+    .blogsContainer p {
+        font-size: 16px;
+        color: var(--light-black);
+        font-style: italic;
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
 
 
     .blog__card {
@@ -503,7 +519,7 @@
 
     .blog__card .content p {
         font-size: 14px;
-        color: #9a9a9a;
+        color: var(--light-black);
         font-weight: 400;
         margin: 0;
     }
@@ -512,14 +528,14 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-evenly;
         padding: 0 0.5rem;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .blog__card .date span {
         font-size: 12px;
-        color: #9a9a9a;
+        color: var(--light-black);
     }
 
     .blog__card .date span i {
@@ -531,10 +547,10 @@
         height: 40px;
         border: none;
         outline: none;
-        background-color: #ffffff;
+        background-color: var(--primary-color);
         padding: 0;
         font-size: 13px;
-        color: #9a9a9a;
+        color: var(--light-black);
     }
 
     .blog__card .date button:nth-child(2) {
@@ -542,13 +558,9 @@
         border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .blog__card .date button:nth-child(3) {
-        border-right: 1px solid rgba(0, 0, 0, 0.1);
-    }
-
     .blog__card .date button i {
         font-size: 16px;
-        color: #9a9a9a;
+        color: var(--light-black);
         margin-right: 0.3rem;
 
     }
@@ -598,7 +610,7 @@
     .classDescription a {
         text-decoration: none;
         text-transform: uppercase;
-        color: #B92929;
+        color: var(--secondary-color);
         font-size: 21px;
         font-weight: 400;
     }
@@ -629,7 +641,7 @@
         height: 100px;
         border-radius: 50%;
         border: 2px solid rgba(0, 0, 0, 0.15);
-        background-color: #ffffff;
+        background-color: var(--primary-color);
     }
 
     .subscriptionCard .imgDiv {
@@ -643,7 +655,7 @@
         border: none;
         outline: none;
         background: #000;
-        color: #ffffff;
+        color: var(--primary-color);
         font-size: 18px;
         font-style: italic;
         width: 100%;
@@ -654,7 +666,7 @@
     }
 
     .subscriptionCard button:hover {
-        background: #B92929;
+        background: var(--secondary-color);
     }
 
 
@@ -672,25 +684,27 @@
 
     .countContainer h3 {
         font-size: 130px;
-        color: #ffffff;
+        color: var(--primary-color);
         font-weight: 700;
+        line-height: 130px;
+        margin: 0;
     }
 
     .countContainer span {
         font-size: 16px;
-        color: #ffffff;
+        color: var(--primary-color);
         font-weight: 700;
     }
 
     /* Amazing Feature */
     .amazingFeatureContainer {
-        width: 80vw;
-        margin: 0 auto;
-        height: 300px;
-        background: url("./assets/images/banner/amazingfeatures.svg");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
+        width: 100vw;
+        padding: 1rem 2rem;
+    }
+
+    .amazingFeatureContainer img {
+        width: 100%;
+        height: 100%;
     }
 
     /* Footer */
@@ -705,7 +719,7 @@
 
     .footer__list h2 {
         font-size: 21px;
-        color: #ffffff;
+        color: var(--primary-color);
     }
 
     .footer__list p {
@@ -715,7 +729,7 @@
 
     .footer__list span {
         font-size: 15px;
-        color: #ffffff;
+        color: var(--primary-color);
     }
 
     .footer__list span i {
@@ -743,16 +757,17 @@
     .form input {
         outline: none;
         border: none;
+        width: 100%;
         background: #3b3b3b;
         font-size: 15px;
         font-style: italic;
-        color: #ffffff;
+        color: var(--primary-color);
         padding: 1rem 1.4rem;
         margin-bottom: 1rem;
     }
 
     .form input::placeholder {
-        color: #ffffff;
+        color: var(--primary-color);
     }
 
     .form textarea {
@@ -760,11 +775,20 @@
         border: none;
         background: #3b3b3b;
         font-size: 15px;
-        color: #ffffff;
+        color: var(--primary-color);
         padding: 1rem 1.4rem;
 
     }
 
+    .form button {
+        border: none;
+        outline: none;
+        font-size: 14px;
+        font-style: italic;
+        background: #fff;
+        margin-top: 1rem;
+        padding: 0.6rem 2rem;
+    }
 
 
     .footer__bottom {
@@ -794,6 +818,20 @@
         margin: 0 0.3rem;
     }
 
+    /* Empty Image Container */
+
+    .emptyImagesContainer .imgContainer {
+        height: 180px;
+    }
+
+    .emptyImagesContainer .imgContainer:nth-child(2n+1) {
+        background: #818181;
+    }
+
+    .emptyImagesContainer .imgContainer:nth-child(2n+2) {
+        background: #3b3b3b;
+    }
+
 
     /* Responsive */
 
@@ -817,6 +855,12 @@
             width: 30%;
         }
 
+        .amazingFeatureContainer {
+            width: 100vw;
+            height: 300px;
+            padding: 1rem 2rem;
+        }
+
     }
 
     @media screen and (max-width:1000px) {
@@ -835,11 +879,27 @@
             margin-top: 0.8rem;
         }
 
+        .countContainer {
+            padding: 2rem 0;
+        }
+
+        .countContainer h3 {
+            font-size: 100px;
+        }
+
+        .countContainer span {
+            font-size: 14px;
+        }
+
     }
 
 
 
     @media screen and (max-width:750px) {
+
+        .banner-image h2 {
+            font-size: 30px;
+        }
 
         .makeAnAppinmentSection {
             height: 400px;
@@ -859,7 +919,46 @@
             padding-right: 1rem;
         }
 
+        .form {
+            width: 100%;
+        }
 
+        .form textarea {
+            width: 100%;
+        }
+
+        .footer__bottom {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+
+        .countContainer {
+            padding: 1rem 0;
+        }
+
+        .countContainer h3 {
+            font-size: 50px;
+            line-height: 50px;
+        }
+
+        .countContainer span {
+            font-size: 12px;
+        }
+
+        .creativeSection h3 {
+            width: 100%;
+            text-align: center;
+        }
+
+        .creativeSection p {
+            text-align: center;
+        }
+
+        .studioBackgroundContainer__content h4 {
+            font-size: 25px;
+            font-weight: 700;
+        }
 
     }
 </style>
@@ -1050,9 +1149,9 @@
     </section>
 
     <section class="studioBackgroundContainer container">
-        <div class="row w-100 flex-row justify-content-between">
+        <div class="row w-100 p-0 m-0 flex-row justify-content-between">
 
-            <div class="studioBackgroundContainer__content col-5 ">
+            <div class="studioBackgroundContainer__content p-0 col-lg-5 col-mg-12 ">
                 <h4>STUDIO BACKGROUND</h4>
                 <p>
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere doloribus alias minus distinctio
@@ -1061,11 +1160,11 @@
                 </p>
             </div>
 
-            <div class="studioBackgroundContainer__image1 col-3">
+            <div class="studioBackgroundContainer__image1 p-0 col-lg-3 col-md-5 mt-md-2 mt-sm-3 ">
                 <span>Text on hover</span>
             </div>
 
-            <div class="studioBackgroundContainer__image2 col-3">
+            <div class="studioBackgroundContainer__image2 p-0 col-lg-3 col-md-5 mt-md-2  mt-sm-3 ">
                 <span>Text on hover</span>
             </div>
         </div>
@@ -1335,28 +1434,24 @@
     </section>
 
     <section class="countContainer">
-        <div class="row w-100 h-100 ">
+        <div class="row w-100 h-100 m-0 ">
 
-            <div
-                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+            <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
                 <h3>99</h3>
                 <span>Students</span>
             </div>
 
-            <div
-                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+            <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
                 <h3>99</h3>
                 <span>Teachers</span>
             </div>
 
-            <div
-                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+            <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
                 <h3>99</h3>
                 <span>Students</span>
             </div>
 
-            <div
-                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+            <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
                 <h3>99</h3>
                 <span>Teachers</span>
             </div>
@@ -1369,6 +1464,10 @@
         <h2 class="circleAndLine">
             Blogs
         </h2>
+
+        <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+        </p>
 
 
         <div class="blogs__cards row w-100 justify-content-around ">
@@ -1390,7 +1489,6 @@
                         Oct 13, 2013
                     </span>
                     <button><i class="fa-regular fa-heart"></i>5</button>
-                    <button><i class="fa-regular fa-comment"></i>2</button>
                     <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -1412,7 +1510,6 @@
                         Oct 13, 2013
                     </span>
                     <button><i class="fa-regular fa-heart"></i>5</button>
-                    <button><i class="fa-regular fa-comment"></i>2</button>
                     <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -1434,7 +1531,6 @@
                         Oct 13, 2013
                     </span>
                     <button><i class="fa-regular fa-heart"></i>5</button>
-                    <button><i class="fa-regular fa-comment"></i>2</button>
                     <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -1444,7 +1540,21 @@
 
     </section>
 
+
     <section class="amazingFeatureContainer">
+        <img src="./assets/images/banner/amazingfeatures.svg" alt="">
+    </section>
+
+    <section class="emptyImagesContainer">
+
+        <div class="row w-100 p-0 m-0">
+            <div class="col-lg-2 col-md-6 p-0 imgContainer"></div>
+            <div class="col-lg-2 col-md-6 p-0 imgContainer"></div>
+            <div class="col-lg-2 col-md-6 p-0 imgContainer"></div>
+            <div class="col-lg-2 col-md-6 p-0 imgContainer"></div>
+            <div class="col-lg-2 col-md-6 p-0 imgContainer"></div>
+            <div class="col-lg-2 col-md-6 p-0 imgContainer"></div>
+        </div>
 
     </section>
 
