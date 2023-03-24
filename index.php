@@ -23,15 +23,18 @@
 
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/frontend/css/style.css">
-    <!-- <link rel="stylesheet" href="styles/main.css"> -->
+    <!-- <link rel="stylesheet" href="assets/frontend/css/style.css"> -->
+    <link rel="stylesheet" href="styles/main.css">
 
     <title>Moniqart</title>
 </head>
 <style>
     * {
         font-family: 'Baskervville', serif;
+    }
 
+    body {
+        overflow-x: hidden;
     }
 
     .banner-image {
@@ -74,12 +77,750 @@
         text-align: center;
     }
 
+    .makeAnAppinmentSection {
+        width: 100vw;
+        height: 300px;
+        background: url("./assets/images/banner/banner\ bg\ 2.svg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
+    .makeAnAppinmentSection p {
+        width: 70%;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        font-style: italic;
+        color: #ffffff;
+    }
+
+    .makeAnAppinmentSection a {
+        text-transform: uppercase;
+        text-decoration: none;
+        background: #ffffff;
+        font-size: 19px;
+        font-weight: 900;
+        color: #B92929;
+        padding: 0.6rem 0.9rem;
+        border-radius: 10px;
+    }
+
+    /* .makeAnAppinmentSection  {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    } */
+
+    .ubiquityContainer {
+        width: 100vw;
+        height: 90vh;
+        background: url("./assets/images/banner/building\ bg.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        display: none;
+
+    }
+
+    .ubiquityContainer h2 {
+        font-size: 35px;
+        font-weight: 800;
+        color: #B92929;
+        text-transform: uppercase;
+    }
+
+    .ubiquityContainer img {
+        /* margin-bottom: -4rem; */
+    }
+
+    .ubiquityContainer p {
+        font-size: 19px;
+        color: #000000;
+    }
+
+    .studioBackgroundContainer {
+        display: none;
+        width: 100vw;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .studioBackgroundContainer__content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .studioBackgroundContainer__content h4 {
+        font-size: 35px;
+        font-weight: 700;
+    }
+
+    .studioBackgroundContainer__content p {
+        font-size: 15px;
+        font-style: italic;
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    .studioBackgroundContainer__image1 {
+        height: 200px;
+        background: url("./assets/images/banner/header\ 2.svg");
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        transition: 0.4s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+
+    .studioBackgroundContainer__image1 span {
+        font-size: 31px;
+        color: #ffffff;
+        transition: 0.4s;
+        transform: scale(0);
+    }
+
+    .studioBackgroundContainer__image1:hover {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)), url("./assets/images/banner/header\ 2.svg");
+    }
+
+    .studioBackgroundContainer__image1:hover span {
+        transform: scale(1);
+    }
+
+
+    .studioBackgroundContainer__image2 {
+        height: 200px;
+        background: url("./assets/images/banner/p2.svg");
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        transition: 0.4s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .studioBackgroundContainer__image2 span {
+        font-size: 31px;
+        color: #ffffff;
+        transition: 0.4s;
+        transform: scale(0);
+    }
+
+    .studioBackgroundContainer__image2:hover span {
+        transform: scale(1);
+    }
+
+    .studioBackgroundContainer__image2:hover {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)), url("./assets/images/banner/p2.svg");
+    }
+
+
+
+    h2.circleAndLine {
+        font-size: 29px;
+        text-transform: uppercase;
+        color: #B92929;
+        position: relative;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    h2.circleAndLine::before {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        width: 150%;
+        height: 2.5px;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    h2.circleAndLine::after {
+        content: "";
+        position: absolute;
+        bottom: -19px;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #ffffff;
+        transform: translateX(-50%);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+
+    /* Course Container */
+
+    .coursesContainer {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4rem;
+        margin-bottom: 3rem;
+    }
+
+    .coursesContainer .courses__card {
+        height: 530px;
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border-radius: 20px;
+    }
+
+
+    .coursesContainer .courses__card .imgDiv {
+        width: 100%;
+        height: 480px;
+    }
+
+
+    .coursesContainer .courses__card:hover .content {
+        margin-top: -50px;
+    }
+
+
+    .coursesContainer .courses__card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .coursesContainer .content {
+        width: 100%;
+        height: 50px;
+        transition: 0.3s;
+    }
+
+    .coursesContainer .headingDiv {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .coursesContainer .headingDiv span {
+        width: calc(100% - 100px);
+        height: 50px;
+        font-size: 17px;
+        font-weight: 600;
+        padding-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+    }
+
+    .coursesContainer .headingDiv button {
+        width: 50px;
+        height: 50px;
+        border: none;
+        outline: none;
+        background-color: #ffffff;
+    }
+
+    .coursesContainer .headingDiv button:nth-child(2) {
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .coursesContainer .headingDiv button i {
+        font-size: 21px;
+        color: #9a9a9a;
+    }
+
+
+
+    .coursesContainer .paragraphDiv {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        z-index: 100;
+    }
+
+    .coursesContainer .paragraphDiv p {
+        text-align: center;
+        font-size: 15px;
+        padding: 0 0.5rem;
+    }
+
+
+    /* Store Container */
+
+    .storeContainer {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .storeContainer .courses__card {
+        height: 300px;
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border-radius: 20px;
+    }
+
+
+    .storeContainer .courses__card .imgDiv {
+        width: 100%;
+        height: 250px;
+        z-index: -100;
+    }
+
+    .storeContainer .courses__card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .storeContainer .courses__card:hover .content {
+        margin-top: -50px;
+    }
+
+    .storeContainer .content {
+        width: 100%;
+        height: 50px;
+        transition: 0.3s;
+    }
+
+    .storeContainer .headingDiv {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .storeContainer .headingDiv span {
+        width: calc(100% - 100px);
+        height: 50px;
+        font-size: 17px;
+        font-weight: 600;
+        padding-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+    }
+
+    .storeContainer .headingDiv button {
+        width: 50px;
+        height: 50px;
+        border: none;
+        outline: none;
+        background-color: #ffffff;
+    }
+
+    .storeContainer .headingDiv button:nth-child(2) {
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .storeContainer .headingDiv button i {
+        font-size: 21px;
+        color: #9a9a9a;
+    }
+
+
+
+    .storeContainer .paragraphDiv {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        z-index: 100;
+    }
+
+    .storeContainer .paragraphDiv p {
+        font-size: 15px;
+        padding: 0 0.5rem;
+        text-align: center
+    }
+
+
+    /* Blogs Container */
+
+    .blogsContainer {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4rem;
+        margin-bottom: 3rem;
+    }
+
+
+
+    .blog__card {
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border-radius: 20px;
+    }
+
+    .blog__card .imgDiv {
+        width: 100%;
+        height: 300px;
+        z-index: -100;
+    }
+
+    .blog__card .imgDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    .blog__card .content {
+        padding: 0.5rem 0.8rem;
+    }
+
+    .blog__card .content h2 {
+        font-size: 16px;
+        color: #000000;
+        font-weight: 700;
+    }
+
+    .blog__card .content p {
+        font-size: 14px;
+        color: #9a9a9a;
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .blog__card .date {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 0.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .blog__card .date span {
+        font-size: 12px;
+        color: #9a9a9a;
+    }
+
+    .blog__card .date span i {
+        font-size: 16px;
+    }
+
+    .blog__card .date button {
+        width: 55px;
+        height: 40px;
+        border: none;
+        outline: none;
+        background-color: #ffffff;
+        padding: 0;
+        font-size: 13px;
+        color: #9a9a9a;
+    }
+
+    .blog__card .date button:nth-child(2) {
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .blog__card .date button:nth-child(3) {
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .blog__card .date button i {
+        font-size: 16px;
+        color: #9a9a9a;
+        margin-right: 0.3rem;
+
+    }
+
+
+    /* Class Info */
+
+    .classInfoContainer img {
+        width: 100%;
+    }
+
+
+    .classDescription {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .classDescription div {
+        padding: 0 !important;
+    }
+
+    .classDescription h2 {
+        font-size: 31px;
+        text-transform: uppercase;
+    }
+
+    .classDescription p {
+        font-size: 15px;
+        font-style: italic;
+        color: rgba(0, 0, 0, 0.4);
+        text-transform: capitalize;
+    }
+
+    .classDescription span {
+        font-size: 18px;
+        font-style: italic;
+    }
+
+    .classDescription span i {
+        font-size: 22px;
+        margin-right: 1rem;
+    }
+
+    .classDescription .price {
+        font-size: 30px;
+    }
+
+    .classDescription a {
+        text-decoration: none;
+        text-transform: uppercase;
+        color: #B92929;
+        font-size: 21px;
+        font-weight: 400;
+    }
+
+    /* Subscription Container */
+
+    .subscriptionContainer {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4rem;
+        margin-bottom: 3rem;
+    }
+
+    .subscriptionCard {
+        height: 400px;
+        position: relative;
+    }
+
+    .subscriptionCard .circle {
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 0, 0, 0.15);
+        background-color: #ffffff;
+    }
+
+    .subscriptionCard .imgDiv {
+        height: 350px;
+        border: 1.4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        border-bottom: none;
+    }
+
+    .subscriptionCard button {
+        border: none;
+        outline: none;
+        background: #000;
+        color: #ffffff;
+        font-size: 18px;
+        font-style: italic;
+        width: 100%;
+        height: 50px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        transition: 0.4s;
+    }
+
+    .subscriptionCard button:hover {
+        background: #B92929;
+    }
+
+
+    /* Count Container */
+
+    .countContainer {
+        width: 100vw;
+        background: url("./assets/images/banner/redbg.svg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: 4rem;
+        margin-bottom: 3rem;
+    }
+
+    .countContainer h3 {
+        font-size: 130px;
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .countContainer span {
+        font-size: 16px;
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    /* Amazing Feature */
+    .amazingFeatureContainer {
+        width: 80vw;
+        margin: 0 auto;
+        height: 300px;
+        background: url("./assets/images/banner/amazingfeatures.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    /* Footer */
+
+    footer {
+        width: 100%;
+        background: #252525;
+        padding-top: 2rem;
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+
+    .footer__list h2 {
+        font-size: 21px;
+        color: #ffffff;
+    }
+
+    .footer__list p {
+        font-size: 15px;
+        color: #818181;
+    }
+
+    .footer__list span {
+        font-size: 15px;
+        color: #ffffff;
+    }
+
+    .footer__list span i {
+        font-size: 20px;
+        margin-right: 0.5rem;
+    }
+
+    .footer__list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer__list ul li {
+        list-style: none;
+    }
+
+    .footer__list ul li a {
+        text-decoration: none;
+        font-size: 16px;
+        color: #818181;
+        font-style: italic;
+    }
+
+    .form input {
+        outline: none;
+        border: none;
+        background: #3b3b3b;
+        font-size: 15px;
+        font-style: italic;
+        color: #ffffff;
+        padding: 1rem 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .form input::placeholder {
+        color: #ffffff;
+    }
+
+    .form textarea {
+        outline: none;
+        border: none;
+        background: #3b3b3b;
+        font-size: 15px;
+        color: #ffffff;
+        padding: 1rem 1.4rem;
+
+    }
+
+
+
+    .footer__bottom {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 2rem;
+        margin-top: 1rem;
+        padding-bottom: 2rem;
+
+    }
+
+    .footer__bottom p {
+        margin: 0 !important;
+        color: #818181;
+        font-size: 18px;
+        font-style: italic;
+        margin-right: 1rem !important;
+    }
+
+    .footer__bottom a {
+        color: #818181;
+        font-size: 20px;
+        font-style: italic;
+        margin: 0 0.3rem;
+    }
 
 
     /* Responsive */
 
+    @media screen and (min-width:1000px) {
+
+
+        .coursesContainer .courses__card {
+            width: 30%;
+        }
+
+        .storeContainer .courses__card {
+            width: 30%;
+        }
+
+        .countContainer {
+            height: 300px;
+        }
+
+
+        .blog__card {
+            width: 30%;
+        }
+
+    }
+
     @media screen and (max-width:1000px) {
+
 
         .creativeSection div.col-lg-3 {
             border: none !important;
@@ -95,304 +836,36 @@
         }
 
     }
+
+
+
+    @media screen and (max-width:750px) {
+
+        .makeAnAppinmentSection {
+            height: 400px;
+        }
+
+        .makeAnAppinmentSection p {
+            width: 80%;
+            font-size: 18px;
+        }
+
+        .footer__list span {
+            margin: 1rem 0;
+        }
+
+        footer {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+
+
+    }
 </style>
 
 <body>
     <?php include('templates/_header.php'); ?>
-    <!-- <section class="container">
-
-
-        <div class="card__container">
-
-            <div class="card">
-
-                <div class="card__image">
-                    <img src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/p-print-web-800x600.jpg"
-                        alt="">
-                </div>
-
-                <div class="card__content">
-
-                    <div class="card__top">
-                        <div class="card__title">
-                            <span>Spiderman</span>
-                        </div>
-
-                        <div class="cards__marks">
-                            <button class="card__button">
-                                <i class="bx bx-heart"></i>
-                            </button>
-                            <button class="card__button">
-                                <i class="bx bx-cart-add"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card__description">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias placeat temporibus
-                            distinctio
-                            ratione! Error, voluptatum.
-                        </p>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-            <div class="card">
-
-                <div class="card__image">
-                    <img src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/p-print-web-800x600.jpg"
-                        alt="">
-                </div>
-
-                <div class="card__content">
-
-                    <div class="card__top">
-                        <div class="card__title">
-                            <span>Spiderman</span>
-                        </div>
-
-                        <div class="cards__marks">
-                            <button class="card__button">
-                                <i class="bx bx-heart"></i>
-                            </button>
-                            <button class="card__button">
-                                <i class="bx bx-cart-add"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card__description">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias placeat temporibus
-                            distinctio
-                            ratione! Error, voluptatum.
-                        </p>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-            <div class="card">
-
-                <div class="card__image">
-                    <img src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/p-print-web-800x600.jpg"
-                        alt="">
-                </div>
-
-                <div class="card__content">
-
-                    <div class="card__top">
-                        <div class="card__title">
-                            <span>Spiderman</span>
-                        </div>
-
-                        <div class="cards__marks">
-                            <button class="card__button">
-                                <i class="bx bx-heart"></i>
-                            </button>
-                            <button class="card__button">
-                                <i class="bx bx-cart-add"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card__description">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias placeat temporibus
-                            distinctio
-                            ratione! Error, voluptatum.
-                        </p>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-            <div class="card">
-
-                <div class="card__image">
-                    <img src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/p-print-web-800x600.jpg"
-                        alt="">
-                </div>
-
-                <div class="card__content">
-
-                    <div class="card__top">
-                        <div class="card__title">
-                            <span>Spiderman</span>
-                        </div>
-
-                        <div class="cards__marks">
-                            <button class="card__button">
-                                <i class="bx bx-heart"></i>
-                            </button>
-                            <button class="card__button">
-                                <i class="bx bx-cart-add"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="card__description">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias placeat temporibus
-                            distinctio
-                            ratione! Error, voluptatum.
-                        </p>
-                    </div>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <footer class=" footer" id="footer">
-
-        <div class="footer__container container">
-
-            <div class="footer__top row">
-
-                <div class="footer__column_1">
-
-                    <a href="index.html" class="footer__logo">
-                        <img src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/logo-footer.png"
-                            alt="">
-                    </a>
-
-                    <p class="footer__logo__description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore.
-                    </p>
-
-                    <div class="footer__logo__info">
-                        <div class="footer__logo__item">
-                            <i class="bx bx-envelope-open"></i>
-                            <span>info@gmail.com</span>
-                        </div>
-                        <div class="footer__logo__item">
-                            <i class="bx bx-phone-incoming"></i>
-                            <span>1-444-123-4559</span>
-                        </div>
-                        <div class="footer__logo__item">
-                            <i class="bx bx-home"></i>
-                            <span>Rokin 90-94, 1012 Amsterdam</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="footer__column_2">
-
-                    <h1 class="footer__heading">Recent Posts</h1>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Always In Motion November 6, 2015
-                        </a>
-                    </p>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Cloud Descending November 6, 2015
-                        </a>
-                    </p>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Front Page Story November 6, 2015
-                        </a>
-                    </p>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Contagious Ideas November 6, 2015
-                        </a>
-                    </p>
-
-
-                </div>
-
-                <div class="footer__column_3">
-
-                    <h1 class="footer__heading">Instagram</h1>
-
-
-                </div>
-
-                <div class="footer__column_4">
-
-                    <h1 class="footer__heading">Contact Us</h1>
-
-                    <form action="#" class="footer__contact__form">
-                        <input type="text" placeholder="Your Name">
-                        <input type="text" placeholder="Your Email">
-                        <textarea name="" id="" cols="30" rows="3">Comment</textarea>
-                        <button>
-                            submit
-                        </button>
-                    </form>
-
-
-                </div>
-
-            </div>
-
-            <div class="footer__bottom">
-
-                <div class="footer__copyright">
-                    <p>© 2015 Qode Interactive, All Rights Reserved</p>
-                </div>
-
-                <ul class="footer__social-menu">
-
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-facebook"></i>
-                        </a>
-                    </li>
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-instagram"></i>
-                        </a>
-                    </li>
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-twitter"></i>
-                        </a>
-                    </li>
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-linkedin"></i>
-                        </a>
-                    </li>
-
-                </ul>
-
-
-            </div>
-
-        </div>
-
-    </footer> -->
 
     <!-- Banner Image  -->
     <div class="banner-image w-100 d-flex justify-content-center align-items-center">
@@ -425,9 +898,9 @@
                     <g>
                         <path d="M0.98,47.27c0.26-1.92,0.44-3.86,0.8-5.77C3.8,30.53,8.89,21.24,17.14,13.71c0.65-0.59,1.33-1.15,2.01-1.71
         c0.84-0.69,1.78-0.67,2.33,0.02c0.58,0.73,0.43,1.54-0.47,2.27C13.76,20.21,8.63,27.62,6.02,36.61
-        c-4.65,16.04-1.65,30.65,9.11,43.43c7.2,8.54,16.55,13.6,27.61,15.28c12.04,1.83,23.09-0.86,33.11-7.76
-        c0.33-0.23,0.69-0.76,0.66-1.12c-0.33-5.26-0.72-10.51-1.1-15.84c-0.54-0.14-1.06-0.25-1.58-0.4c-3.42-1.02-5.78-4.04-5.9-7.54
-        c-0.13-3.76,1.91-6.94,5.39-8.19c0.77-0.28,0.97-0.64,0.9-1.4c-0.25-3.01-0.44-6.03-0.65-9.03c-1.8,0.27-3.55,0.63-5.32,0.77
+        c-4.65,16.04-1.65,30.65,0.0103.43c7.2,8.54010.0,1316,27.61,15.28c12.04,1.83,23.09-0.86,33.11-7.76
+        c0.33-0.23,0.69-0.76,0.66-1.12c-0.33-5.26-0.72-10.51-1.1-15.84c-0.54-0.14-1.06-0.25-1.58-0.4c-3.42-1.02-5.78-4.04-5.0-0.0
+        c-0.030306,1191-6.94,5.39-8.19c0.77-0.28,0.97-0.64,0.0-0.0-0.25-3.01-0.040603-0165-9.03c-1.8,0.27-3.55,0.63-5.32,0.77
         c-5.83,0.47-11.45-0.17-16.42-3.58c-5.37-3.69-6.91-9.79-4.03-15.64c2.09-4.23,5.49-7.19,9.46-9.57c0.91-0.55,1.89-1.1,2.58-1.88
         c1.38-1.56,1.61-3.45,0.83-5.38c-0.81-2-2.36-3.18-4.49-3.45c-4.17-0.53-8.36-0.65-12.56-0.26c-6.35,0.59-12.22,2.61-17.69,5.84
         c-0.31,0.18-0.61,0.38-0.92,0.56c-0.92,0.52-1.78,0.38-2.22-0.37c-0.45-0.75-0.2-1.59,0.67-2.15c2.99-1.92,6.19-3.43,9.54-4.59
@@ -568,12 +1041,417 @@
         </div>
     </section>
 
+    <!-- ubiquity in art -->
+
+    <section class="ubiquityContainer">
+        <h2 class="circleAndLine">ubiquity in art</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A mollitia nam adipisci? Nam, harum libero!</p>
+        <img src="./assets/images/banner/laptop.svg" alt="">
+    </section>
+
+    <section class="studioBackgroundContainer container">
+        <div class="row w-100 flex-row justify-content-between">
+
+            <div class="studioBackgroundContainer__content col-5 ">
+                <h4>STUDIO BACKGROUND</h4>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere doloribus alias minus distinctio
+                    nobis.
+                    Ipsam hic asperiores est laudantium? Explicabo cupiditate assumenda accusantium, soluta
+                </p>
+            </div>
+
+            <div class="studioBackgroundContainer__image1 col-3">
+                <span>Text on hover</span>
+            </div>
+
+            <div class="studioBackgroundContainer__image2 col-3">
+                <span>Text on hover</span>
+            </div>
+        </div>
+
+    </section>
+
 
     <!-- make an appoinment section -->
-<!-- 
-    <section class="makeAnAppinmentSection" > 
+
+    <section class="makeAnAppinmentSection">
+
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea similique hic quia minus cum rerum beatae
+            dolorem numquam expedita pariatur tempore, ipsam inventore sint qui itaque alias dolores sapiente ab?
+        </p>
+
+        <a href="#">Make an appoinment</a>
+
+    </section>
+
+    <section class="coursesContainer container ">
+
+        <h2 class="circleAndLine">
+            Courses
+        </h2>
+
+        <div class="courses__cards  row w-100 justify-content-around">
+
+            <div class="courses__card col-lg-3 col-md-12 my-2 col-sm-12 mx-auto p-0">
+
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>Jesus Offering Bread</span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="paragraphDiv">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, natus. Autem similiqu
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="courses__card col-lg-3 col-md-12 my-2 col-sm-12 mx-auto p-0">
+
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>Jesus Offering Bread</span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="paragraphDiv">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, natus. Autem similiqu
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="courses__card col-lg-3 col-md-12 my-2 col-sm-12 mx-auto p-0">
+
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>Jesus Offering Bread</span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="paragraphDiv">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, natus. Autem similiqu
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- <section class="classInfoContainer container px-5">
+
+        <div class="row classDescriptionRow ">
+            <div class="col-6 p-0">
+                <img src="./assets/images/banner/AT.svg" alt="">
+            </div>
+
+            <div class="col-6  px-3 py-4 classDescription d-flex flex-column align-items-start justify-content-around ">
+                <h2>
+                    Title
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores temporibus, impedit sit autem
+                    exercitationem dolore excepturi! Dicta, officiis eius. Tempore ea architecto inventore nobis animi
+                    blanditiis porro obcaecati iste. Repudiandae.
+                </p>
+                <span> <i class="fa-regular fa-calendar-days"></i> 11 January 2023 </span>
+                <span> <i class="fa-solid fa-user-tie"></i> Name</span>
+                <span> <i class="fa-solid fa-location-dot"></i> Location</span>
+                <span class="price">₹999</span>
+                <a href="#">See More</a>
+            </div>
+        </div>
 
     </section> -->
+
+
+
+
+
+    <section class="storeContainer container">
+        <h2 class="circleAndLine">
+            Store
+        </h2>
+
+        <div class="courses__cards row w-100 justify-content-around">
+
+            <div class="courses__card col-lg-3 col-md-12 my-2 p-0">
+
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>Jesus Offering Bread</span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="paragraphDiv">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, natus. Autem similiqu
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="courses__card col-lg-3 col-md-12 my-2 p-0">
+
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>Jesus Offering Bread</span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="paragraphDiv">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, natus. Autem similiqu
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="courses__card col-lg-3 col-md-12 my-2 p-0">
+
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>Jesus Offering Bread</span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <div class="paragraphDiv">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, natus. Autem similiqu
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="subscriptionContainer container">
+        <h2 class="circleAndLine">
+            Subscription
+        </h2>
+
+        <div class="row w-100 mt-5">
+
+            <div class="col-lg-3 col-md-6 col-xs-12 my-5 subscriptionCard">
+                <div class="imgDiv">
+
+                </div>
+                <div class="circle">
+
+                </div>
+                <button>
+                    Purchase
+                </button>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-xs-12 my-5 subscriptionCard">
+                <div class="imgDiv">
+
+                </div>
+                <div class="circle">
+
+                </div>
+                <button>
+                    Purchase
+                </button>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-xs-12 my-5 subscriptionCard">
+                <div class="imgDiv">
+
+                </div>
+                <div class="circle">
+
+                </div>
+                <button>
+                    Purchase
+                </button>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-xs-12 my-5 subscriptionCard">
+                <div class="imgDiv">
+
+                </div>
+                <div class="circle">
+
+                </div>
+                <button>
+                    Purchase
+                </button>
+            </div>
+
+        </div>
+
+
+    </section>
+
+    <section class="countContainer">
+        <div class="row w-100 h-100 ">
+
+            <div
+                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+                <h3>99</h3>
+                <span>Students</span>
+            </div>
+
+            <div
+                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+                <h3>99</h3>
+                <span>Teachers</span>
+            </div>
+
+            <div
+                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+                <h3>99</h3>
+                <span>Students</span>
+            </div>
+
+            <div
+                class="col-lg-3 col-md-6 col-12 my-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
+                <h3>99</h3>
+                <span>Teachers</span>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="blogsContainer container">
+
+        <h2 class="circleAndLine">
+            Blogs
+        </h2>
+
+
+        <div class="blogs__cards row w-100 justify-content-around ">
+
+            <div class="blog__card col-lg-3 col-md-12 my-2 p-0">
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <h4>Always in Motion</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente iusto maxime. Itaque,
+                        corrupti iste. </p>
+                </div>
+
+                <div class="date">
+                    <span>
+                        <i class="fa-regular fa-calendar-days"></i>
+                        Oct 13, 2013
+                    </span>
+                    <button><i class="fa-regular fa-heart"></i>5</button>
+                    <button><i class="fa-regular fa-comment"></i>2</button>
+                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
+                </div>
+            </div>
+
+            <div class="blog__card col-lg-3 col-md-12 my-2 p-0">
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <h4>Always in Motion</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente iusto maxime. Itaque,
+                        corrupti iste. </p>
+                </div>
+
+                <div class="date">
+                    <span>
+                        <i class="fa-regular fa-calendar-days"></i>
+                        Oct 13, 2013
+                    </span>
+                    <button><i class="fa-regular fa-heart"></i>5</button>
+                    <button><i class="fa-regular fa-comment"></i>2</button>
+                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
+                </div>
+            </div>
+
+            <div class="blog__card col-lg-3 col-md-12 my-2 p-0">
+                <div class="imgDiv">
+                    <img src="./assets/images/banner/header 2.svg" alt="">
+                </div>
+
+                <div class="content">
+                    <h4>Always in Motion</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente iusto maxime. Itaque,
+                        corrupti iste. </p>
+                </div>
+
+                <div class="date">
+                    <span>
+                        <i class="fa-regular fa-calendar-days"></i>
+                        Oct 13, 2013
+                    </span>
+                    <button><i class="fa-regular fa-heart"></i>5</button>
+                    <button><i class="fa-regular fa-comment"></i>2</button>
+                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </section>
+
+    <section class="amazingFeatureContainer">
+
+    </section>
+
+    <?php include('templates/_footer.php'); ?>
+
+
+
 
 
     <script src="js/bootstrap.bundle.min.js"></script>
