@@ -51,7 +51,7 @@ if(isset($_POST['submit'])){
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
             <!-- <h3>Login to <strong>Colorlib</strong></h3> -->
-            <h3><img style="width:220px;margin-bottom:20px;margin-left:-5px" src="uploads/images/<?php echo _siteconfig('_sitelogo'); ?>" alt=""></h3>
+            <h3><img style="width:120px;margin-bottom:20px;margin-left:-5px" src="uploads/images/<?php echo _siteconfig('_sitelogo'); ?>" alt=""></h3>
             <p class="mb-4">Hello there! Please log in with your credentials to access your account </p>
             <?php if($_SESSION['signup_success']){ ?>
               <div class="alert alert-success alert-dismissible fade show" role="alert">

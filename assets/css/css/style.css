@@ -62,7 +62,9 @@ h2 {
 .half .btn {
   height: 54px;
   padding-left: 30px;
-  padding-right: 30px; }
+  padding-right: 30px; 
+  background-color: #DA251D;
+}
 
 .half .forgot-pass {
   position: relative;
@@ -103,11 +105,11 @@ h2 {
   background: #ccc; }
 
 .control input:checked ~ .control__indicator {
-  background: #fb771a; }
+  background: #DA251D; }
 
 .control:hover input:not([disabled]):checked ~ .control__indicator,
 .control input:checked:focus ~ .control__indicator {
-  background: #fb8633; }
+  background: #DA251D; }
 
 .control input:disabled ~ .control__indicator {
   background: #e6e6e6;

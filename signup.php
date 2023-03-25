@@ -49,7 +49,7 @@ if(isset($_POST['submit'])){
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
             <!-- <h3>Login to <strong>Colorlib</strong></h3> -->
-            <h3><img style="width:220px;margin-bottom:20px;margin-left:-5px" src="uploads/images/<?php echo _siteconfig('_sitelogo'); ?>" alt=""></h3>
+            <h3><img style="width:120px;margin-bottom:20px;margin-left:-5px" src="uploads/images/<?php echo _siteconfig('_sitelogo'); ?>" alt=""></h3>
             <p class="mb-4">We're excited to have you join us. Please fill out the form below to create your account</p>
             <form action="#" method="post" style="margin-bottom:20px">
               <div class="form-group first">
